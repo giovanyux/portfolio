@@ -9,7 +9,7 @@ export const AUTHOR = {
   email: 'cicerogiovany@gmail.com',
   bio: [
     'Lead product designer com 9 anos construindo produtos digitais na interseção entre método, pensamento sistêmico e IA.',
-    'Atualmente no setor de food-tech. Aberto a posições sênior/lead em product design, preferencialmente remote-first.',
+    '9 anos em SaaS B2B e B2C. Do Figma ao componente em produção, com IA no fluxo. Aberto a posições sênior/lead, remoto.',
   ],
 };
 
@@ -35,9 +35,9 @@ export const NAV_LINKS = [
 ];
 
 export const SITE = {
-  title: 'Giovany Jr — Lead Product Designer · Food-tech · Brasil',
+  title: 'Giovany Jr — Lead Product Designer | SaaS B2B e código com IA',
   description:
-    'Lead product designer com 9 anos de experiência. Portfólio de trabalhos selecionados em product design, design systems e IA.',
+    'Lead product designer com 9 anos em SaaS B2B e B2C. Do Figma ao componente em produção, com IA no fluxo.',
   url: 'https://giovanyux.github.io/portfolio',
   ogImage: `${BASE}/og-image.png`,
 };

@@ -1,12 +1,65 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import GridLines from '@/components/GridLines.astro';
-import CaseListItem from '@/components/CaseListItem.astro';
-import { getCollection } from 'astro:content';
-import { AUTHOR, CREDENTIALS, BASE } from '@/consts';
+import HomeCaseCard from '@/components/HomeCaseCard.astro';
+import Testimonials from '@/components/Testimonials.astro';
+import { CREDENTIALS, BASE } from '@/consts';
 
-const allCases = await getCollection('cases', ({ data }) => !data.draft);
-const cases = allCases.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+// Os 8 cases da home — curados à mão nesta rodada (v2.0), independente da
+// content collection. Só o Design System multitema já foi migrado pro novo
+// template; os outros 7 aguardam confirmação de formato antes da migração
+// (ver docs/tokens.md e a conversa da v2.0 pra contexto).
+const homeCases = [
+  {
+    title: 'Um sistema de cores que já estava quebrado antes de eu abrir o primeiro arquivo',
+    meta: ['Cardápio Web (autoral)', 'Lead Product Designer', 'Food-tech · SaaS B2B', 'Web — React, MUI v4 + Tailwind', '2026'],
+    paragraph: 'Documentar um design system multi-tenant como ele já era — não como deveria ser — foi o único jeito de enxergar onde cinco domínios de marca e dois sistemas de estilo já tinham divergido silenciosamente.',
+    image: '/cases/ds-multitema/cover.png',
+    href: `${BASE}/cases/ds-multitema`,
+  },
+  {
+    title: 'Gupy — case completo, aguardando adaptação ao novo formato',
+    meta: ['Gupy', 'Product Designer', 'HR Tech · SaaS B2B', 'Web', '—'],
+    paragraph: 'Case completo em gerenciamento de vagas. Conteúdo em processo de adaptação ao template v2.0.',
+    image: '/cases/gupy/cover.png',
+  },
+  {
+    title: 'Totem de autoatendimento — case completo, aguardando adaptação ao novo formato',
+    meta: ['Cardápio Web', 'PM · Product Designer · QA', 'Food-tech', 'Web + hardware', '—'],
+    paragraph: 'Case completo sobre um produto físico-digital, do discovery ao piloto em campo. Conteúdo em processo de adaptação ao template v2.0.',
+    image: '/cases/totem/cover.png',
+  },
+  {
+    title: 'PJBank — case completo, aguardando adaptação ao novo formato',
+    meta: ['Superlógica', 'Product Designer', 'Fintech', 'Web + mobile', '—'],
+    paragraph: 'Case completo sobre onboarding bancário regulado. Conteúdo em processo de adaptação ao template v2.0.',
+    image: '/cases/pjbank/cover.png',
+  },
+  {
+    title: 'Healthtech — case completo, aguardando adaptação ao novo formato',
+    meta: ['Intmed', 'Product Designer', 'Healthtech', 'Web', '—'],
+    paragraph: 'Case completo sobre sistemas de emergência e atendimento clínico. Conteúdo em processo de adaptação ao template v2.0.',
+    image: '/cases/healthcare/cover.png',
+  },
+  {
+    title: 'Integração WhatsApp Business API',
+    meta: ['—', '—', '—', 'Web', '—'],
+    paragraph: 'Case em breve.',
+    image: '/cases/whatsapp/cover.png',
+  },
+  {
+    title: 'Agenda Edu — design system web e app',
+    meta: ['Agenda Edu', '—', 'Edtech', 'Web + app', '—'],
+    paragraph: 'Case em breve.',
+    image: '/cases/agenda-edu/cover.png',
+  },
+  {
+    title: 'Cliqx — fluxos conversacionais',
+    meta: ['Cliqx', '—', '—', 'Web', '—'],
+    paragraph: 'Case em breve.',
+    image: '/cases/cliqx/cover.png',
+  },
+];
 ---
 
 <BaseLayout>
@@ -147,23 +200,40 @@ const cases = allCases.sort((a, b) => b.data.date.getTime() - a.data.date.getTim
       </h2>
     </div>
 
-    {cases.map((c, i) => (
-      <CaseListItem
+    {homeCases.map((c, i) => (
+      <HomeCaseCard
         number={String(i + 1).padStart(2, '0')}
-        tag={c.data.tags[0] ?? 'PRODUTO'}
-        title={c.data.title}
-        subtitle={c.data.description}
-        cover={c.data.cover}
-        thumbnail={c.data.thumbnail}
-        coverVideo={c.data.coverVideo}
-        metric={c.data.metric}
-        slug={c.slug}
+        title={c.title}
+        meta={c.meta}
+        paragraph={c.paragraph}
+        image={c.image}
         index={i}
-        comingSoon={c.data.comingSoon}
+        href={c.href}
       />
     ))}
     <div style="border-top: 1px solid var(--border);"></div>
   </section>
 
+  <!-- ── DEPOIMENTOS ──────────────────────────────────────── -->
+  <Testimonials />
+
+  <!-- ── CTA FINAL ────────────────────────────────────────── -->
+  <section style="max-width: 1200px; margin: 0 auto; padding: 8rem 2rem 8rem;">
+    <div data-reveal="scroll" style="border-top: 1px solid var(--border); padding-top: 4rem;">
+      <p style="font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.14em; color: var(--muted-foreground); text-transform: uppercase; margin-bottom: 1rem;">
+        Vamos conversar
+      </p>
+      <h2 style="font-family: var(--font-mono); font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 700; color: var(--foreground); margin-bottom: 2rem; line-height: 1.1; max-width: 16ch;">
+        Aberto a posições sênior/lead, remoto.
+      </h2>
+      <a
+        href={`${BASE}/contato`}
+        class="underline-hover"
+        style="font-family: var(--font-mono); font-size: 0.95rem; font-weight: 700; letter-spacing: 0.08em; color: var(--accent); text-decoration: none; text-transform: uppercase;"
+      >
+        Entrar em contato →
+      </a>
+    </div>
+  </section>
 
 </BaseLayout>

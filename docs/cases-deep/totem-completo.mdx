@@ -1,0 +1,139 @@
+---
+title: "Totem da Cardápio Web: do discovery ao piloto em campo"
+description: "Como rodar Double Diamond completo acumulando três papéis e levar um produto físico-digital até cliente real"
+date: 2026-05-07
+tags: ["food-tech", "discovery", "hardware", "double diamond"]
+cover: "/cases/totem/foto-piloto-bar.png"
+metric: "739 pedidos em 8 estabelecimentos"
+client: "Cardápio Web"
+role: "PM · Product Designer · QA"
+duration: "Agosto de 2025 ao presente"
+year: 2026
+---
+
+import BigNumber from "@/components/BigNumber.astro";
+import BigNumberGrid from "@/components/BigNumberGrid.astro";
+import SystemDisplay from "@/components/SystemDisplay.astro";
+import TechNote from "@/components/TechNote.astro";
+import Pullquote from "@/components/Pullquote.astro";
+
+A Cardápio Web é uma plataforma SaaS de cardápios digitais e gestão de pedidos que atende mais de 13 mil estabelecimentos pagantes no Brasil. Em 2025 a empresa identificou uma oportunidade de evolução estratégica: deixar de ser solução exclusivamente digital e virar plataforma omnichannel, conectando portal de gestão (B2B), catálogo de pedido (B2C) e ponto físico de venda em uma só infraestrutura. O Totem CW seria a peça que fechava essa tríade.
+
+Esse projeto teve uma característica organizacional importante. Eu acumulei três papéis simultaneamente. Conduzi o Discovery e o business case como Product Manager, desenhei a interface e o design system mínimo como Product Designer, e validei o produto antes de chegar ao cliente como QA, incluindo o teste físico do hardware em campo. Em uma equipe estruturada esses papéis estariam em três pessoas. Aqui estavam em uma. Isso explica o cronograma apertado e contextualiza decisões que precisaram ser revistas em iterações posteriores, depois que o produto começou a operar nos primeiros estabelecimentos.
+
+## Sobre a escala
+
+O produto está em piloto controlado desde janeiro de 2026. Os números acumulados refletem a tese de produto rodando em ambiente real, não em laboratório.
+
+<BigNumberGrid>
+  <BigNumber number="739" label="pedidos concluídos" context="Em 101 dias de operação em oito estabelecimentos." />
+  <BigNumber number="R$ 44.751" label="em GMV piloto" context="Distribuídos entre pizzarias, hamburguerias e bares." />
+  <BigNumber number="8" label="estabelecimentos ativos" context="Norte e Nordeste, perfil bar, pizzaria e hamburgueria." />
+  <BigNumber number="101" label="dias de operação" context="Desde 26 de janeiro de 2026." />
+  <BigNumber number="98%" label="taxa de conclusão" context="739 concluídos contra 15 cancelados." />
+</BigNumberGrid>
+
+<TechNote>
+A distribuição entre os oito estabelecimentos é assimétrica. Duas pizzarias concentram cerca de 87% do volume, com ticket médio entre R$ 53 e R$ 64. O primeiro estabelecimento a operar foi uma hamburgueria-bar de bairro em Fortaleza, que validou o produto em ambiente real antes da expansão para os demais. Os cinco estabelecimentos restantes operam em volume baixo, em fase inicial de adoção. O pico de uso concentra-se entre 19h e 22h, padrão típico de bar e pizzaria. A distribuição entre métodos de pagamento mostra cartão de crédito em 34,5%, débito em 27,2%, Pix em 22,9% e dinheiro em 15,4%, valor ainda relevante que confirma que o produto precisa funcionar offline-friendly.
+</TechNote>
+
+## A tese: tablet contra hardware proprietário
+
+A escolha por tablet como base do hardware foi decisão estratégica de posicionamento competitivo, registrada já no briefing inicial do Discovery. O autoatendimento no Brasil até então era território quase exclusivo de redes consolidadas com hardware proprietário caro. McDonald's com totens verticais grandes. Toast POS com terminais a partir de USD 130. Wikatop e GoTotem com soluções dedicadas que custam de R$ 5 mil a R$ 15 mil por unidade. Para uma rede consolidada o investimento faz sentido. Para o estabelecimento de pequeno e médio porte que é a maior parte da base CW, é proibitivo.
+
+A tese era democratizar o que a concorrência cobra caro. Tablet Android de baixo custo, com case impresso em 3D modelado por mim para suportar contextos diferentes — balcão, mesa de pé, parede, barril decorado de bar — permite custo unitário de hardware uma fração do que cobra a concorrência. O software acompanha como whitelabel multi-tenant: o mesmo build se reconfigura por cliente via portal, com cor, logo e banner próprios, sem necessidade de novo deploy ou intervenção de desenvolvedor.
+
+<Pullquote text="A pergunta inicial era se a Cardápio Web devia entrar em hardware. A resposta saiu do Discovery estruturado, não de instinto: o totem só fazia sentido se democratizasse o que a concorrência cobra caro." />
+
+## Discovery em quatro fases
+
+O Discovery rodou Double Diamond completo entre agosto e outubro de 2025, em seis semanas, distribuído em 19 tarefas formais com cronograma, dependências e milestones. As quatro fases tinham objetivos próprios e entregáveis específicos.
+
+<SystemDisplay
+  variant="backdrop"
+  src="/cases/totem/discovery-briefing.png"
+  alt="Briefing inicial do Discovery no Confluence"
+  caption="Briefing inicial do Discovery, com tese estratégica, definição de produto, hipóteses a validar, perguntas-chave, cenários de uso e roadmap das quatro fases"
+/>
+
+A **Discovery (Exploração e Divergência)** levantou dados de mercado e concorrência. Survey com a base de mais de 11 mil estabelecimentos da CW para mensurar interesse e perfil de adoção. Benchmark de cinco concorrentes locais (Aiwle, Goomer, Alotree, Gulflow, Consumer) e seis referências globais (Toast POS, McDonald's, Wikatop, GoTotem, Trends, Lichtspeed). Mapeamento de fornecedores de hardware com cotação de tablets Android e estudo de viabilidade do case impresso em 3D. Observação de totens em uso real no varejo de Fortaleza.
+
+A **Define (Síntese e Foco)** transformou os dados em direcionadores. Personas e cenários de uso priorizados (Fast Food/Quick Service, Fast Casual, Restaurantes Tradicionais). Definição dos fluxos críticos a validar: pedido, pagamento e cancelamento. Mapa de jornada atual versus jornada futura, com gaps a resolver.
+
+A **Develop (Ideação e Prototipagem)** materializou as hipóteses em UX testável. Entrevistas com restaurantes para validar necessidades. Validação técnica com produto e engenharia. Cocriação de fluxos no Figma. Design system mínimo focado em botões grandes, contraste alto e feedback visual claro. Testes de usabilidade com protótipo clicável.
+
+A **Delivery (Teste e Decisão)** consolidou tudo em material executável. Business case com CAPEX e OPEX e três modelos de receita propostos (R$ 99 a 149 por mês adicional, plano dedicado de R$ 279 por mês com totem incluso, e Hardware as a Service de R$ 199 mais R$ 99 por mês). Critérios Go/No-Go formais (ROI menor que doze meses, mais de 50% da base com perfil compatível, payback inferior a dezoito meses, investimento inicial abaixo de R$ 500 mil). Apresentação ao comitê executivo.
+
+## Os testes que mudaram o produto
+
+A fase de Develop incluiu testes de usabilidade com sete pessoas de funções e contextos distintos: dois SDRs (Gustavo, Lucas), dois CEOs de pequenas empresas (Jonny, Glauton), uma analista de G&G (Joyce), uma pessoa de marketing (Alexandre) e uma dona de cafeteria (Ruth). A diversidade era proposital. O totem ia operar em hamburgueria, pizzaria, cafeteria e bar, e cada contexto traz expectativa diferente sobre o que é interface boa o suficiente. Cada participante testou dois protótipos lado a lado: vertical e horizontal.
+
+O resultado foi consistente. O protótipo vertical venceu na maioria dos perfis. Foi descrito como mais intuitivo, com menos cliques e melhor hierarquia visual. O horizontal foi considerado tosco e pouco objetivo em vários testes, com queixas recorrentes sobre quebra de sequência e fotos atrapalhando a leitura. Os pontos críticos levantados nos testes viraram diretrizes do design final: hierarquia visual mais clara, evitar excesso de itens por tela, transmitir segurança em pagamento e dados, e priorizar UI que incentiva compra ao invés de oferecer múltiplas opções de navegação simultaneamente.
+
+<Pullquote text="O totem pode ter a mesma estrutura do catálogo, porém ele não deve seguir como o catálogo construído. Ele é um meio para compra diferente em um contexto específico." attribution="Conclusão consolidada dos testes de usabilidade" />
+
+## O sistema final
+
+O totem foi entregue com seis telas principais cobrindo o caminho do cliente final, e uma tela de configuração para o estabelecimento. Os mockups abaixo mostram o whitelabel em funcionamento. O mesmo build do software exibido com brands diferentes — Sushi Feast no chamariz e Washi Sushi no cardápio expandido — ambos fictícios criados como prova de conceito da arquitetura multi-tenant.
+
+<SystemDisplay
+  variant="mosaic"
+  imageAspectRatio="3/4"
+  screens={[
+    { src: "/cases/totem/chamariz.png", alt: "Chamariz do totem com brand Sushi Feast", caption: "Chamariz com brand Sushi Feast e call to action de início de pedido" },
+    { src: "/cases/totem/categorias.png", alt: "Grid de categorias do cardápio digital do totem com fotos dos pratos e destaque visual", caption: "Grid de categorias com fotos e destaque visual para itens principais" },
+    { src: "/cases/totem/cardapio-completo.png", alt: "Cardápio expandido com sidebar de navegação e brand Washi Sushi", caption: "Cardápio expandido com sidebar de navegação e brand Washi Sushi" },
+  ]}
+  label="O sistema em produção · sequência inicial"
+  caption="Chamariz, categorias e cardápio expandido. O mesmo build reconfigura por cliente via portal, sem novo deploy."
+/>
+
+<SystemDisplay
+  variant="mosaic"
+  imageAspectRatio="3/4"
+  screens={[
+    { src: "/cases/totem/carrinho.png", alt: "Revisão de pedido com escolha entre consumo no local ou para levar", caption: "Revisão do pedido com escolha entre consumo no local ou para levar" },
+    { src: "/cases/totem/pagamento.png", alt: "Seleção de forma de pagamento incluindo cashback acumulado", caption: "Seleção de pagamento com cashback acumulado e múltiplos métodos" },
+    { src: "/cases/totem/config-totem.png", alt: "Tela de configuração do totem para vincular tablet ao sistema CW", caption: "Configuração do totem: vínculo com sistema CW e maquininha do estabelecimento" },
+  ]}
+  label="O sistema em produção · conclusão do pedido"
+  caption="Carrinho, pagamento e configuração. O fluxo de pagamento cobre sucesso, falha, perda de conexão e item esgotado."
+/>
+
+O tratamento de erro merece destaque próprio. Para fluxos críticos como o pagamento, mapeei todos os caminhos possíveis no Figma como diagrama de estados antes de escrever qualquer descrição em texto. O fluxograma virou o contrato comum entre design e desenvolvimento. Tudo que estava no diagrama era o que precisava ser implementado, e tudo que não estava era território a discutir antes de codar. Cobre sucesso (dirigir-se ao caixa ou retirada do pedido), falha de pagamento (com opção de tentar de novo ou trocar forma), perda de conexão (com retry automático em 30 segundos), e item esgotado durante a sessão ativa (com retomada de fluxo no carrinho atualizado).
+
+<SystemDisplay
+  variant="backdrop"
+  src="/cases/totem/fluxograma-pagamento.png"
+  alt="Diagrama de estados do fluxo de pagamento"
+  caption="Diagrama de estados do fluxo de pagamento, cobrindo sucesso, falhas e estados intermediários. O diagrama serviu como contrato entre design e desenvolvimento."
+/>
+
+## Validação em campo
+
+O primeiro estabelecimento a colocar o totem em operação foi uma hamburgueria-bar de bairro em Fortaleza. Decoração com mural cinza estilo metal e rock, mesas em pé sobre barris reaproveitados, iluminação noturna. Não é o tipo de ambiente asséptico onde totens normalmente são fotografados em material institucional. É bar real de bairro, com cliente real fazendo pedido em pé, sem vendedor presente. Foi o que queríamos testar.
+
+<SystemDisplay
+  variant="backdrop"
+  src="/cases/totem/foto-piloto-bar.png"
+  alt="Cliente da hamburgueria-bar piloto fazendo pedido pelo totem"
+  caption="Cliente da hamburgueria-bar piloto fazendo pedido pelo totem em janeiro de 2026, primeiro estabelecimento da operação."
+/>
+
+A operação piloto começou em 26 de janeiro de 2026 e em 101 dias acumulou 739 pedidos concluídos em oito estabelecimentos diferentes, distribuídos entre pizzarias, hamburguerias e bares. A taxa de conclusão de 98% (739 concluídos contra 15 cancelados) confirmou em campo a hipótese central do Discovery: o autoatendimento funciona em estabelecimento de pequeno e médio porte quando o custo de entrada é baixo o suficiente para o estabelecimento topar testar.
+
+## A decisão executiva
+
+A apresentação do business case ao comitê executivo da Cardápio Web saiu com aprovação enfática. A diretoria avaliou os critérios formais — ROI projetado, perfil da base, payback estimado, investimento inicial. Saiu como GO. O totem entrou em desenvolvimento em outubro de 2025 e os primeiros pedidos em produção começaram três meses depois, em janeiro de 2026.
+
+## Aprendizados
+
+Sobre rodar Double Diamond em equipe enxuta: o método não exige time grande, exige disciplina de não pular fase. Em seis semanas com uma pessoa rodando PM, PD e QA simultaneamente, o que sustentou o ritmo foi tratar entregável de cada fase como pré-requisito da próxima. O survey precisava sair antes do benchmark. O benchmark precisava sair antes da definição de personas. Personas precisavam sair antes da prototipagem. Tentar paralelizar fora dessa ordem teria custado retrabalho.
+
+Sobre solo product operator: acumular três papéis funcionou para um Discovery e para o lançamento de piloto, mas tem teto. Algumas decisões precisaram ser revistas em iterações posteriores, depois que o produto entrou em campo, porque o ciclo de QA, PM e PD numa cabeça única perde a rotação de perspectiva que três pessoas trariam. Para escala fora do piloto, o produto vai precisar dessa rotação distribuída entre mais gente.
+
+Sobre o que ainda não está respondido: o piloto valida viabilidade econômica e adoção em estabelecimento pequeno, mas não responde como o produto se comporta em rede com mais de cinco unidades, como o tempo médio de atendimento muda quando o autoatendimento substitui parcialmente atendimento humano, e como a curva de adoção evolui em estabelecimento onde o totem fica visível mas opcional. Essas perguntas exigem instrumentação que o piloto atual ainda não gera em volume suficiente.
+
+## Reconhecimento
+
+Esse projeto foi conduzido em parceria com o time de produto e desenvolvimento da Cardápio Web. A liderança técnica e a confiança da diretoria em aprovar Go com louvor após o Discovery tornaram possível levar o totem do Confluence para o cliente real em pouco mais de cinco meses. As métricas de produção pertencem a esse esforço coletivo, ainda que o Discovery e o desenho do produto tenham sido executados solo.

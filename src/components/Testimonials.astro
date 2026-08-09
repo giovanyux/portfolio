@@ -1,0 +1,56 @@
+---
+interface Testimonial {
+  quote?: string;
+  name?: string;
+  role?: string;
+  photo?: string;
+}
+
+interface Props {
+  items?: Testimonial[];
+}
+
+// Estrutura pronta com 3 placeholders — preencher depois com depoimentos reais.
+const { items = [{}, {}, {}] } = Astro.props;
+---
+
+<section style="max-width: 1200px; margin: 0 auto; padding: 6rem 2rem 0;">
+  <div data-reveal="scroll" style="display: flex; align-items: baseline; gap: 1rem; margin-bottom: 2.5rem;">
+    <h2 style="font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted-foreground);">
+      O QUE DIZEM SOBRE TRABALHAR COMIGO
+    </h2>
+  </div>
+
+  <div class="testimonials-grid">
+    {items.map((item, i) => (
+      <figure data-reveal="scroll" style={`transition-delay: ${i * 80}ms; border: 1px solid var(--border); padding: 2rem;`}>
+        <blockquote style="margin: 0 0 1.5rem;">
+          <p style="font-family: var(--font-sans); font-size: 0.95rem; line-height: 1.7; color: var(--foreground);">
+            {item.quote ?? '— depoimento a preencher —'}
+          </p>
+        </blockquote>
+        <figcaption style="display: flex; align-items: center; gap: 0.75rem;">
+          <div class="img-placeholder" style="width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0;">
+            {item.photo && <img src={item.photo} alt={item.name ?? ''} style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;" onerror="this.style.display='none';" />}
+          </div>
+          <div>
+            <p style="font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; color: var(--foreground);">{item.name ?? 'Nome — a preencher'}</p>
+            <p style="font-family: var(--font-mono); font-size: 0.65rem; color: var(--muted-foreground);">{item.role ?? 'Cargo — a preencher'}</p>
+          </div>
+        </figcaption>
+      </figure>
+    ))}
+  </div>
+</section>
+
+<style>
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  @media (max-width: 900px) {
+    .testimonials-grid { grid-template-columns: 1fr; }
+  }
+</style>

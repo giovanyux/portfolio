@@ -3,14 +3,23 @@ import { getCollection } from 'astro:content';
 import CaseLayout from '@/layouts/CaseLayout.astro';
 
 export async function getStaticPaths() {
-  const cases = await getCollection('cases', ({ data }) => !data.draft && !data.comingSoon);
-  return cases.map((entry) => ({
-    params: { slug: entry.slug },
-    props: { entry },
-  }));
+  const all = await getCollection('cases', ({ data }) => !data.draft && !data.comingSoon);
+  const sorted = all.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+  return sorted.map((entry, i) => {
+    const next = sorted[(i + 1) % sorted.length];
+    return {
+      params: { slug: entry.slug },
+      props: {
+        entry,
+        next: next.slug !== entry.slug
+          ? { title: next.data.title, slug: next.slug, tag: next.data.tags[0] ?? 'PRODUTO' }
+          : undefined,
+      },
+    };
+  });
 }
 
-const { entry } = Astro.props;
+const { entry, next } = Astro.props;
 const { Content } = await entry.render();
 ---
 
@@ -21,10 +30,14 @@ const { Content } = await entry.render();
   coverVideo={entry.data.coverVideo}
   tags={entry.data.tags}
   metric={entry.data.metric}
+  metricLabel={entry.data.metricLabel}
   client={entry.data.client}
   role={entry.data.role}
+  industry={entry.data.industry}
+  platform={entry.data.platform}
   duration={entry.data.duration}
   year={entry.data.year}
+  next={next}
 >
   <Content />
 </CaseLayout>

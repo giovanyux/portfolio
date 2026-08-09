@@ -1,0 +1,206 @@
+---
+title: "Healthcare e Hapvida: trabalho reflexivo"
+description: "O que aprendi trabalhando em emergência constante"
+date: 2026-05-10
+thumbnail: "/cases/healthcare/sam-atendimento.png"
+tags:
+  - healthcare
+  - saúde regulada
+  - design reflexivo
+  - ai-augmented
+cover: "/cases/healthcare/redesign-desktop.png"
+coverVideo: "/cases/healthcare/redesign-desktop.mp4"
+metric: "5M+ beneficiários impactados"
+client: "Intmed (para a operação Hapvida)"
+role: "Product Designer"
+duration: "2018 a 2021"
+year: 2021
+---
+
+import BigNumber from '@/components/BigNumber.astro'
+import BigNumberGrid from '@/components/BigNumberGrid.astro'
+import HighlightCitation from '@/components/HighlightCitation.astro'
+import SystemDisplay from '@/components/SystemDisplay.astro'
+import TechNote from '@/components/TechNote.astro'
+import Pullquote from '@/components/Pullquote.astro'
+
+## Contexto
+
+A Hapvida é uma das maiores operadoras de saúde do Brasil, com forte presença no Norte e Nordeste. A Intmed, onde fui product designer entre 2018 e 2021, mantinha o ecossistema técnico dessa operação. Foram três anos desenhando dentro da intranet hospitalar, com padrões herdados de gerações anteriores de software médico, e telas projetadas pra mostrar tudo, sem hierarquia clara entre o crítico e o secundário. Os sistemas que entreguei lá ainda estão no ar.
+
+Foi minha primeira startup e minha primeira vaga como product designer. Apresentava fluxos pra chefia médica e defendia decisões de design em reunião comercial. Cada projeto aprovado representava sustentabilidade financeira pro time, então design não era só entrega, era argumento. Estruturei o processo de seleção e contratei três designers. Quando saí, era responsável pelos novos projetos da empresa, e os de sustentação ficaram com os designers que eu havia contratado. Cheguei a ser reconhecido pessoalmente pelo CEO da operadora, Dr. Candido Pinheiro Koren de Lima.
+
+**Os nove sistemas.** Cobriam emergência, fluxo clínico, prescrição, prontuário e fluxos especializados como cardiotocografia digital. Esse case foca em dois dos quais ainda tenho material acessível: o **SAM**, sistema de emergência hospitalar, e o **Hapclin**, atendimento clínico ambulatorial e prescrição.
+
+<HighlightCitation
+  text="Detalhei um deles, Batimentos Fetais (cardiotocografia digital), neste post no LinkedIn. Foi o projeto que mais me orgulho de ter entregue na Intmed."
+  href="https://www.linkedin.com/posts/giovany-jr-617223aa_ux-designdeexperiaeancia-pesquisacomusuaerrios-activity-7312877562752352257-a6dS"
+  linkLabel="ver post no LinkedIn"
+/>
+
+---
+
+## Sobre a escala
+
+Os números abaixo refletem a operação Hapvida no período pré-fusão com NotreDame Intermédica.
+
+<BigNumberGrid>
+  <BigNumber number="+5 milhões" label="beneficiários atendidos" context="Norte e Nordeste, antes da fusão de 2022." />
+  <BigNumber number="+15 mil" label="médicos ativos na rede" context="Em fluxos clínicos, emergência e prescrição." />
+  <BigNumber number="+40" label="hospitais próprios" context="Concentrados no Nordeste." />
+  <BigNumber number="+150" label="clínicas próprias" context="Atendimento ambulatorial e procedimentos." />
+  <BigNumber number="3 anos" label="em saúde regulada" context="Período como product designer na Intmed." />
+</BigNumberGrid>
+
+<TechNote label="Nota técnica">
+Não tenho métricas diretas dos sistemas. O ambiente era fechado por intranet, sem analytics. Os números refletem a magnitude da operação, não medição direta de uso. Pela rede própria e pela natureza dos fluxos, é razoável inferir que esses sistemas atravessaram dezenas de milhares de profissionais e impactaram milhões de atendimentos.
+</TechNote>
+
+---
+
+## Reflexão honesta
+
+Quatro dores atravessavam todos os projetos. **Velocidade clínica:** cada segundo a mais na interface era segundo a menos com o paciente. **Contenção de custo:** o sistema precisava ajudar o médico a decidir com menos exames e medicamentos, e em alguns fluxos sinalizar quando uma prescrição extrapolava limite previsto pelo protocolo da operadora. **Rotatividade alta:** embarque constante de profissional novo, então o sistema tinha que ser aprendível em pouco tempo. **Classificação de risco:** em emergência, define ordem de atendimento. Cheguei a estudar protocolos clínicos pra entender o que estava desenhando.
+
+O Double Diamond cabia mal nesse contexto. Discovery com paciente era raro, mediado por médico ou enfermeiro. Validação clínica antes de virar projeto era o gate político. Sem analytics nem rollout gradual, quando bug subia, já tinha atravessado a operação inteira. Era confiança em relato.
+
+Mesmo sem cobrança externa, mantinha disciplina de pesquisa, decisão e documentação. A Hapvida raramente lia esses documentos, mas eles existiam. Olhando hoje, três coisas eu não repetiria. **Confiar só em relato pra validar adoção**, em vez de propor instrumentação leve dentro da intranet. **Tratar as nove entregas como projetos independentes**, em vez de buscar padrões compartilhados. E **aceitar que UI densa era inevitável em saúde regulada**. Densidade não era o problema. Hierarquia mal feita era.
+
+---
+
+## Os sistemas em produção
+
+Era assim que esses sistemas eram usados em produção entre 2018 e 2021. Telas não foram retocadas.
+
+### SAM, sistema de emergência hospitalar
+
+<SystemDisplay
+  variant="mosaic"
+  screens={[
+    { src: "/cases/healthcare/sam-fila.png", alt: "SAM, fila de pacientes graves", caption: "Fila de pacientes graves com legenda de criticidade clínica." },
+    { src: "/cases/healthcare/sam-atendimento.png", alt: "SAM, tela de atendimento médico com sinais vitais, anamnese e histórico do paciente", caption: "Tela de atendimento médico inicial com sinais vitais e anamnese." },
+    { src: "/cases/healthcare/sam-resumo.png", alt: "SAM, resumo do atendimento", caption: "Resumo com indicador de alteração crítica em vermelho." }
+  ]}
+/>
+
+### Hapclin, atendimento clínico ambulatorial
+
+<SystemDisplay
+  variant="mosaic"
+  screens={[
+    { src: "/cases/healthcare/hapclin-receituario.png", alt: "Hapclin, receituário vazio", caption: "Receituário em estado vazio." },
+    { src: "/cases/healthcare/hapclin-medicamento.png", alt: "Hapclin, medicamento prescrito", caption: "Receituário com medicamento adicionado." },
+    { src: "/cases/healthcare/hapclin-manipulado.png", alt: "Hapclin, medicamento manipulado", caption: "Prescrição de medicamento manipulado." },
+    { src: "/cases/healthcare/hapclin-documentacao.png", alt: "Hapclin, documentação clínica", caption: "Documentação com histórico de atestados." }
+  ]}
+/>
+
+Pra esse case, escolhi uma tela específica do SAM pra repensar com o repertório de hoje. A tela de atendimento médico, porque concentra três das quatro dores que descrevi acima.
+
+---
+
+## A tela escolhida
+
+<SystemDisplay
+  variant="backdrop"
+  accent={true}
+  src="/cases/healthcare/sam-atendimento.png"
+  alt="SAM, atendimento médico, versão original 2018-2021"
+  label="SAM · atendimento médico · 2020"
+  caption="Hierarquia plana entre anamnese, sinais vitais e história patológica. Sem indicação visual de fora-de-faixa. Painel lateral fixo competindo com conteúdo central."
+/>
+
+Quatro limitações que eu apontaria hoje. **Hierarquia plana** entre criticidade e contexto: Glasgow e qSOFA aparecem do mesmo tamanho que comorbidades. **Sinais vitais sem indicação visual** de fora-de-faixa. PA, FC e SAT são inputs padrão, sem cor, ícone ou alerta. **Painel lateral fixo** competindo com conteúdo central. **Anamnese como textarea livre**, sem estruturação.
+
+Mas esse não é o problema central. As quatro limitações tratam de hierarquia visual, e foi exatamente onde meu primeiro ímpeto de redesign travou: reorganizei zonas e o resultado foi a mesma tela com pesos diferentes.
+
+<Pullquote
+  text="A pergunta era: como melhorar essa tela de atendimento médico? A pergunta certa era: como o sistema pode ajudar o médico a atender, em vez de só documentar atendimento?"
+/>
+
+A diferença entre essas duas perguntas é a diferença entre reorganizar um formulário e reimaginar um fluxo. É onde eu errei.
+
+### Discovery em três camadas
+
+Discovery em saúde regulada é mais difícil que em SaaS comum. Hoje eu rodaria três camadas em paralelo, cada uma cobrindo uma das limitações que reconheci na Reflexão.
+
+**Pesquisa direta com enfermeiros e médicos em campo.** Três a cinco turnos de observação em unidades de tamanhos diferentes, seguidos de entrevistas estruturadas com oito a dez profissionais. Foco em fricção: como leem a tela sob pressão, em que ordem buscam informação, onde abandonam o fluxo. Esse tipo de observação revela que **UI densa não é o problema, hierarquia mal feita é, e que o médico passa 60-70% do tempo digitando, não atendendo.**
+
+**Instrumentação leve dentro da intranet.** Eventos de telemetria interna sem dados sensíveis: tempo médio de atendimento, taxa de retrabalho, sequência de preenchimento, abandono de fluxo. Não precisa virar Mixpanel. Logger leve no front, dashboard interno acessível à chefia clínica.
+
+**Validação cruzada com chefia clínica e auditoria interna.** Apresentação dos protótipos pra três a cinco médicos chefes em workshop, e teste controlado aplicando protocolo Manchester ou ABCDE com a UI proposta versus UI atual, em pacientes simulados.
+
+Essas três camadas levam ao reframe. Reframado o problema, três decisões estruturais aparecem por consequência. **Captura primária deixa de ser formulário e vira conversa estruturada por IA.** **Sinais vitais deixam de ser inputs e viram leitura monitorada.** **Decision support deixa de ser acessório retroativo e vira assistente clínico contínuo.**
+
+---
+
+## O redesign
+
+Três zonas com função clínica distinta. Header com identidade, criticidade e ação primária. Banda de sinais vitais sempre visível, com cor, ícone e texto pra fora-de-faixa, e qSOFA calculado automaticamente. Captura central conversacional com IA estruturando em cards aprovavéis. Assistente clínico lateral com hipótese sugerida, protocolo ativado, histórico relevante e alertas medicamentosos.
+
+<SystemDisplay
+  variant="backdrop"
+  src="/cases/healthcare/redesign-desktop.png"
+  videoSrc="/cases/healthcare/redesign-desktop.mp4"
+  alt="Redesign desktop da tela de atendimento médico do SAM"
+  label="Desktop · 1280px"
+  caption="Hierarquia clínica em três zonas. Sinais vitais críticos sempre visíveis no topo. Captura por voz com IA estruturando em tempo real. Assistente clínico proativo na lateral."
+/>
+
+<SystemDisplay
+  variant="backdrop"
+  src="/cases/healthcare/redesign-mobile.png"
+  videoSrc="/cases/healthcare/redesign-mobile.mp4"
+  alt="Redesign mobile da tela de atendimento médico do SAM"
+  label="Mobile · 390px"
+  caption="O alerta crítico migra pra banner persistente abaixo do header. Painel assistente vira ícone bottom-right. Ação primária fixa no rodapé."
+/>
+
+### Tokens do design system clínico
+
+Cores semânticas pra criticidade clínica, tipografia técnica que separa dados numéricos (mono) de texto livre (sans), espaçamento na base 4px. Tokens compartilhados entre os fluxos seriam o início de um design system clínico, que era a segunda coisa que eu não repetiria da época.
+
+<SystemDisplay
+  variant="mosaic"
+  screens={[
+    { src: "/cases/healthcare/tokens-colors.png", alt: "Paleta de cores do design system clínico", caption: "Cores semânticas: danger pra alteração crítica, warning pra atenção, success pra normal, accent azul cobalto pra ações primárias." },
+    { src: "/cases/healthcare/tokens-typography.png", alt: "Escala tipográfica do design system clínico", caption: "Inter pra texto, JetBrains Mono pra dados numéricos. Hierarquia em cinco tamanhos." },
+    { src: "/cases/healthcare/tokens-spacing.png", alt: "Sistema de espaçamento do design system clínico, base 4px com escala linear até 48px", caption: "Base 4px, escala linear até 48px." }
+  ]}
+/>
+
+---
+
+## Como o handoff aconteceria
+
+Se o redesign virasse projeto real, o handoff seria multi-formato e contínuo, não um momento de exportar e mandar.
+
+**Figma com Dev Mode** como ponto de verdade visual. Tokens vinculados, componentes documentados, anotações de comportamento.
+
+**Componentes em Storybook** ao lado do código, no mesmo repo. Cada componente do DS clínico (VitalCard, AlertBanner, AssistantCard, TimerDisplay) com states, props e casos limite documentados.
+
+**Documentação leve em Markdown** vivendo ao lado do componente. Specs comportamentais, decisões justificadas, edge cases. Lido por humanos hoje, por LLMs amanhã.
+
+**Prompts otimizados pra Antigravity, v0 ou Cursor.** No fluxo AI-augmented, design entrega não só Figma e Storybook, mas também prompts que geram componentes alinhados aos tokens. Dev recebe o prompt, gera, ajusta minimamente.
+
+**HTML estático standalone** raramente é entregue pro dev, mas é útil pra apresentação a stakeholders não-técnicos como chefias médicas, antes do dev começar a construir.
+
+A escolha do formato depende do leitor. Pra dev, Figma e Storybook. Pra chefia clínica que vai aprovar antes do MVP, HTML estático. Pra LLM que vai gerar variantes futuras, Markdown estruturado.
+
+---
+
+## Aprendizados
+
+**Em emergência, fricção é risco, não incômodo.** Em SaaS B2B, UI funciona é critério de pronto. Em fluxo clínico crítico, não é. Hoje eu não trataria "UI funciona" como pronto pra produção em emergência. Tratei na época, e não repetiria.
+
+**Design system clínico é ativo de segurança, não de produtividade.** A repetição entre os nove sistemas que entreguei era enorme. Ainda me pesa. Reduzir variação visual e comportamental entre sistemas que o mesmo médico usa em sequência é decisão clínica disfarçada de DS.
+
+**Discovery em saúde regulada precisa de mediação clínica, mas mediação não pode virar desculpa.** A gente fingia discovery porque a chefia médica decidia em última instância. Mesmo nesse contexto dá pra observar enfermeiro em campo, instrumentar tela em produção, fazer entrevistas estruturadas pós-implantação. Eu não fiz isso na época. Hoje, faço.
+
+Esse case existe pra reconhecer publicamente o que não foi feito, e mostrar que aprender com isso muda como eu desenho hoje. Defender o trabalho antigo é diferente de aprender com ele.
+
+---
+
+## Reconhecimento
+
+Esse case é exercício reflexivo. Os projetos originais foram feitos em equipe, em contexto profissional na Intmed entre 2018 e 2021. O que apresento aqui é leitura individual e atualizada, com base no repertório que adquiri desde então. Material original sob propriedade da Intmed e da Hapvida, e pode ser discutido em conversa.

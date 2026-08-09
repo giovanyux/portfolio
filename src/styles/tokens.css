@@ -10,6 +10,30 @@
 
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
   --font-sans: 'Inter', system-ui, sans-serif;
+
+  /* Escala de tipografia — extraída dos valores ad-hoc do v1, nomeada para o v2.
+     Ver docs/tokens.md para o levantamento completo. */
+  --text-eyebrow: 0.65rem;
+  --text-body-sm: 0.85rem;
+  --text-body: 1rem;
+  --text-highlight: 1.25rem;
+  --text-section-title: clamp(1.75rem, 4vw, 2.5rem);
+  --text-display: clamp(2.5rem, 7vw, 5.5rem);
+
+  /* Escala de espaçamento — mesma origem. */
+  --space-xs: 0.5rem;
+  --space-sm: 0.75rem;
+  --space-md: 1.5rem;
+  --space-lg: 2.5rem;
+  --space-xl: 4rem;
+  --space-2xl: 6rem;
+
+  /* Containers — já consistentes no v1, apenas nomeados. */
+  --container-content: 900px;
+  --container-wide: 1200px;
+
+  /* Raio — sistema deliberadamente reto. Exceções ficam locais ao componente. */
+  --radius: 0;
 }
 
 .dark {

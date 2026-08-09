@@ -1,0 +1,75 @@
+---
+title: "Um sistema de cores que já estava quebrado antes de eu abrir o primeiro arquivo"
+description: "Documentar um design system multi-tenant como ele é, antes de decidir como ele deveria ser."
+date: 2026-07-20
+tags: ["design system", "tokens", "multi-tenant", "autoral"]
+cover: "/cases/ds-multitema/cover.png"
+metric: "7 inconsistências críticas mapeadas"
+metricLabel: "entre a paleta Tailwind e os papéis semânticos do MUI v4 — nunca comparadas lado a lado antes."
+client: "Cardápio Web (projeto autoral)"
+role: "Lead Product Designer"
+industry: "Food-tech · SaaS B2B"
+platform: "Web — React, MUI v4 + Tailwind CSS"
+duration: "Em andamento desde 2026"
+year: 2026
+---
+
+import BigNumber from "@/components/BigNumber.astro";
+import BigNumberGrid from "@/components/BigNumberGrid.astro";
+import Pullquote from "@/components/Pullquote.astro";
+import Fig from "@/components/Fig.astro";
+import Sistema from "@/components/Sistema.astro";
+
+## Contexto
+
+O Cardápio Web é um SaaS de food service que atende milhares de restaurantes no Brasil, e opera em regime multi-tenant: o mesmo produto é servido sob cinco domínios diferentes, cada um com identidade visual própria — vermelho no domínio principal, roxo no portal de gestão, azul e roxo-escuro em dois white-labels, índigo num quinto. A cor primária muda por tenant; o resto do sistema, teoricamente, não.
+
+Só que "teoricamente" fazia bastante trabalho nessa frase. O produto roda dois sistemas de estilo ao mesmo tempo — Tailwind CSS para grande parte da interface, e um tema MUI v4 (`themesConfig.js`) para os componentes de biblioteca — e nunca houve um documento que colocasse os dois lado a lado. Cada engenheiro novo aprendia a paleta por osmose, lendo código.
+
+Entrei nesse projeto sem escrever uma linha de produto ainda: o objetivo da primeira rodada não era redesenhar nada, era descobrir o que já existia, com precisão.
+
+<Fig number="01" src="/cases/ds-multitema/dominios.png" alt="Os cinco domínios do Cardápio Web lado a lado" caption="Os cinco domínios do produto, cada um com cor primária própria." />
+
+## Problema
+
+Sem um documento comparativo, divergências entre os dois sistemas de origem viviam invisíveis até quebrar alguma coisa em produção. A mais grave: o token semântico `fontSize.sm` do Tailwind estava mapeado para 24px — o mesmo valor de `2xl` — em vez de um valor pequeno como ~14px. Qualquer `text-sm` no produto renderiza em 24px. Ninguém tinha notado, porque ninguém tinha comparado a escala inteira num só lugar.
+
+Havia mais: as cores de `secondary` do MUI (`#EF9602`, `#f2ab34`, `#a76901`) não correspondem a nenhum tom da paleta Tailwind, então botões e chips secundários no MUI usam laranjas que não existem para quem trabalha só em utilitários CSS. E a cor de erro do MUI vem de `@material-ui/core/colors/red`, que diverge do vermelho Tailwind em cerca de 4% de matiz — pequeno o bastante pra passar despercebido, grande o bastante pra dois alertas de erro na mesma tela terem tons visivelmente diferentes.
+
+## Decisão
+
+A decisão que definiu esse case foi resistir à tentação óbvia: não comecei escolhendo qual sistema estava "certo" e migrando tudo pra ele. Comecei extraindo os dois — cor, tipografia, espaçamento — pra arquivos comentados e nomeados, e só depois fui marcando cada divergência com um nível de severidade (crítico, atenção, cosmético). A correção vem depois; primeiro, o mapa teria que estar completo e verificável por qualquer pessoa do time, não só por mim.
+
+<Pullquote
+  text="Documentar o sistema como ele já era — não como eu achava que deveria ser — foi o único jeito de enxergar onde ele tinha quebrado silenciosamente."
+/>
+
+Essa ordem importa porque um design system que nasce corrigindo bugs antes de documentá-los tende a repetir o mesmo erro de origem: decisões tomadas sem visibilidade total do que já está em produção.
+
+<Fig number="02" src="/cases/ds-multitema/inconsistencias.png" alt="Tabela de inconsistências mapeadas por severidade" caption="Tabela de severidade — sete divergências mapeadas entre Tailwind e MUI v4." />
+
+## Sistema
+
+<Sistema screens={[
+  { src: "/cases/ds-multitema/tokens-colors.png", caption: "Paleta base + papéis semânticos por tenant" },
+  { src: "/cases/ds-multitema/tokens-typography.png", caption: "Famílias, tamanhos e o bug do fontSize.sm" },
+  { src: "/cases/ds-multitema/tokens-spacing.png", caption: "Escala numérica + containers de layout" },
+  { src: "/cases/ds-multitema/brand-domains.png", caption: "Cinco temas de marca documentados lado a lado" },
+]} />
+
+## Impacto
+
+<BigNumberGrid>
+  <BigNumber number="7" label="inconsistências mapeadas" context="Da mais crítica (bug em produção) à mais cosmética." />
+  <BigNumber number="5" label="temas de marca" context="Documentados com fonte e justificativa de cada cor." />
+  <BigNumber number="2" label="fontes de verdade" context="Tailwind e MUI, comparadas pela primeira vez lado a lado." />
+  <BigNumber number="1" label="bug crítico" context="fontSize.sm em 24px — já reportado à engenharia." />
+</BigNumberGrid>
+
+O impacto direto ainda é interno: um documento que qualquer engenheiro ou designer pode abrir para responder "de onde vem essa cor" sem precisar grepar dois repositórios. O bug do `fontSize.sm` já foi reportado; a correção em produção depende de priorização da engenharia, fora do meu controle direto.
+
+## Aprendizado
+
+Esse case ainda está em andamento, e é importante ser honesto sobre isso: o que existe hoje é documentação e mapeamento, não a fonte de verdade em produção. Os arquivos `tailwind.config.js` e `themesConfig.js` originais continuam sendo o que o produto lê — os tokens extraídos são referência, ainda não substituem o código real.
+
+O que ainda não resolvi: como conduzir a migração sem depender inteiramente de disponibilidade de engenharia, e como decidir, com dados de uso reais, qual das duas fontes vence em cada divergência — hoje a escolha é caso a caso, e alguns casos (como o `secondary` do MUI) ainda não têm decisão tomada.

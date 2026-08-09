@@ -1,0 +1,216 @@
+---
+title: "PJBank: o peso emocional de cada passo"
+description: "Pesquisa em quatro camadas num onboarding bancário regulado"
+date: 2026-05-08
+tags: [fintech, onboarding, pesquisa, compliance, ux writing]
+cover: "/cases/pjbank/mapa-fluxo.png"
+thumbnail: "/cases/pjbank/atual-entrada.png"
+metric: "Pesquisa em 4 camadas"
+client: "Superlógica"
+role: "Product Designer"
+duration: "2022 a 2023"
+year: 2023
+---
+
+import BigNumber from "@/components/BigNumber.astro";
+import BigNumberGrid from "@/components/BigNumberGrid.astro";
+import SystemDisplay from "@/components/SystemDisplay.astro";
+import TechNote from "@/components/TechNote.astro";
+import Pullquote from "@/components/Pullquote.astro";
+
+Em 2022, fui contratado pela Superlógica pra trabalhar no PJBank, banco digital pra pessoa jurídica. O produto era jovem, tinha alguns milhares de empresas onboardadas, e crescia rápido dentro do ecossistema Superlógica. A operação dependia de um onboarding inteiramente digital: empresário baixa o app, manda documentos, espera análise, e em poucos minutos ou poucas horas tem conta ativa pra movimentar dinheiro. No papel, é simples. Na prática, era uma das experiências de produto mais difíceis e regulamentadas com que já trabalhei.
+
+## Sobre a escala
+
+Onboarding de banco PJ no Brasil é diferente de tudo. Não é abertura de conta corrente PF, não é cadastro de e-commerce, não é nem mesmo onboarding de fintech B2C. É um processo que junta três camadas: regulação federal (BACEN, Receita Federal, KYC e AML), validação societária (que muda conforme o tipo da empresa), e validação biométrica (selfie, RG, prova de vida). E tudo isso precisa rodar num celular comum, com conexão variável, em qualquer região do país.
+
+<BigNumberGrid>
+  <BigNumber number="12" label="entrevistas em profundidade" context="Diversidade geográfica: Norte, Nordeste, Sul." />
+  <BigNumber number="8" label="tipos de empresa atendidos" context="Do MEI à cooperativa, com requisitos documentais distintos." />
+  <BigNumber number="6 meses" label="de chamados analisados" context="Pareamento com suporte e backoffice documental." />
+  <BigNumber number="18" label="motivos de reprovação mapeados" context="Do RG vencido ao comprovante de endereço fora do prazo." />
+  <BigNumber number="47" label="problemas de microcópia" context="Typos, ambiguidade, tom inconsistente, placeholders vazados." />
+</BigNumberGrid>
+
+<TechNote label="Sobre a regulação">
+Onboarding bancário PJ é regido pelas normas do Banco Central, especialmente Resolução BACEN sobre KYC (Conheça Seu Cliente) e PLD/FT (Prevenção à Lavagem de Dinheiro e Financiamento ao Terrorismo). Cada peça do fluxo carrega exigência regulatória: consentimento informado, validação biométrica, prova de vida, comprovação societária. Não é território de "tirar campo pra simplificar". Boa parte do que existe é exigência legal, e qualquer mudança passa por jurídico e compliance.
+</TechNote>
+
+A pesquisa em quatro camadas não foi luxo metodológico. Foi resposta a uma realidade onde nenhuma fonte de dado isolada conseguia mostrar o problema inteiro. Telemetria mostrava abandono mas não dizia o porquê. Suporte sabia o porquê de alguns, mas era enviesado por quem ligava. Backoffice sabia o que reprovava documentos, mas não via a fricção emocional. Entrevista mostrava sentimento, mas amostra pequena. Só cruzando todas saía o desenho real.
+
+## A complexidade real
+
+A primeira coisa que descobri foi que "empresa" não é uma categoria. É um conjunto de oito tipos jurídicos com requisitos documentais distintos. **MEI** abre conta com CCMEI, CNPJ e RG. **Empresário Individual** precisa de Requerimento de Empresário e CNPJ. **EIRELI** (que ainda existia em parte das contas) tinha Ato Constitutivo. **LTDA Unipessoal** veio com a Lei da Liberdade Econômica e mudou o mapa documental. **LTDA tradicional** tem Contrato Social, e cada alteração precisa estar registrada na Junta Comercial. **S/A** tem Estatuto Social mais Atas. **Sociedade Simples** segue caminho próprio no cartório. **Cooperativa** tem regimento e ata.
+
+Cada tipo desses tem um caminho de aprovação diferente no BACEN, e cada caminho impacta quais campos precisam ser preenchidos no app. O onboarding existente tratava todos como se fossem o mesmo tipo. O empresário começava o cadastro, mandava documentos, e descobria depois que mandou o documento errado. A taxa de retrabalho documental era alta, e a sensação na ponta era de "burocracia mal explicada".
+
+A segunda complexidade era societária. Banco digital PJ tem que validar **quem assina** pela empresa. Isso significa identificar sócios, validar percentual de cada um, distinguir sócio administrador de procurador, e em alguns casos pedir KYC completo de mais de uma pessoa. O fluxo do app presumia que existia um sócio único e não tinha bom suporte pra empresas com dois ou mais sócios. Na pesquisa, vi empresários LTDA com dois sócios travarem completamente porque o app só pedia dados de um.
+
+A terceira complexidade era o conjunto de comprovantes: endereço, atividade econômica, faturamento. Cada um com regra própria. Endereço não pode ter mais de 90 dias. Comprovante precisa estar em nome da empresa, ou conter declaração específica se estiver em nome do sócio. Faturamento é declarado mas validado contra CNAE. CNAE precisa ser compatível com o produto bancário ofertado. Tudo isso era invisível pro empresário até ele errar.
+
+## O sistema em produção
+
+O produto que existia tinha múltiplas telas iniciais antes da primeira ação do empresário. Algumas explicavam por que o banco era diferente. Outras pediam verificação de email. Outras listavam regras pra documentação. Isso vai contra o instinto de "menos é mais", mas tem lógica regulatória: o BACEN exige consentimento informado, e parte do conteúdo era exigência de compliance. O problema não era a presença das telas. Era o ritmo, a densidade textual, e o fato de elas não prepararem o empresário pra ação seguinte.
+
+<SystemDisplay
+  variant="mosaic"
+  imageAspectRatio="9/16"
+  screens={[
+    { src: "/cases/pjbank/atual-entrada.png", alt: "Tela de entrada do app PJBank: 'Liberte-se da burocracia bancária'" },
+    { src: "/cases/pjbank/atual-onboarding-solucao.png", alt: "Tela de onboarding: 'A solução que sua empresa precisa'" },
+    { src: "/cases/pjbank/atual-onboarding-preenchimento.png", alt: "Tela de onboarding: 'Preenchimento de dados e validação de documentos'" },
+    { src: "/cases/pjbank/atual-verificacao-email.png", alt: "Tela de verificação de email com link expirando em 3 horas" },
+  ]}
+  label="Quatro telas antes da primeira ação"
+  caption="O onboarding inicial concentrava densidade textual e validações antes de qualquer decisão prática do empresário."
+/>
+
+O mapa de fluxo do primeiro acesso passava por **dezessete decisões e validações** entre o splash inicial e o "documentos aprovados". Algumas eram lineares. Outras eram condicionais (se o RG for vencido, vai pra esse caminho; se a CNH não tiver CPF, vai pra esse outro). Esse mapa nunca foi mostrado pro empresário. Ele só descobria a complexidade tela a tela.
+
+<SystemDisplay
+  variant="backdrop"
+  src="/cases/pjbank/mapa-fluxo.png"
+  alt="Mapa do fluxo de primeiro acesso do PJBank, com dezessete etapas distribuídas em swim lanes horizontais"
+  label="Mapa do fluxo de primeiro acesso"
+  caption="O caminho do empresário do splash até documentos aprovados, com etapas condicionais que só apareciam ao errar."
+/>
+
+Quando coloquei esse mapa lado a lado com a curva de abandono, vi os pontos onde a desistência se concentrava. Não eram aleatórios. Tinham padrão. Concentravam onde o empresário precisava sair do app pra buscar algo (documento físico, assinatura digital, RG na gaveta), onde a validação era ambígua (que documento serve, qual é a foto certa, o que conta como comprovante), e onde o feedback era genérico (erro, retry, espera).
+
+## Onde a fricção morava
+
+Quatro telas concentravam mais da metade dos motivos de abandono. Não eram as mais bonitas nem as mais feias. Eram as mais ambíguas.
+
+<SystemDisplay
+  variant="mosaic"
+  imageAspectRatio="9/16"
+  screens={[
+    { src: "/cases/pjbank/atual-endereco-erro.png", alt: "Tela de endereço com campo Complemento marcado em vermelho como obrigatório" },
+    { src: "/cases/pjbank/atual-captura-rg.png", alt: "Tela cinza de captura da frente do RG, sem guia visual" },
+    { src: "/cases/pjbank/atual-selfie-typo.png", alt: "Tela de instruções pra selfie com typo no título: 'sefie'" },
+    { src: "/cases/pjbank/atual-selfie-placeholder.png", alt: "Tela de confirmação da selfie com placeholder de design vazado pra produção" },
+  ]}
+  label="Quatro fricções concentradas"
+  caption="Endereço com erro genérico, captura sem guia visual, typo editorial em tela sensível, placeholder de Figma vazado pra produção."
+/>
+
+A primeira é a tela de endereço. Ao tentar avançar com o campo "Complemento" vazio, aparece um toast no rodapé dizendo "Preencha todos os campos para continuar", e o campo é marcado em vermelho com a label "Obrigatório". O problema é duplo. Primeiro, complemento não é campo obrigatório no Brasil real (muita casa não tem). Segundo, o feedback é genérico ("preencha todos") quando o sistema sabe exatamente qual campo está vazio. Microinteração que devia ser cirúrgica vira ruído.
+
+A segunda é a captura de frente do RG. A tela é cinza, claustrofóbica, com instrução textual no topo e um botão branco no rodapé. Não tem guia visual de como enquadrar. Não tem reconhecimento da câmera detectando que o documento foi posicionado. Empresário no celular Motorola G6, debaixo da luz amarela da cozinha, tira foto que não passa, e refaz três, quatro vezes. Cada tentativa frustrada é vivida como rejeição.
+
+A terceira é a tela de instruções pra selfie, e o problema dela é editorial: o título tem um typo. "Vamos começar com uma sefie sua." Selfie está escrito errado, na tela onde o produto pede uma foto do rosto do empresário pra autenticar identidade. Não dá pra subestimar isso. Quando o produto que cuida de CPF, RG e dinheiro escreve errado uma palavra que aparece na tela mais sensível do fluxo, a confiança despenca.
+
+A quarta é a tela de confirmação da selfie, e o problema dela é estrutural. Depois de tirar a foto, o empresário deveria ver a selfie capturada antes de mandar pra análise. O que aparece é um retângulo cinza com texto centralizado: "Aqui fica a selfie que a pessoa tirou". Isso é placeholder de Figma que vazou pra produção. Ninguém implementou o componente que renderiza a foto de fato, e o texto-de-design ficou ali, lendo pro empresário como parte do produto. Em uma tela onde o usuário tá entregando biometria pra validação bancária, isso é falha de QA estrutural, não só editorial.
+
+## Sintomas de um sistema sem dono editorial
+
+Quando comecei a olhar para além das quatro telas críticas, vi que os problemas não eram falhas isoladas. Eram sintomas de algo maior: o produto tinha crescido sem dono editorial, sem governança de microcópia, e sem sistema de design rastreável. As evidências apareciam em todo lado.
+
+<SystemDisplay
+  variant="mosaic"
+  imageAspectRatio="9/16"
+  screens={[
+    { src: "/cases/pjbank/atual-update-light.png", alt: "Tela de update do app em design light com header simples" },
+    { src: "/cases/pjbank/atual-update-dark.png", alt: "Tela de update do app em design dark com header azul navy" },
+    { src: "/cases/pjbank/atual-sucesso-aprovados.png", alt: "Tela 'Seus documentos foram aprovados!' com header 'Aguardo de análise'" },
+    { src: "/cases/pjbank/atual-sucesso-liberado.png", alt: "Tela 'Seu acesso está liberado!' com header 'Resultado da análise'" },
+  ]}
+  label="Quatro evidências de inconsistência sistêmica"
+  caption="Duas telas de update em design languages incompatíveis. Duas telas de 'tudo certo' para o mesmo momento, com copy e ações diferentes."
+/>
+
+As duas telas de "tudo certo" no fim do onboarding mostram o problema mais claro. Uma diz "Seus documentos foram aprovados!" com header "Aguardo de análise" (header que continuava errado mesmo após a aprovação), botão "Entendi". A outra diz "Seu acesso está liberado!" com header "Resultado da análise", botão "Acessar aplicativo". Mesma função, copy diferente, header diferente, ação diferente. Duas telas convivendo no produto pro mesmo momento, deixando o empresário sem saber se o estado era "aprovado mas ainda não liberado" ou "liberado de fato".
+
+As duas telas de update do app reforçam o diagnóstico. Uma é light com tipografia simples e botão accent. A outra é dark com header azul navy preenchido e tipografia diferente. Mesmo objetivo, dois designs incompatíveis, vindos de momentos diferentes do produto sem que ninguém consolidasse. Detalhe técnico que reforça a ausência de sistema: o nome do arquivo Figma de uma das telas de update era "Pagar_por_Pix.png". Alguém renomeou errado e ninguém pegou.
+
+Isso muda o tipo de redesign que o case pedia. Não dava pra propor "telas novas" sobre um substrato sem governança. Antes do redesign visual precisava existir o que faltou: propriedade editorial real, sistema de design rastreável, e ritual de QA que validasse o que ia pra produção.
+
+## A reformulação que mudou a pergunta
+
+Antes da pesquisa em camadas, a discussão interna era sobre fluxo. "Como reduzir o número de telas?", "Como simplificar a captura de documentos?", "Como dar feedback mais rápido?". Todas perguntas legítimas, mas todas tratando o sintoma. O reframe veio depois de cruzar entrevistas com motivos de reprovação documental, e mudou o que estava em jogo.
+
+<Pullquote text="Cada erro era vivido como rejeição. O redesign não era sobre menos passos. Era sobre menos peso emocional em cada passo." />
+
+Onboarding bancário não é fluxo a otimizar. É jornada emocional a redesenhar. O empresário tá num momento específico (querendo abrir conta pra movimentar dinheiro do negócio), num estado específico (já decidiu, quer começar logo), com expectativa específica (que vá rápido e dê certo). Cada erro confronta essa expectativa. E quando o erro vem com microcópia genérica ou com placeholder de Figma na tela, ele vira "esse banco não me quer".
+
+## A pesquisa em quatro camadas
+
+A pesquisa rodou ao longo de dois meses, com aprovação prévia de jurídico e compliance pra cada peça. Cada camada respondeu uma pergunta diferente.
+
+### Camada 1: telemetria sem PII
+
+Instrumentação leve dentro do app, sem capturar nenhum dado pessoal identificável. Eventos por tela, tempo até cada ação, taxa de retorno após sair, e funil completo do início ao "documentos aprovados". Saiu mapa de calor de abandono e tempos médios por etapa. Foi o ponto de partida pra saber **onde** olhar.
+
+### Camada 2: análise de chamados de suporte e motivos de reprovação documental
+
+Pareamento com o time de atendimento e o time de backoffice de análise documental. Seis meses de chamados categorizados, top motivos de chamada relacionados a onboarding, e listagem completa dos motivos pelos quais documentos eram rejeitados internamente. Mapeamos **dezoito motivos distintos** de reprovação, do RG vencido ao comprovante de endereço com mais de 90 dias. Foi o ponto que respondeu **por que** as pessoas falhavam.
+
+### Camada 3: entrevistas em profundidade e observação remota
+
+Doze empresários entrevistados em profundidade, com diversidade geográfica (Norte, Nordeste, Sul) e de tipo de empresa (do MEI no interior do Ceará à LTDA com dois sócios em São Paulo). Cada entrevista durou cerca de uma hora. Em paralelo, oito sessões de observação remota, com a pessoa tentando se cadastrar enquanto eu acompanhava por chamada de vídeo com tela compartilhada. Vi as fricções acontecerem em tempo real. Foi o ponto que mostrou **como** as pessoas viviam o processo.
+
+### Camada 4: audit editorial e revisão de microcópia
+
+Audit completo de toda a microcópia do onboarding. Cada string de cada tela, cada dialog, cada toast, cada tela de erro, cada tela de espera. **Quarenta e sete problemas mapeados**, do typo "sefie" ao placeholder "Aqui fica a selfie que a pessoa tirou", passando por frases ambíguas como "documento original" e tons que oscilavam entre formal-legal e casual-amigável dentro do mesmo fluxo. Foi o ponto que tornou explícita a inconsistência editorial e estrutural.
+
+## Os insights que mudaram a pergunta
+
+A pesquisa produziu sete insights principais. Cada um deles era óbvio depois que apareceu, mas nenhum era óbvio antes.
+
+**Empresário não é cliente bancário, é um humano com pressa.** O onboarding presumia que ele tinha trinta minutos livres num lugar bem iluminado com documentos em mãos. Quase nunca era assim. A realidade é que ele tentava abrir conta no carro, no caixa do mercado, esperando o filho na escola. Esse desencaixe entre presunção do produto e realidade da pessoa explicava boa parte do abandono.
+
+**Documento "vencido" é categoria nova pra ele.** Empresários pequenos não pensam que RG tem validade prática (ainda que não vença juridicamente, banco pede até dez anos da emissão). E CNH precisa estar dentro da validade. E precisa ter CPF impresso. Essas regras só apareciam depois de ele ter começado, depois de já ter investido tempo emocional e procedural.
+
+**A foto do documento não é uma foto, são quatro etapas emocionalmente carregadas.** Frente, verso, selfie, validação. Cada uma com fricção própria. Selfie é a pior, exige luz boa, sem chapéu ou óculos, rosto centralizado num oval cinza num fundo cinza. Em pesquisa, vi pessoas tirando selfie seis ou sete vezes até conseguir.
+
+**O tempo de análise é black box.** "Pode levar alguns instantes" não significa nada. Pode ser dois minutos, pode ser dois dias. Empresário ligava pro suporte quatro vezes nesse intervalo, sem saber se devia esperar, sair, ou recomeçar.
+
+**Erro genérico é reset emocional.** A tela "Tivemos um problema ao enviar sua documentação" obrigava o empresário a recomeçar mentalmente. Ele já tinha se preparado, já tinha feito tudo, e via aparecer um erro sem saber o que falhou. A taxa de abandono nessa tela era altíssima.
+
+**Microcópia é parte do produto, não polish opcional.** Em produtos que cuidam de dinheiro e identidade, cada string carrega segurança percebida. Tons inconsistentes, telas duplicadas para o mesmo momento, placeholders de design que vazam pra produção: tudo isso dilui a sensação de que o sistema é confiável. UX writing precisa ter dono nominal e ritual de QA editorial, não pode ser tarefa difusa entre dev, PM e designer.
+
+**Mobile-first foi mobile-only-no-pior-celular-com-pior-conexão.** Empresários no Brasil profundo abriam conta em celular Motorola G6 com 4G fraco. O upload de foto demorava. A foto era grande. Se a conexão caísse no meio do upload, perdia tudo. O sistema não tinha resume nem retry. Não tinha compressão automática. Não tinha indicação de "foto sendo enviada, aguarde". Tinha um botão e uma fé.
+
+## Os princípios do redesign
+
+A partir desses insights, propus seis princípios pra orientar o redesign. Não eram regras de UI. Eram critérios de decisão pra cada fricção que aparecesse no caminho.
+
+**Preparar antes de pedir.** Antes de pedir foto do RG, mostrar concretamente como deve ser a foto. Antes de pedir comprovante de endereço, listar quais comprovantes contam. Antes de pedir selfie, dizer que precisa de luz e mostrar exemplo. Cada pedido vem com preparação visível, não com surpresa.
+
+**Cada erro com rota de saída.** Em vez de "Tivemos um problema", mostrar qual problema foi e uma ação concreta. "Sua foto ficou escura. Tente de novo num lugar mais iluminado, ou use a lanterna do celular." Empatia operacional, não empatia genérica.
+
+**Tempo é informação, não mistério.** Substituir "alguns instantes" por intervalos reais. "Análise em até 24 horas. Vamos te avisar quando concluir, e você pode fechar o app sem perder progresso." Saída do app com tranquilidade, não com ansiedade.
+
+**Microcópia revisada como contrato de qualidade.** Cada string passa por revisão editorial antes de subir. Tom consistente do início ao fim. Padrão de termos. Padrão de tratamento. Nenhum placeholder de Figma chega à produção. Não pode ter typo num produto que pede CPF.
+
+**Resilience patterns no mobile fraco.** Upload com retry automático, resume após queda de conexão, compressão de imagem antes do envio, indicação clara de progresso. Falha de rede não invalida progresso. Quem fechou o app no meio do upload volta no ponto onde parou.
+
+**Documento como conversa, não formulário.** Em vez de pedir uma foto e o usuário descobrir que falhou, guiar visualmente. Câmera com guia que reconhece o documento posicionado, feedback em tempo real (claro, escuro, borrado), e captura automática quando as condições estão certas. Tirar a foto deixa de ser ação solitária e vira diálogo entre app e empresário.
+
+## Como o redesign aconteceria
+
+Mesmo sem o redesign visual feito nesta versão do case, o plano de implementação estava desenhado e validado com as áreas envolvidas. O método herdava a disciplina aprendida em projetos anteriores e adaptava ao contexto regulado do PJBank.
+
+A primeira etapa seria validação prévia com **compliance e jurídico**. Banco PJ não permite "vamos testar e ver". Cada mudança de microcópia em telas com consentimento informado, cada alteração no fluxo de autenticação, cada novo tipo de feedback em erro de documento, tudo passa por revisão regulatória. Marquei aprovação dessas áreas como pré-requisito de qualquer mock entrar em produção.
+
+A segunda etapa seria **pareamento com backoffice**. As pessoas que analisavam documentos no dia a dia eram a fonte mais rica de informação sobre o que tornava um documento aceitável ou não. Sentar com elas, observar uma manhã de análise, e usar esse aprendizado pra construir os guias de captura no app teria mais valor que mil entrevistas externas.
+
+A terceira etapa seria **teste controlado num subgrupo de novos cadastros**. Não rollout completo. Um subconjunto, com rollback claro: se a nova versão piorasse a taxa de aprovação documental ou a taxa de conclusão em mais de cinco por cento, reverter sem cerimônia. Métrica de conversão como contrato com o produto, não como esperança.
+
+A quarta etapa seria **iteração visível pro time de suporte**. O suporte é a linha de frente que escuta a frustração. Cada release tinha que vir com lista do que mudou e do que esperar de mudança nos chamados. Aprendi isso tarde. Sem esse loop, o suporte vira espectador da reforma, e a reforma vira problema do design isoladamente.
+
+## Aprendizados
+
+Quatro coisas levei pra dentro do que vim a fazer depois.
+
+**Categoria regulada exige humildade metodológica.** Não dá pra ser "criativo" com formulário bancário. Dá pra ser claro, calmo, e respeitoso com o tempo do empresário. A criatividade fica no como, não no que. Onde alguns produtos podem se permitir experimentar, banco PJ não pode. E isso não é limitação, é restrição construtiva: força o design a melhorar dentro de margens estreitas, e isso afia a habilidade.
+
+**Pesquisa em camadas paga, e paga junto.** Telemetria sozinha não diz por quê. Suporte sozinho é enviesado. Entrevista sozinha é amostra pequena. Editorial sozinho é cosmética. As quatro juntas mostram desenho que nenhuma sozinha mostraria. Aprendi a tratar pesquisa como composição, não como escolha entre métodos.
+
+**Antes do redesign visual, o sistema editorial.** Não dá pra propor telas novas sobre um substrato sem governança. Quando o produto aceita placeholder de Figma em produção e tem duas telas pra mesmo momento sem que ninguém perceba, o problema não é UI. É falta de propriedade editorial e de QA estrutural. O redesign começa por instalar essas duas coisas.
+
+**Onboarding bancário é momento de fragilidade.** O empresário tá expondo CPF, foto do rosto, endereço, dinheiro, projetos. Cada passo tem que reforçar segurança, não fazer ele duvidar. Esse foi o aprendizado emocional que mudou como abordo qualquer fluxo onde o usuário expõe dados sensíveis.
+
+## Reconhecimento
+
+A pesquisa só foi possível pelo time interno que abriu portas e dados. O suporte que cedeu seis meses de chamados categorizados, o backoffice que parou a operação pra explicar como avalia documentos, o jurídico e compliance que validaram cada peça com paciência, o time de produto que segurou pressão de roadmap pra deixar a pesquisa rodar. Onboarding bancário só se redesenha quando muita gente coopera, e eu tive sorte do time inteiro topar.

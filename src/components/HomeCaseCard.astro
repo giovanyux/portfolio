@@ -1,0 +1,65 @@
+---
+import { BASE } from '@/consts';
+
+interface Props {
+  number: string;
+  title: string;
+  meta: string[];
+  paragraph: string;
+  image: string;
+  index: number;
+  href?: string;
+}
+
+const { number, title, meta, paragraph, image, index, href } = Astro.props;
+const comingSoon = !href;
+---
+
+<article
+  data-reveal="scroll"
+  style={`transition-delay: ${index * 80}ms; border-top: 1px solid var(--border); padding: 3.5rem 0; ${comingSoon ? 'opacity: 0.65;' : ''}`}
+>
+  <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.25rem;">
+    <span style="font-family: var(--font-mono); font-size: 0.65rem; color: var(--accent); font-weight: 700; letter-spacing: 0.1em;">{number}</span>
+    {comingSoon && (
+      <span style="font-family: var(--font-mono); font-size: 0.6rem; font-weight: 700; letter-spacing: 0.14em; color: var(--muted-foreground); text-transform: uppercase; border: 1px solid var(--border); padding: 0.2em 0.6em;">
+        CASE COMPLETO EM BREVE
+      </span>
+    )}
+  </div>
+
+  <h3 style="font-family: var(--font-mono); font-size: clamp(1.5rem, 3.5vw, 2.25rem); font-weight: 700; line-height: 1.15; letter-spacing: -0.02em; color: var(--foreground); margin-bottom: 1rem; max-width: 24ch;">
+    {title}
+  </h3>
+
+  <p style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--muted-foreground); letter-spacing: 0.03em; margin-bottom: 1.25rem; text-transform: uppercase;">
+    {meta.join(' · ')}
+  </p>
+
+  <p style="font-family: var(--font-sans); font-size: 0.95rem; color: var(--muted-foreground); line-height: 1.7; max-width: 62ch; margin-bottom: 2rem;">
+    {paragraph}
+  </p>
+
+  <div style="display: block; margin-bottom: 1.5rem; overflow: hidden; position: relative;">
+    <div class="img-placeholder" style="width: 100%; aspect-ratio: 16/9;">
+      <img
+        src={BASE + image}
+        alt={`${title} — screenshot`}
+        style="width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; z-index: 2;"
+        onerror="this.style.display='none';"
+        loading="lazy"
+      />
+      <span>{title} — screenshot placeholder</span>
+    </div>
+  </div>
+
+  {href && (
+    <a
+      href={href}
+      class="underline-hover"
+      style="font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; color: var(--foreground); text-decoration: none; text-transform: uppercase;"
+    >
+      Ler case completo →
+    </a>
+  )}
+</article>

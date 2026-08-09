@@ -457,6 +457,15 @@ figcaption { font-size: var(--text-xs); color: var(--color-ink-35); margin-top: 
 .proto-embed__head { max-width: none; margin-bottom: var(--space-lg); }
 .proto-embed__head h3 { font-size: var(--text-lg); margin-bottom: var(--space-xs); }
 .proto-embed__head p { color: var(--color-ink-70); font-size: var(--text-sm); }
+
+/* ---------------- Video embed (top of page) ---------------- */
+.video-embed { padding-block: clamp(2rem, 5vw, 3rem) 0; }
+.video-embed__frame {
+  position: relative; width: 100%; aspect-ratio: 16 / 9;
+  border-radius: 12px; overflow: hidden; border: 1px solid var(--color-rule-strong);
+  background: var(--color-paper-3);
+}
+.video-embed__frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
 .proto-embed__head--second { margin-top: clamp(2.5rem, 5vw, 3.5rem); padding-top: clamp(2rem, 4vw, 3rem); border-top: 1px solid var(--color-rule); }
 .proto-embed__video-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-2xl); align-items: center; }
 @media (max-width: 55rem) { .proto-embed__video-row { grid-template-columns: 1fr; } }
@@ -500,6 +509,14 @@ figcaption { font-size: var(--text-xs); color: var(--color-ink-35); margin-top: 
     </div>
   </div>
 </nav>
+
+<section class="video-embed">
+  <div class="wrap">
+    <div class="video-embed__frame">
+      <iframe src="https://www.youtube.com/embed/lYjtjszE1RU?si=WAmKj3Uf2_JLG7sg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
+    </div>
+  </div>
+</section>
 
 <header class="hero" id="top">
   <div class="wrap">

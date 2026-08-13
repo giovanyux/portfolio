@@ -264,7 +264,10 @@ img { display: block; max-width: 100%; }
   opacity: 0.5;
 }
 
-.img-placeholder span { position: relative; z-index: var(--z-raised); }
+/* z-index: 1, not var(--z-raised) — must sit BELOW the real <img>/<video>
+   (hardcoded z-index: 2 in CaseListItem/Fig/Sistema/CaseLayout) so the
+   placeholder text only shows when the image fails to load, not on top of it. */
+.img-placeholder span { position: relative; z-index: 1; }
 
 /* ─── Tabular numbers on any data display ─────────────── */
 .tabular-nums { font-variant-numeric: tabular-nums; }

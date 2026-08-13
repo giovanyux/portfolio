@@ -29,9 +29,6 @@ const { size = 28 } = Astro.props;
     <source src={`${BASE}/brand/logo.webm`} type="video/webm" />
     <source src={`${BASE}/brand/logo.mp4`} type="video/mp4" />
   </video>
-  <svg class="logo-glyph" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <path fill-rule="evenodd" clip-rule="evenodd" d="M39.8008 17.1667C38.4248 7.46283 30.0839 0 20 0C8.95434 0 0 8.95432 0 20C0 31.0456 8.95434 40 20 40V31.2316C13.7931 31.2091 8.76825 26.1705 8.76825 19.9582C8.76825 13.7321 13.8156 8.68474 20.0418 8.68474C25.3044 8.68474 29.7248 12.2907 30.9669 17.1667H39.8008Z" fill="#fff"/>
-  </svg>
 </span>
 
 <style>
@@ -59,13 +56,6 @@ const { size = 28 } = Astro.props;
      ready, so the logo never blocks render and never flashes empty. */
   .logo-video { opacity: 0; transition: opacity var(--dur-short) var(--ease-out); }
   .logo-video.is-ready { opacity: 1; }
-
-  .logo-glyph {
-    position: relative;
-    width: 58%;
-    height: 58%;
-    z-index: 1;
-  }
 
   /* Reduced motion: video is paused + hidden by script (see below),
      poster stays as the permanent static mark. */

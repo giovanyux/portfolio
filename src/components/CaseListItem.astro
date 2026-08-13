@@ -124,4 +124,10 @@ const videoSrc = coverVideo ? BASE + coverVideo : undefined;
   .case-img-hover video:hover {
     transform: scale(1.02);
   }
+
+  /* Cobalt signal on hover — cards are the one clickable surface where the
+     accent earns a border flash instead of the generic --border-strong. */
+  .case-card:hover {
+    border-color: var(--accent);
+  }
 </style>

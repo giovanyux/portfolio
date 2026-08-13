@@ -1,4 +1,5 @@
 ---
+import Logo from './Logo.astro';
 import { AUTHOR, SOCIAL } from '@/consts';
 
 const year = new Date().getFullYear();
@@ -7,8 +8,9 @@ const year = new Date().getFullYear();
 <footer style="border-top: 1px solid var(--border); margin-top: var(--space-2xl);">
   <div style="max-width: 1200px; margin: 0 auto; padding: var(--space-lg) 2rem; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-md);">
 
-    <!-- Left: photo + info -->
+    <!-- Left: logo + photo + info -->
     <div style="display: flex; align-items: center; gap: var(--space-sm);">
+      <Logo size={32} />
       <img
         src="/portfolio/avatar.jpg"
         alt="Cicero Giovany Junior, Lead Product Designer"
@@ -17,8 +19,8 @@ const year = new Date().getFullYear();
         style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; object-position: center; border: 1px solid var(--border); flex-shrink: 0;"
       />
       <div>
-        <p style="font-family: var(--font-display); font-size: 0.8rem; font-weight: 600; color: var(--foreground); line-height: 1.3;">{AUTHOR.short}</p>
-        <p style="font-family: var(--font-mono); font-size: 0.62rem; color: var(--muted-foreground); letter-spacing: 0.04em; line-height: 1.3;">{AUTHOR.role} · {AUTHOR.location}</p>
+        <p style="font-family: var(--font-display); font-size: 0.8rem; font-weight: 600; color: var(--text); line-height: 1.3;">{AUTHOR.short}</p>
+        <p style="font-family: var(--font-sans); font-size: 0.68rem; color: var(--text-muted); letter-spacing: 0.02em; line-height: 1.3;">{AUTHOR.role} · {AUTHOR.location}</p>
       </div>
     </div>
 
@@ -34,7 +36,7 @@ const year = new Date().getFullYear();
           target={external ? '_blank' : undefined}
           rel={external ? 'noopener noreferrer' : undefined}
           class="underline-hover"
-          style="font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.08em; font-weight: 500; color: var(--muted-foreground); text-decoration: none; transition: color var(--dur-short) var(--ease-out);"
+          style="font-family: var(--font-sans); font-size: 0.7rem; letter-spacing: 0.06em; text-transform: uppercase; font-weight: 600; color: var(--text-muted); text-decoration: none; transition: color var(--dur-short) var(--ease-out);"
         >
           {label}
         </a>
@@ -42,7 +44,7 @@ const year = new Date().getFullYear();
     </nav>
 
     <!-- Right: copyright -->
-    <p style="font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.06em; color: var(--muted-foreground);" class="tabular-nums">
+    <p style="font-family: var(--font-sans); font-size: 0.7rem; color: var(--text-muted);" class="tabular-nums">
       &copy; {year}
     </p>
   </div>

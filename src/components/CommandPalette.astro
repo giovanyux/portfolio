@@ -24,7 +24,7 @@ const { items } = Astro.props;
     font-family: var(--font-mono);
     font-size: 0.68rem;
     letter-spacing: 0.04em;
-    color: var(--muted-foreground);
+    color: var(--text-muted);
     background: transparent;
     border: 1px solid var(--border);
     border-radius: var(--radius-sm);
@@ -45,7 +45,7 @@ const { items } = Astro.props;
   aria-label="Busca rápida"
 >
   <div class="cmdk-input-row">
-    <span aria-hidden="true" style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--muted-foreground);">→</span>
+    <span aria-hidden="true" style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted);">→</span>
     <input
       id="cmdk-input"
       type="text"
@@ -53,7 +53,7 @@ const { items } = Astro.props;
       autocomplete="off"
       aria-label="Buscar página ou case"
     />
-    <span style="font-family: var(--font-mono); font-size: 0.6rem; color: var(--muted-foreground); letter-spacing: 0.04em;">ESC</span>
+    <span style="font-family: var(--font-mono); font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.04em;">ESC</span>
   </div>
   <div id="cmdk-list" class="cmdk-list" role="listbox" aria-label="Resultados"></div>
 </div>

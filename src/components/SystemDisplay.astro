@@ -25,8 +25,8 @@ const resolvedVideoSrc = videoSrc ? BASE + videoSrc : undefined;
 const imgScreens = screens.map(s => ({ ...s, src: BASE + s.src }));
 
 const backdropBg = accent
-  ? 'color-mix(in srgb, var(--accent) 10%, transparent)'
-  : 'var(--muted)';
+  ? 'color-mix(in srgb, var(--action) 10%, transparent)'
+  : 'var(--surface)';
 ---
 
 <figure class="sysdisplay" data-variant={variant}>
@@ -101,14 +101,14 @@ const backdropBg = accent
     font-weight: 700;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--muted-foreground);
+    color: var(--text-muted);
     margin-bottom: 0.75rem;
   }
 
   .sysdisplay-caption {
     font-family: var(--font-mono);
     font-size: 0.6rem;
-    color: var(--muted-foreground);
+    color: var(--text-muted);
     letter-spacing: 0.06em;
     margin-top: 0.75rem;
     line-height: 1.6;
@@ -132,7 +132,7 @@ const backdropBg = accent
   /* ── stack ── */
   .sysdisplay-stack-wrap {
     position: relative;
-    background: var(--muted);
+    background: var(--surface);
     padding: 4rem 5rem 6rem 4rem;
     border-radius: var(--radius-md);
     /* height enough to show all layers */
@@ -154,7 +154,7 @@ const backdropBg = accent
   .sysdisplay-mosaic {
     display: grid;
     gap: 1.5rem;
-    background: var(--muted);
+    background: var(--surface);
     padding: 1.5rem;
     border-radius: var(--radius-md);
   }
@@ -183,7 +183,7 @@ const backdropBg = accent
   .sysdisplay-cell-caption {
     font-family: var(--font-mono);
     font-size: 0.55rem;
-    color: var(--muted-foreground);
+    color: var(--text-muted);
     letter-spacing: 0.06em;
     text-transform: uppercase;
     line-height: 1.5;

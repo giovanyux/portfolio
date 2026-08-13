@@ -34,30 +34,30 @@ const {
     <nav
       aria-label="Breadcrumb"
       data-reveal="hero"
-      style="padding: 2rem 0 1.5rem; font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.1em; color: var(--muted-foreground); display: flex; align-items: center; gap: 0.5rem; text-transform: uppercase;"
+      style="padding: 2rem 0 1.5rem; font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.1em; color: var(--text-muted); display: flex; align-items: center; gap: 0.5rem; text-transform: uppercase;"
     >
-      <a href={`${BASE}/`} style="color: var(--muted-foreground); text-decoration: none;" class="underline-hover">Home</a>
+      <a href={`${BASE}/`} style="color: var(--text-muted); text-decoration: none;" class="underline-hover">Home</a>
       <span style="opacity: 0.4;">/</span>
-      <a href={`${BASE}/cases`} style="color: var(--muted-foreground); text-decoration: none;" class="underline-hover">Cases</a>
+      <a href={`${BASE}/cases`} style="color: var(--text-muted); text-decoration: none;" class="underline-hover">Cases</a>
       <span style="opacity: 0.4;">/</span>
-      <span style="color: var(--foreground);">{title}</span>
+      <span style="color: var(--text);">{title}</span>
     </nav>
 
     <!-- Tags + year -->
     <div data-reveal="hero" style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem; flex-wrap: wrap;">
       {tags.map((tag) => (
-        <span style="font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.12em; color: var(--muted-foreground); text-transform: uppercase;">
+        <span style="font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.12em; color: var(--text-muted); text-transform: uppercase;">
           {tag}
         </span>
       ))}
       <span style="color: var(--border);">·</span>
-      <span style="font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.1em; color: var(--accent); font-weight: 700;">{year}</span>
+      <span style="font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.1em; color: var(--action); font-weight: 700;">{year}</span>
     </div>
 
     <!-- Title -->
     <h1
       data-reveal="hero"
-      style="font-family: var(--font-display); font-size: var(--text-display); font-weight: 600; line-height: 1.02; letter-spacing: -0.03em; color: var(--foreground); margin-bottom: var(--space-md);"
+      style="font-family: var(--font-display); font-size: var(--text-display); font-weight: 600; line-height: 1.02; letter-spacing: -0.03em; color: var(--text); margin-bottom: var(--space-md);"
     >
       {title}
     </h1>
@@ -65,7 +65,7 @@ const {
     <!-- Description -->
     <p
       data-reveal="hero"
-      style="font-family: var(--font-sans); font-size: 1.05rem; color: var(--muted-foreground); line-height: 1.6; margin-bottom: var(--space-lg); max-width: 56ch;"
+      style="font-family: var(--font-sans); font-size: 1.05rem; color: var(--text-muted); line-height: 1.6; margin-bottom: var(--space-lg); max-width: 56ch;"
     >
       {description}
     </p>
@@ -85,8 +85,8 @@ const {
         { label: 'ANO', value: String(year) },
       ].map(({ label, value }, i) => (
         <div style={`padding: var(--space-sm) var(--space-md); border-right: ${i % 3 < 2 ? '1px solid var(--border)' : 'none'}; border-top: ${i > 2 ? '1px solid var(--border)' : 'none'};`}>
-          <p style="font-family: var(--font-mono); font-size: 0.55rem; letter-spacing: 0.12em; color: var(--muted-foreground); text-transform: uppercase; margin-bottom: 0.3rem;">{label}</p>
-          <p class="tabular-nums" style="font-family: var(--font-mono); font-size: 0.78rem; font-weight: 700; color: var(--foreground); line-height: 1.3;">{value}</p>
+          <p style="font-family: var(--font-mono); font-size: 0.55rem; letter-spacing: 0.12em; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.3rem;">{label}</p>
+          <p class="tabular-nums" style="font-family: var(--font-mono); font-size: 0.78rem; font-weight: 700; color: var(--text); line-height: 1.3;">{value}</p>
         </div>
       ))}
     </div>
@@ -127,20 +127,20 @@ const {
       )}
       <span>{title} — hero screenshot</span>
     </div>
-    <p style="font-family: var(--font-mono); font-size: 0.6rem; color: var(--muted-foreground); letter-spacing: 0.06em; margin-bottom: var(--space-xl); text-align: center;">
+    <p style="font-family: var(--font-mono); font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.06em; margin-bottom: var(--space-xl); text-align: center;">
       Fig. 01 — {title}
     </p>
 
-    <!-- Resultado — a faixa grafite, o "beat" escuro da página -->
+    <!-- Resultado — card de superfície com acento --action, era a faixa grafite -->
     <div
       data-reveal="scroll"
-      class="graphite-band"
+      class="result-card"
       style="padding: var(--space-lg); margin-bottom: var(--space-xl);"
     >
-      <p style="font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: var(--space-xs);" class="muted">Resultado</p>
-      <p class="tabular-nums" style="font-family: var(--font-display); font-size: clamp(1.5rem, 4vw, 2.25rem); font-weight: 600; color: var(--graphite-foreground); letter-spacing: -0.01em; line-height: 1.15;">{metric}</p>
+      <p style="font-family: var(--font-sans); font-size: 0.65rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: var(--space-xs);">Resultado</p>
+      <p class="tabular-nums" style="font-family: var(--font-display); font-size: clamp(1.5rem, 4vw, 2.25rem); font-weight: 600; color: var(--text); letter-spacing: -0.01em; line-height: 1.15;">{metric}</p>
       {metricLabel && (
-        <p style="font-family: var(--font-sans); font-size: 0.85rem; margin-top: var(--space-xs); line-height: 1.5;" class="muted">{metricLabel}</p>
+        <p style="font-family: var(--font-sans); font-size: 0.85rem; color: var(--text-muted); margin-top: var(--space-xs); line-height: 1.5;">{metricLabel}</p>
       )}
     </div>
 

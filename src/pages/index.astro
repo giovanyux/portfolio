@@ -13,12 +13,12 @@ const cases = allCases.sort((a, b) => b.data.date.getTime() - a.data.date.getTim
 
   <!-- ── MARQUEE HERO ──────────────────────────────────── -->
   <section style="position: relative; overflow: hidden; padding: 6rem 2rem 6rem; max-width: 1200px; margin: 0 auto;">
-    <GridLines scan />
+    <GridLines glow />
     <div style="position: relative; z-index: var(--z-base); max-width: 900px;">
 
       <p
         data-reveal="hero"
-        style="font-family: var(--font-mono); font-size: 0.7rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted-foreground); margin-bottom: var(--space-md);"
+        style="font-family: var(--font-mono); font-size: 0.7rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); margin-bottom: var(--space-md);"
       >
         LEAD PRODUCT DESIGNER · 09 ANOS
       </p>
@@ -26,7 +26,7 @@ const cases = allCases.sort((a, b) => b.data.date.getTime() - a.data.date.getTim
       <h1 style="font-family: var(--font-display); font-weight: 600; letter-spacing: -0.03em; line-height: 0.98; margin-bottom: var(--space-lg); overflow: hidden;">
         <span data-reveal="hero" style="display: block; font-size: var(--text-display); transition-delay: 100ms;">Criando produtos</span>
         <span data-reveal="hero" style="display: block; font-size: var(--text-display); transition-delay: 180ms;">com método</span>
-        <span data-reveal="hero" style="display: block; font-size: var(--text-display-s); color: var(--accent); transition-delay: 260ms;">
+        <span data-reveal="hero" style="display: block; font-size: var(--text-display-s); color: var(--action); transition-delay: 260ms;">
           <span class="cycling-text">
             <span class="cycling-item">e AI-Augmented Design</span>
             <span class="cycling-item">e pesquisa com usuário</span>
@@ -91,7 +91,7 @@ const cases = allCases.sort((a, b) => b.data.date.getTime() - a.data.date.getTim
 
       <p
         data-reveal="hero"
-        style="font-family: var(--font-sans); font-size: 1rem; color: var(--muted-foreground); max-width: 52ch; line-height: 1.65; margin-bottom: var(--space-lg); transition-delay: 340ms;"
+        style="font-family: var(--font-sans); font-size: 1rem; color: var(--text-muted); max-width: 52ch; line-height: 1.65; margin-bottom: var(--space-lg); transition-delay: 340ms;"
       >
         9 anos desenhando SaaS B2B e B2C. Do Figma ao componente em produção, com IA no fluxo.
         Aberto a posições sênior/lead, remoto.
@@ -101,14 +101,14 @@ const cases = allCases.sort((a, b) => b.data.date.getTime() - a.data.date.getTim
         <a
           href={`${BASE}/cases`}
           class="underline-hover"
-          style="font-family: var(--font-mono); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.06em; color: var(--foreground); text-decoration: none; text-transform: uppercase;"
+          style="font-family: var(--font-mono); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.06em; color: var(--text); text-decoration: none; text-transform: uppercase;"
         >
           Ver trabalhos →
         </a>
         <a
           href={`${BASE}/contato`}
           class="underline-hover"
-          style="font-family: var(--font-mono); font-size: 0.8rem; font-weight: 500; letter-spacing: 0.06em; color: var(--muted-foreground); text-decoration: none; text-transform: uppercase;"
+          style="font-family: var(--font-mono); font-size: 0.8rem; font-weight: 500; letter-spacing: 0.06em; color: var(--text-muted); text-decoration: none; text-transform: uppercase;"
         >
           Entrar em contato →
         </a>
@@ -119,13 +119,13 @@ const cases = allCases.sort((a, b) => b.data.date.getTime() - a.data.date.getTim
   <!-- ── CREDENTIALS STRIP ─────────────────────────────── -->
   <div style="border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: var(--space-sm) 0;">
     <div style="display: flex; align-items: center;">
-      <span style="font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.1em; color: var(--muted-foreground); text-transform: uppercase; padding: 0 2rem; flex-shrink: 0; white-space: nowrap;">
+      <span style="font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.1em; color: var(--text-muted); text-transform: uppercase; padding: 0 2rem; flex-shrink: 0; white-space: nowrap;">
         Anteriormente em
       </span>
       <div style="overflow: hidden; flex: 1; min-width: 0;">
         <div class="marquee-track" style="gap: var(--space-xl); display: flex; align-items: center;">
           {[...CREDENTIALS, ...CREDENTIALS].map((name) => (
-            <span style="font-family: var(--font-mono); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; color: var(--muted-foreground); text-transform: uppercase; flex-shrink: 0;">
+            <span style="font-family: var(--font-mono); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; color: var(--text-muted); text-transform: uppercase; flex-shrink: 0;">
               {name}
             </span>
           ))}
@@ -136,7 +136,7 @@ const cases = allCases.sort((a, b) => b.data.date.getTime() - a.data.date.getTim
 
   <!-- ── TRABALHOS SELECIONADOS — portfolio grid ─────────── -->
   <section style="max-width: 1200px; margin: 0 auto; padding: var(--space-2xl) 2rem 0;">
-    <p style="font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted-foreground); margin-bottom: var(--space-lg);">
+    <p style="font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); margin-bottom: var(--space-lg);">
       Trabalhos selecionados
     </p>
 
@@ -159,13 +159,13 @@ const cases = allCases.sort((a, b) => b.data.date.getTime() - a.data.date.getTim
     </div>
   </section>
 
-  <!-- ── CTA FINAL — graphite band ─────────────────────── -->
+  <!-- ── CTA FINAL ──────────────────────────────────────── -->
   <section style="max-width: 1200px; margin: 0 auto; padding: var(--space-2xl) 2rem;">
-    <div data-reveal="scroll" class="graphite-band" style="padding: var(--space-xl) var(--space-lg);">
-      <p class="muted" style="font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: var(--space-sm);">
+    <div data-reveal="scroll" class="result-card" style="padding: var(--space-xl) var(--space-lg);">
+      <p style="font-family: var(--font-sans); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); margin-bottom: var(--space-sm);">
         Vamos conversar
       </p>
-      <h2 style="font-family: var(--font-display); font-size: clamp(1.75rem, 4.5vw, 3rem); font-weight: 600; margin-bottom: var(--space-lg); line-height: 1.15; max-width: 18ch;">
+      <h2 style="font-family: var(--font-display); font-size: clamp(1.75rem, 4.5vw, 3rem); font-weight: 600; color: var(--text); margin-bottom: var(--space-lg); line-height: 1.15; max-width: 18ch;">
         Aberto a posições sênior/lead, remoto.
       </h2>
       <a

@@ -1,27 +1,26 @@
-/* Hallmark · genre: modern-minimal · macrostructure: family (Marquee Hero / Portfolio Grid / Workbench)
- * theme: Cobalt · accent: electric cobalt oklch(58% 0.20 256) · nav: N13 · footer: Ft2
- * design-system: design.md · designed-as-app
+/* Rebrand · identidade nova (light/dark) — extraída de capa-linkedin.jpeg + logo.webm
+ * De-para completo em design.md. Accent é SEMPRE decorativo — nunca texto/link/ícone
+ * com significado (isso usa --action). Contraste calculado via WCAG 2.1, não estimado.
  */
 :root {
-  /* ---- color: Cobalt palette, converted to the project's existing token names ---- */
-  --background:          oklch(98.5% 0.004 250); /* paper — cool engineered near-white, never #fff */
-  --background-2:        oklch(96.5% 0.006 250); /* paper-2 — one step down, for subtle surfaces */
-  --foreground:           oklch(24% 0.02 258);     /* ink — cool charcoal, never #000 */
-  --muted:                oklch(96.5% 0.006 250);
-  --muted-foreground:     oklch(34% 0.018 257);     /* body text sits a notch lighter than headings */
-  --border:               oklch(88% 0.006 250);     /* hairline rule — does the work of depth */
-  --border-strong:        oklch(80% 0.008 250);
-  --accent:               oklch(58% 0.20 256);      /* electric cobalt — used sparsely, < 5% of viewport */
-  --accent-foreground:    oklch(99% 0.005 250);
-  --grid-line:            oklch(24% 0.02 258 / 0.05);
+  /* ---- color ---- */
+  --bg:              #FFF3EB;
+  --surface:         #FFFFFF;
+  --border:          #EFDDD1;
+  --border-strong:   color-mix(in oklab, var(--border), var(--text) 30%);
+  --text:            #5E2116;
+  --text-muted:      #836A60;
+  --action:          #31749E; /* CTA, link, foco — o antigo "accent" */
+  --action-foreground: #FFFFFF;
+  --accent:          #DC9790; /* decorativo apenas — sparkle, destaque pontual. NUNCA texto/link/ícone com significado */
+  --grid-line:       rgba(94, 33, 22, 0.05);
 
-  /* The one dark beat per page — a graphite band, never a whole dark theme */
-  --graphite:             oklch(22% 0.016 260);
-  --graphite-foreground:  oklch(94% 0.006 250);
-  --graphite-border:      oklch(94% 0.006 250 / 0.12);
+  /* glows de canto — valores exatos do Figma (radial, não estimado) */
+  --glow-top:    radial-gradient(circle, rgba(61,187,255,0.4) 0%, rgba(61,187,255,0) 100%);
+  --glow-bottom: radial-gradient(circle, rgba(224,158,150,0.4) 0%, rgba(224,158,150,0.26) 45%, rgba(224,158,150,0) 100%);
 
-  /* ---- type: Space Grotesk display + Inter body + JetBrains Mono outlier ---- */
-  --font-display: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+  /* ---- type: Poppins display + Inter body + JetBrains Mono (técnico, pontual) ---- */
+  --font-display: 'Poppins', ui-sans-serif, system-ui, sans-serif;
   --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 
@@ -33,7 +32,7 @@
   --text-display: clamp(2.5rem, 5vw + 1rem, 5.25rem);
   --text-display-s: clamp(2rem, 3.5vw + 1rem, 3.5rem);
 
-  /* ---- space: 4pt scale, extended for Cobalt's tighter/looser rhythms ---- */
+  /* ---- space: 4pt scale — não muda no rebrand ---- */
   --space-3xs: 0.25rem;
   --space-2xs: 0.375rem;
   --space-xs: 0.5rem;
@@ -48,12 +47,12 @@
   --container-content: 900px;
   --container-wide: 1200px;
 
-  /* ---- radii: drawn with a ruler, not brutalist 0 nor Coral's soft pills ---- */
-  --radius: 6px;
-  --radius-sm: 6px;
-  --radius-md: 10px;
+  /* ---- radii: mais arredondado, ecoando o squircle do logo ---- */
+  --radius: 10px;
+  --radius-sm: 10px;
+  --radius-md: 18px;
 
-  /* ---- motion: three named easings, three duration buckets ---- */
+  /* ---- motion — não muda no rebrand ---- */
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in: cubic-bezier(0.7, 0, 0.84, 0);
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
@@ -61,7 +60,7 @@
   --dur-short: 220ms;
   --dur-long: 420ms;
 
-  /* ---- z-index: six named levels, never freestyle ---- */
+  /* ---- z-index — não muda no rebrand ---- */
   --z-base: 1;
   --z-raised: 10;
   --z-dropdown: 100;
@@ -71,18 +70,16 @@
 }
 
 .dark {
-  --background: oklch(16% 0.014 260);
-  --background-2: oklch(19% 0.015 260);
-  --foreground: oklch(94% 0.006 250);
-  --muted: oklch(19% 0.015 260);
-  --muted-foreground: oklch(74% 0.012 255);
-  --border: oklch(30% 0.014 258);
-  --border-strong: oklch(38% 0.014 258);
-  --accent: oklch(66% 0.19 256);
-  --accent-foreground: oklch(12% 0.01 258);
-  --grid-line: oklch(94% 0.006 250 / 0.06);
+  --bg:              #1C1310;
+  --surface:         #2A1E18;
+  --border:          #4A362C;
+  --text:            #F6E8DD;
+  --text-muted:      #C7AEA2;
+  --action:          #6FC2EE;
+  --action-foreground: #12130F;
+  --accent:          #E9A79C;
+  --grid-line:       rgba(246, 232, 221, 0.06);
 
-  --graphite: oklch(10% 0.012 260);
-  --graphite-foreground: oklch(94% 0.006 250);
-  --graphite-border: oklch(94% 0.006 250 / 0.1);
+  --glow-top:    radial-gradient(circle, rgba(61,187,255,0.3) 0%, rgba(61,187,255,0) 100%);
+  --glow-bottom: radial-gradient(circle, rgba(224,158,150,0.3) 0%, rgba(224,158,150,0.18) 45%, rgba(224,158,150,0) 100%);
 }

@@ -1,7 +1,16 @@
 <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path fill-rule="evenodd" clip-rule="evenodd" d="M39.8008 17.1667C38.4248 7.46283 30.0839 0 20 0C8.95434 0 0 8.95432 0 20C0 31.0456 8.95434 40 20 40V31.2316C13.7931 31.2091 8.76825 26.1705 8.76825 19.9582C8.76825 13.7321 13.8156 8.68474 20.0418 8.68474C25.3044 8.68474 29.7248 12.2907 30.9669 17.1667H39.8008Z" fill="#272727"/>
-<path d="M30 31.25H20L20 40L30 40V31.25Z" fill="#7964FF"/>
-<path d="M30 22.5H20V31.25H30V22.5Z" fill="#0B00C8"/>
-<path d="M40 22.5H30V31.25L40 31.25V22.5Z" fill="#0B00C8"/>
-<path d="M40 31.25L30 31.25V40H40V31.25Z" fill="#0B00C8"/>
+  <defs>
+    <linearGradient id="mark-grad" x1="4" y1="36" x2="36" y2="4" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#3FB6EE"/>
+      <stop offset="0.55" stop-color="#D69C9A"/>
+      <stop offset="1" stop-color="#8FBFAE"/>
+    </linearGradient>
+    <clipPath id="mark-clip">
+      <rect width="40" height="40" rx="10"/>
+    </clipPath>
+  </defs>
+  <g clip-path="url(#mark-clip)">
+    <rect width="40" height="40" fill="url(#mark-grad)"/>
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M39.8008 17.1667C38.4248 7.46283 30.0839 0 20 0C8.95434 0 0 8.95432 0 20C0 31.0456 8.95434 40 20 40V31.2316C13.7931 31.2091 8.76825 26.1705 8.76825 19.9582C8.76825 13.7321 13.8156 8.68474 20.0418 8.68474C25.3044 8.68474 29.7248 12.2907 30.9669 17.1667H39.8008Z" fill="#fff"/>
+  </g>
 </svg>

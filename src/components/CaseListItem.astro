@@ -70,40 +70,40 @@ const videoSrc = coverVideo ? BASE + coverVideo : undefined;
   <div style="padding: var(--space-md);">
     <!-- Top row: tag + status -->
     <div style="display: flex; align-items: center; justify-content: space-between; gap: var(--space-xs); margin-bottom: var(--space-sm);">
-      <span style="font-family: var(--font-mono); font-size: 0.62rem; color: var(--muted-foreground); letter-spacing: 0.08em; text-transform: uppercase;">
+      <span style="font-family: var(--font-mono); font-size: 0.62rem; color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase;">
         {tag}
       </span>
       {comingSoon ? (
-        <span style="font-family: var(--font-mono); font-size: 0.58rem; font-weight: 700; letter-spacing: 0.1em; color: var(--muted-foreground); text-transform: uppercase; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 0.2em 0.55em;">
+        <span style="font-family: var(--font-mono); font-size: 0.58rem; font-weight: 700; letter-spacing: 0.1em; color: var(--text-muted); text-transform: uppercase; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 0.2em 0.55em;">
           EM BREVE
         </span>
       ) : (
-        <span style="font-family: var(--font-mono); font-size: 0.62rem; color: var(--accent); font-weight: 700; letter-spacing: 0.06em;">
+        <span style="font-family: var(--font-mono); font-size: 0.62rem; color: var(--action); font-weight: 700; letter-spacing: 0.06em;">
           {number}
         </span>
       )}
     </div>
 
     <!-- Title -->
-    <h3 style="font-family: var(--font-display); font-size: 1.25rem; font-weight: 600; line-height: 1.2; letter-spacing: -0.01em; color: var(--foreground); margin-bottom: var(--space-2xs);">
+    <h3 style="font-family: var(--font-display); font-size: 1.25rem; font-weight: 600; line-height: 1.2; letter-spacing: -0.01em; color: var(--text); margin-bottom: var(--space-2xs);">
       {title}
     </h3>
 
     <!-- Subtitle -->
-    <p style="font-family: var(--font-sans); font-size: 0.8rem; color: var(--muted-foreground); line-height: 1.55; margin-bottom: var(--space-md);">
+    <p style="font-family: var(--font-sans); font-size: 0.8rem; color: var(--text-muted); line-height: 1.55; margin-bottom: var(--space-md);">
       {subtitle}
     </p>
 
     <!-- Bottom row: metric + link -->
     <div style="display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-sm); border-top: 1px solid var(--border); padding-top: var(--space-sm);">
-      <p class="tabular-nums" style="font-family: var(--font-mono); font-size: 0.68rem; color: var(--muted-foreground); letter-spacing: 0.02em;">
+      <p class="tabular-nums" style="font-family: var(--font-mono); font-size: 0.68rem; color: var(--text-muted); letter-spacing: 0.02em;">
         {metric}
       </p>
       {!comingSoon && (
         <a
           href={href}
           class="underline-hover"
-          style="font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.06em; color: var(--foreground); text-decoration: none; text-transform: uppercase; white-space: nowrap;"
+          style="font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.06em; color: var(--text); text-decoration: none; text-transform: uppercase; white-space: nowrap;"
         >
           Ver case →
         </a>
@@ -125,9 +125,9 @@ const videoSrc = coverVideo ? BASE + coverVideo : undefined;
     transform: scale(1.02);
   }
 
-  /* Cobalt signal on hover — cards are the one clickable surface where the
-     accent earns a border flash instead of the generic --border-strong. */
+  /* Action-colour signal on hover — cards are the one clickable surface
+     where the border flashes --action instead of the generic --border-strong. */
   .case-card:hover {
-    border-color: var(--accent);
+    border-color: var(--action);
   }
 </style>

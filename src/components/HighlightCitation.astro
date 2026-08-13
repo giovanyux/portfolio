@@ -7,8 +7,8 @@ interface Props {
 const { text, href, linkLabel = 'ver link' } = Astro.props;
 ---
 
-<div style="border-left: 2px solid var(--accent); padding: 1.25rem 1.5rem; margin: 2.5rem 0; background: color-mix(in srgb, var(--accent) 5%, transparent);">
-  <p style="font-family: var(--font-mono); font-size: 0.9rem; line-height: 1.8; color: var(--foreground); margin-bottom: 1rem;">
+<div style="border-left: 2px solid var(--action); padding: 1.25rem 1.5rem; margin: 2.5rem 0; background: color-mix(in srgb, var(--action) 5%, transparent);">
+  <p style="font-family: var(--font-mono); font-size: 0.9rem; line-height: 1.8; color: var(--text); margin-bottom: 1rem;">
     {text}
   </p>
   <a
@@ -16,7 +16,7 @@ const { text, href, linkLabel = 'ver link' } = Astro.props;
     target="_blank"
     rel="noopener noreferrer"
     class="underline-hover"
-    style="font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); text-decoration: none;"
+    style="font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--action); text-decoration: none;"
   >
     {linkLabel} ↗
   </a>

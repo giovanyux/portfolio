@@ -97,11 +97,8 @@ const tools = ['FIGMA', 'FIGMA MCP', 'CLAUDE', 'CLAUDE CODE', 'CURSOR', 'DOVETAI
         'Meu trabalho mais recente foi food-tech, software operacional que faz restaurante funcionar. Interface que aguenta pressão. Cozinha barulhenta. Mãos ocupadas. Operador com 30 segundos pra decidir.',
         'Nos últimos dois anos integrei IA em todas as fases do meu trabalho. Claude pra síntese de pesquisa e escrita. Cursor pra prototipagem com código real. Claude Code pra construir projetos inteiros, como este portfólio. Não é atalho. É multiplicador de capacidade.',
         'Procuro posição senior ou lead em product design, remote, em produto com complexidade operacional de verdade.',
-      ].map((para, i) => (
-        <p
-          data-reveal="scroll"
-          style={`font-family: var(--font-mono); font-size: 0.95rem; line-height: 1.85; color: var(--muted-foreground); margin-bottom: 1.25rem; transition-delay: ${i * 80}ms;`}
-        >
+      ].map((para) => (
+        <p style="font-family: var(--font-mono); font-size: 0.95rem; line-height: 1.85; color: var(--muted-foreground); margin-bottom: 1.25rem;">
           {para}
         </p>
       ))}
@@ -110,15 +107,11 @@ const tools = ['FIGMA', 'FIGMA MCP', 'CLAUDE', 'CLAUDE CODE', 'CURSOR', 'DOVETAI
 
   <!-- ── EXPERIÊNCIA ────────────────────────────────────── -->
   <section style="max-width: 1200px; margin: 0 auto; padding: 0 2rem 5rem; border-top: 1px solid var(--border);">
-    <div data-reveal="scroll" style="display: flex; align-items: baseline; gap: 1rem; padding: 3rem 0 2rem;">
-      <span style="font-family: var(--font-mono); font-size: 0.65rem; color: var(--accent); font-weight: 700; letter-spacing: 0.1em;">03</span>
-      <h2 style="font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted-foreground);">EXPERIÊNCIA</h2>
-    </div>
+    <h2 style="font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted-foreground); padding: 3rem 0 2rem;">Experiência</h2>
 
-    {experience.map((item, i) => (
+    {experience.map((item) => (
       <div
-        data-reveal="scroll"
-        style={`border-top: 1px solid var(--border); padding: 1.5rem 0; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: baseline; transition-delay: ${i * 60}ms;`}
+        style="border-top: 1px solid var(--border); padding: 1.5rem 0; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: baseline;"
       >
         <div>
           <p style="font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.06em; color: var(--foreground); margin-bottom: 0.25rem;">{item.company}</p>
@@ -135,16 +128,12 @@ const tools = ['FIGMA', 'FIGMA MCP', 'CLAUDE', 'CLAUDE CODE', 'CURSOR', 'DOVETAI
 
   <!-- ── ÁREAS DE FOCO ──────────────────────────────────── -->
   <section style="max-width: 1200px; margin: 0 auto; padding: 0 2rem 5rem; border-top: 1px solid var(--border);">
-    <div data-reveal="scroll" style="display: flex; align-items: baseline; gap: 1rem; padding: 3rem 0 2rem;">
-      <span style="font-family: var(--font-mono); font-size: 0.65rem; color: var(--accent); font-weight: 700; letter-spacing: 0.1em;">04</span>
-      <h2 style="font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted-foreground);">ÁREAS DE FOCO</h2>
-    </div>
+    <h2 style="font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted-foreground); padding: 3rem 0 2rem;">Áreas de foco</h2>
 
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 0; border: 1px solid var(--border);">
+    <div data-reveal="scroll" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 0; border: 1px solid var(--border);">
       {focusAreas.map((area, i) => (
         <div
-          data-reveal="scroll"
-          style={`padding: 2rem; ${i < focusAreas.length - 1 ? 'border-right: 1px solid var(--border);' : ''} transition-delay: ${i * 80}ms;`}
+          style={`padding: 2rem; ${i < focusAreas.length - 1 ? 'border-right: 1px solid var(--border);' : ''}`}
         >
           <p style="font-family: var(--font-mono); font-size: 0.6rem; color: var(--accent); font-weight: 700; letter-spacing: 0.1em; margin-bottom: 1rem;">{area.num}</p>
           <h3 style="font-family: var(--font-mono); font-size: 0.9rem; font-weight: 700; color: var(--foreground); margin-bottom: 0.75rem; letter-spacing: -0.01em;">{area.title}</h3>
@@ -156,11 +145,8 @@ const tools = ['FIGMA', 'FIGMA MCP', 'CLAUDE', 'CLAUDE CODE', 'CURSOR', 'DOVETAI
 
   <!-- ── FERRAMENTAS ────────────────────────────────────── -->
   <section style="max-width: 1200px; margin: 0 auto; padding: 0 2rem 6rem; border-top: 1px solid var(--border);">
-    <div data-reveal="scroll" style="display: flex; align-items: baseline; gap: 1rem; padding: 3rem 0 2rem;">
-      <span style="font-family: var(--font-mono); font-size: 0.65rem; color: var(--accent); font-weight: 700; letter-spacing: 0.1em;">05</span>
-      <h2 style="font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted-foreground);">FERRAMENTAS</h2>
-    </div>
-    <p data-reveal="scroll" style="font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.1em; color: var(--muted-foreground);">
+    <h2 style="font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted-foreground); padding: 3rem 0 2rem;">Ferramentas</h2>
+    <p style="font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.1em; color: var(--muted-foreground);">
       {tools.join(' · ')}
     </p>
   </section>

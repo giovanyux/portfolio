@@ -34,6 +34,28 @@ export const NAV_LINKS = [
   { href: `${BASE}/contato`, label: 'CONTATO' },
 ];
 
+// Case fora da content collection: página estática auto-contida em
+// public/cases/case-dionisio (design system próprio, não usa CaseLayout).
+// Entrada manual só pra ela aparecer nas listagens — a URL já resolve
+// certo porque o slug bate com o nome da pasta em public/.
+export const EXTRA_CASES = [
+  {
+    slug: 'case-dionisio',
+    data: {
+      title: 'Dionísio: operação de mesa que funciona sem internet',
+      description:
+        'App do garçom e admin do gerente pra bistrôs de mesa sentada — discovery completo, telas em alta fidelidade e design system.',
+      tags: ['food-tech', 'design system'],
+      cover: '/cases/case-dionisio/cover.png',
+      thumbnail: undefined as string | undefined,
+      coverVideo: undefined as string | undefined,
+      metric: 'Piloto: 22 mesas · 6 garçons/turno',
+      comingSoon: false,
+      date: new Date('2026-08-09'),
+    },
+  },
+];
+
 export const SITE = {
   title: 'Giovany Jr — Lead Product Designer | SaaS B2B e código com IA',
   description:

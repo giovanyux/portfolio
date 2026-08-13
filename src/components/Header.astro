@@ -1,5 +1,4 @@
 ---
-import LanguageToggle from './LanguageToggle.astro';
 import ThemeToggle from './ThemeToggle.astro';
 import { NAV_LINKS, AUTHOR, BASE } from '@/consts';
 
@@ -7,13 +6,8 @@ const currentPath = Astro.url.pathname;
 ---
 
 <header id="site-header" style="
-  position: sticky;
-  top: 0;
-  z-index: 100;
   border-bottom: 1px solid var(--border);
-  background: color-mix(in srgb, var(--background) 80%, transparent);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: var(--background);
 ">
   <div style="max-width: 1200px; margin: 0 auto; padding: 0 2rem; height: 56px; display: flex; align-items: center; justify-content: space-between; gap: 2rem;">
 
@@ -26,10 +20,10 @@ const currentPath = Astro.url.pathname;
     >
       <svg width="28" height="28" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <path fill-rule="evenodd" clip-rule="evenodd" d="M39.8008 17.1667C38.4248 7.46283 30.0839 0 20 0C8.95434 0 0 8.95432 0 20C0 31.0456 8.95434 40 20 40V31.2316C13.7931 31.2091 8.76825 26.1705 8.76825 19.9582C8.76825 13.7321 13.8156 8.68474 20.0418 8.68474C25.3044 8.68474 29.7248 12.2907 30.9669 17.1667H39.8008Z" fill="currentColor"/>
-        <path d="M30 31.25H20L20 40L30 40V31.25Z" fill="#7964FF"/>
-        <path d="M30 22.5H20V31.25H30V22.5Z" fill="#0B00C8"/>
-        <path d="M40 22.5H30V31.25L40 31.25V22.5Z" fill="#0B00C8"/>
-        <path d="M40 31.25L30 31.25V40H40V31.25Z" fill="#0B00C8"/>
+        <path d="M30 31.25H20L20 40L30 40V31.25Z" fill="var(--accent)"/>
+        <path d="M30 22.5H20V31.25H30V22.5Z" fill="var(--accent)"/>
+        <path d="M40 22.5H30V31.25L40 31.25V22.5Z" fill="var(--accent)"/>
+        <path d="M40 31.25L30 31.25V40H40V31.25Z" fill="var(--accent)"/>
       </svg>
     </a>
 
@@ -61,7 +55,6 @@ const currentPath = Astro.url.pathname;
 
     <!-- Right controls -->
     <div style="display: flex; align-items: center; gap: 1.25rem; flex-shrink: 0;">
-      <LanguageToggle />
       <ThemeToggle />
 
       <!-- Mobile menu button -->
@@ -73,7 +66,7 @@ const currentPath = Astro.url.pathname;
           display: none;
           background: none;
           border: none;
-          cursor: none;
+          cursor: pointer;
           color: var(--muted-foreground);
           font-family: var(--font-mono);
           font-size: 0.7rem;

@@ -2,12 +2,11 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import GridLines from '@/components/GridLines.astro';
 import CaseListItem from '@/components/CaseListItem.astro';
-import Testimonials from '@/components/Testimonials.astro';
-import { CREDENTIALS, BASE } from '@/consts';
+import { CREDENTIALS, EXTRA_CASES, BASE } from '@/consts';
 import { getCollection } from 'astro:content';
 
 const allCases = await getCollection('cases', ({ data }) => !data.draft);
-const cases = allCases.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+const cases = [...allCases, ...EXTRA_CASES].sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 ---
 
 <BaseLayout>
@@ -141,12 +140,9 @@ const cases = allCases.sort((a, b) => b.data.date.getTime() - a.data.date.getTim
 
   <!-- ── TRABALHOS SELECIONADOS ─────────────────────────── -->
   <section style="max-width: 1200px; margin: 0 auto; padding: 6rem 2rem 0;">
-    <div data-reveal="scroll" style="display: flex; align-items: baseline; gap: 1rem; margin-bottom: 0;">
-      <span style="font-family: var(--font-mono); font-size: 0.65rem; color: var(--accent); font-weight: 700; letter-spacing: 0.1em;">01</span>
-      <h2 style="font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted-foreground);">
-        TRABALHOS SELECIONADOS
-      </h2>
-    </div>
+    <h2 style="font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted-foreground); margin-bottom: 0;">
+      Trabalhos selecionados
+    </h2>
 
     {cases.map((c, i) => (
       <CaseListItem
@@ -165,9 +161,6 @@ const cases = allCases.sort((a, b) => b.data.date.getTime() - a.data.date.getTim
     ))}
     <div style="border-top: 1px solid var(--border);"></div>
   </section>
-
-  <!-- ── DEPOIMENTOS ──────────────────────────────────────── -->
-  <Testimonials />
 
   <!-- ── CTA FINAL ────────────────────────────────────────── -->
   <section style="max-width: 1200px; margin: 0 auto; padding: 8rem 2rem 8rem;">

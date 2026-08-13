@@ -88,6 +88,37 @@ img { display: block; max-width: 100%; }
   z-index: var(--z-base);
 }
 
+/* ─── Scan sweep — Tier A CSS, one instrument-panel beat ─
+   A single cobalt line crosses the grid once per cycle, like an
+   oscilloscope or radar sweep. One accent hue, no gradient blob,
+   no library. Opt-in via <GridLines scan /> — reserved for the home
+   hero so it reads as one deliberate flourish, not a repeated tic. */
+.grid-lines--scan::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    color-mix(in oklch, var(--accent) 55%, transparent) 49%,
+    color-mix(in oklch, var(--accent) 55%, transparent) 51%,
+    transparent 100%
+  );
+  background-size: 100% 420%;
+  background-repeat: no-repeat;
+  animation: scan-sweep 7s var(--ease-in-out) infinite;
+  opacity: 0.55;
+}
+
+@keyframes scan-sweep {
+  0%   { background-position: 0 -160%; }
+  100% { background-position: 0 260%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .grid-lines--scan::after { animation: none; opacity: 0.12; background-position: 0 50%; }
+}
+
 /* ─── Marquee (credentials strip) ─────────────────────── */
 .marquee-track {
   display: flex;

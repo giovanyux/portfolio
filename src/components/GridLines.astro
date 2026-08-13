@@ -1,3 +1,7 @@
 ---
+interface Props {
+  scan?: boolean;
+}
+const { scan = false } = Astro.props;
 ---
-<div class="grid-lines" aria-hidden="true"></div>
+<div class={`grid-lines ${scan ? 'grid-lines--scan' : ''}`} aria-hidden="true"></div>

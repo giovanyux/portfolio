@@ -21,9 +21,10 @@ const { number, label, context } = Astro.props;
 
   .bignum-number {
     font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
     font-size: var(--bng-num-size, clamp(2.25rem, 6vw, 3.75rem));
     font-weight: 700;
-    letter-spacing: -0.04em;
+    letter-spacing: -0.02em;
     color: var(--foreground);
     line-height: 1;
     margin-bottom: 0.5rem;

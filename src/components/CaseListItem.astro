@@ -15,45 +15,17 @@ interface Props {
   comingSoon?: boolean;
 }
 
-const { number, tag, title, subtitle, cover, thumbnail, coverVideo, metric, slug, index, comingSoon = false } = Astro.props;
+const { number, tag, title, subtitle, cover, thumbnail, coverVideo, metric, slug, comingSoon = false } = Astro.props;
 const href = `${BASE}/cases/${slug}`;
 const imgSrc = BASE + (thumbnail ?? cover);
 const videoSrc = coverVideo ? BASE + coverVideo : undefined;
 ---
 
-<article
-  style={`border-top: 1px solid var(--border); padding: 3rem 0; ${comingSoon ? 'opacity: 0.6;' : ''}`}
->
-  <!-- Top row: number + tag -->
-  <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
-    {comingSoon ? (
-      <span style="font-family: var(--font-mono); font-size: 0.6rem; font-weight: 700; letter-spacing: 0.14em; color: var(--muted-foreground); text-transform: uppercase; border: 1px solid var(--border); padding: 0.2em 0.6em;">
-        EM BREVE
-      </span>
-    ) : (
-      <span style="font-family: var(--font-mono); font-size: 0.65rem; color: var(--accent); font-weight: 700; letter-spacing: 0.1em;">
-        {number}
-      </span>
-    )}
-    <span style="font-family: var(--font-mono); font-size: 0.65rem; color: var(--muted-foreground); letter-spacing: 0.1em; text-transform: uppercase;">
-      {tag}
-    </span>
-  </div>
-
-  <!-- Title -->
-  <h3 style="font-family: var(--font-mono); font-size: clamp(1.75rem, 4vw, 2.5rem); font-weight: 700; line-height: 1.1; letter-spacing: -0.02em; color: var(--foreground); margin-bottom: 0.75rem;">
-    {title}
-  </h3>
-
-  <!-- Subtitle -->
-  <p style="font-family: var(--font-mono); font-size: 0.85rem; color: var(--muted-foreground); margin-bottom: 2rem; line-height: 1.6;">
-    {subtitle}
-  </p>
-
+<article class="hairline-card case-card" style={comingSoon ? 'opacity: 0.6;' : undefined}>
   <!-- Case image -->
   {comingSoon ? (
-    <div style="display: block; margin-bottom: 1.5rem; overflow: hidden; position: relative;">
-      <div class="img-placeholder" style="width: 100%; aspect-ratio: 16/9;">
+    <div style="display: block; position: relative; border-bottom: 1px solid var(--border);">
+      <div class="img-placeholder" style="width: 100%; aspect-ratio: 4/3; border: none; border-radius: 0;">
         <img
           src={imgSrc}
           alt={`${title} screenshot`}
@@ -65,8 +37,8 @@ const videoSrc = coverVideo ? BASE + coverVideo : undefined;
       </div>
     </div>
   ) : (
-    <a href={href} style="display: block; margin-bottom: 1.5rem; overflow: hidden; position: relative;" aria-label={`Open case: ${title}`}>
-      <div class="img-placeholder case-img-hover" style="width: 100%; aspect-ratio: 16/9;">
+    <a href={href} style="display: block; position: relative; border-bottom: 1px solid var(--border);" aria-label={`Abrir case: ${title}`}>
+      <div class="img-placeholder case-img-hover" style="width: 100%; aspect-ratio: 4/3; border: none; border-radius: 0;">
         {videoSrc ? (
           <video
             autoplay
@@ -76,7 +48,7 @@ const videoSrc = coverVideo ? BASE + coverVideo : undefined;
             preload="metadata"
             poster={imgSrc}
             aria-label={`${title} — preview`}
-            style="width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; z-index: 2; transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);"
+            style="width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; z-index: 2; transition: transform var(--dur-long) var(--ease-out);"
           >
             <source src={videoSrc} type="video/mp4" />
             <img src={imgSrc} alt={`${title} screenshot`} style="width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; z-index: 2;" />
@@ -85,7 +57,7 @@ const videoSrc = coverVideo ? BASE + coverVideo : undefined;
           <img
             src={imgSrc}
             alt={`${title} screenshot`}
-            style="width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; z-index: 2; transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.3s ease;"
+            style="width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; z-index: 2; transition: transform var(--dur-long) var(--ease-out);"
             onerror="this.style.display='none';"
             loading="lazy"
           />
@@ -95,26 +67,61 @@ const videoSrc = coverVideo ? BASE + coverVideo : undefined;
     </a>
   )}
 
-  <!-- Bottom row: metric + link -->
-  <div style="display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
-    <p style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--muted-foreground); letter-spacing: 0.04em;">
-      <span style={`color: ${comingSoon ? 'var(--muted-foreground)' : 'var(--accent)'}; font-weight: 700;`}>{comingSoon ? '—' : '↗'}</span> {metric}
+  <div style="padding: var(--space-md);">
+    <!-- Top row: tag + status -->
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: var(--space-xs); margin-bottom: var(--space-sm);">
+      <span style="font-family: var(--font-mono); font-size: 0.62rem; color: var(--muted-foreground); letter-spacing: 0.08em; text-transform: uppercase;">
+        {tag}
+      </span>
+      {comingSoon ? (
+        <span style="font-family: var(--font-mono); font-size: 0.58rem; font-weight: 700; letter-spacing: 0.1em; color: var(--muted-foreground); text-transform: uppercase; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 0.2em 0.55em;">
+          EM BREVE
+        </span>
+      ) : (
+        <span style="font-family: var(--font-mono); font-size: 0.62rem; color: var(--accent); font-weight: 700; letter-spacing: 0.06em;">
+          {number}
+        </span>
+      )}
+    </div>
+
+    <!-- Title -->
+    <h3 style="font-family: var(--font-display); font-size: 1.25rem; font-weight: 600; line-height: 1.2; letter-spacing: -0.01em; color: var(--foreground); margin-bottom: var(--space-2xs);">
+      {title}
+    </h3>
+
+    <!-- Subtitle -->
+    <p style="font-family: var(--font-sans); font-size: 0.8rem; color: var(--muted-foreground); line-height: 1.55; margin-bottom: var(--space-md);">
+      {subtitle}
     </p>
-    {!comingSoon && (
-      <a
-        href={href}
-        class="underline-hover"
-        style="font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; color: var(--foreground); text-decoration: none; text-transform: uppercase;"
-      >
-        Ver case →
-      </a>
-    )}
+
+    <!-- Bottom row: metric + link -->
+    <div style="display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-sm); border-top: 1px solid var(--border); padding-top: var(--space-sm);">
+      <p class="tabular-nums" style="font-family: var(--font-mono); font-size: 0.68rem; color: var(--muted-foreground); letter-spacing: 0.02em;">
+        {metric}
+      </p>
+      {!comingSoon && (
+        <a
+          href={href}
+          class="underline-hover"
+          style="font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.06em; color: var(--foreground); text-decoration: none; text-transform: uppercase; white-space: nowrap;"
+        >
+          Ver case →
+        </a>
+      )}
+    </div>
   </div>
 </article>
 
 <style>
-  .case-img-hover img:hover {
+  .case-card {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .case-img-hover img:hover,
+  .case-img-hover video:hover {
     transform: scale(1.02);
-    filter: brightness(0.95);
   }
 </style>

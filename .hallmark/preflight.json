@@ -1,0 +1,7 @@
+{
+  "font_stack": "JetBrains Mono (font-mono) + Inter (font-sans) (package.json, src/styles/global.css)",
+  "palette": "Hex custom properties with light/dark classes (src/styles/tokens.css :root / .dark)",
+  "motion": "motion-cut (no motion libraries in package.json)",
+  "spacing": "Custom CSS space-xs to space-2xl scale (src/styles/tokens.css)",
+  "framework": "Astro 5 (package.json, astro.config.mjs)"
+}

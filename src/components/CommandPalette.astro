@@ -1,0 +1,159 @@
+---
+interface Item {
+  label: string;
+  href: string;
+  group: string;
+}
+
+interface Props {
+  items: Item[];
+}
+
+const { items } = Astro.props;
+---
+
+<button
+  id="cmdk-trigger"
+  type="button"
+  aria-label="Abrir busca (Cmd+K)"
+  aria-haspopup="dialog"
+  style="
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.04em;
+    color: var(--muted-foreground);
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 0.3rem 0.55rem;
+    cursor: pointer;
+    transition: border-color var(--dur-short) var(--ease-out), color var(--dur-short) var(--ease-out);
+  "
+>
+  <span aria-hidden="true">⌘K</span>
+</button>
+
+<div id="cmdk-backdrop" class="cmdk-backdrop"></div>
+<div
+  id="cmdk-panel"
+  class="cmdk-panel"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Busca rápida"
+>
+  <div class="cmdk-input-row">
+    <span aria-hidden="true" style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--muted-foreground);">→</span>
+    <input
+      id="cmdk-input"
+      type="text"
+      placeholder="Ir pra Cases, Sobre, Contato…"
+      autocomplete="off"
+      aria-label="Buscar página ou case"
+    />
+    <span style="font-family: var(--font-mono); font-size: 0.6rem; color: var(--muted-foreground); letter-spacing: 0.04em;">ESC</span>
+  </div>
+  <div id="cmdk-list" class="cmdk-list" role="listbox" aria-label="Resultados"></div>
+</div>
+
+<script define:vars={{ items }} is:inline>
+  function initCommandPalette() {
+    const trigger = document.getElementById('cmdk-trigger');
+    const backdrop = document.getElementById('cmdk-backdrop');
+    const panel = document.getElementById('cmdk-panel');
+    const input = document.getElementById('cmdk-input');
+    const list = document.getElementById('cmdk-list');
+    if (!trigger || !backdrop || !panel || !input || !list) return;
+
+    let filtered = items;
+    let activeIndex = 0;
+
+    function render() {
+      list.innerHTML = '';
+      if (filtered.length === 0) {
+        const empty = document.createElement('p');
+        empty.className = 'cmdk-empty';
+        empty.textContent = 'Nada encontrado.';
+        list.appendChild(empty);
+        return;
+      }
+      filtered.forEach((item, i) => {
+        const row = document.createElement('a');
+        row.href = item.href;
+        row.className = 'cmdk-item';
+        row.setAttribute('role', 'option');
+        row.setAttribute('aria-selected', String(i === activeIndex));
+        row.innerHTML = `<span>${item.label}</span><span class="cmdk-item-meta">${item.group}</span>`;
+        row.addEventListener('mouseenter', () => { activeIndex = i; render(); });
+        list.appendChild(row);
+      });
+    }
+
+    function open() {
+      backdrop.classList.add('is-open');
+      panel.classList.add('is-open');
+      filtered = items;
+      activeIndex = 0;
+      input.value = '';
+      render();
+      setTimeout(() => input.focus(), 10);
+    }
+
+    function close() {
+      backdrop.classList.remove('is-open');
+      panel.classList.remove('is-open');
+      trigger.focus();
+    }
+
+    function isOpen() {
+      return panel.classList.contains('is-open');
+    }
+
+    trigger.addEventListener('click', open);
+    backdrop.addEventListener('click', close);
+
+    // astro:page-load fires on every view-transition navigation, and Header
+    // (unlike a transition:persist element) is re-rendered fresh each time —
+    // so this whole function runs again. document.addEventListener would
+    // stack a new keydown handler every navigation without this guard.
+    if (window.__cmdkKeydownHandler) {
+      document.removeEventListener('keydown', window.__cmdkKeydownHandler);
+    }
+    window.__cmdkKeydownHandler = (e) => {
+      const isK = e.key === 'k' || e.key === 'K';
+      if ((e.metaKey || e.ctrlKey) && isK) {
+        e.preventDefault();
+        isOpen() ? close() : open();
+        return;
+      }
+      if (!isOpen()) return;
+      if (e.key === 'Escape') { close(); return; }
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        activeIndex = Math.min(activeIndex + 1, filtered.length - 1);
+        render();
+      }
+      if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        activeIndex = Math.max(activeIndex - 1, 0);
+        render();
+      }
+      if (e.key === 'Enter' && filtered[activeIndex]) {
+        e.preventDefault();
+        window.location.href = filtered[activeIndex].href;
+      }
+    };
+    document.addEventListener('keydown', window.__cmdkKeydownHandler);
+
+    input.addEventListener('input', () => {
+      const q = input.value.trim().toLowerCase();
+      filtered = q ? items.filter((it) => it.label.toLowerCase().includes(q)) : items;
+      activeIndex = 0;
+      render();
+    });
+  }
+
+  document.addEventListener('astro:page-load', initCommandPalette);
+</script>

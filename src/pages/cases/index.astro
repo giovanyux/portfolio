@@ -13,33 +13,35 @@ const cases = allCases.sort((a, b) => b.data.date.getTime() - a.data.date.getTim
   description="Trabalhos selecionados em product design: SaaS B2B, design systems e IA no fluxo."
 >
 
-  <section style="position: relative; overflow: hidden; padding: 5rem 2rem 5rem; max-width: 1200px; margin: 0 auto;">
+  <!-- ── PORTFOLIO GRID — short tagline, no display hero ── -->
+  <section style="position: relative; overflow: hidden; padding: 4rem 2rem 3rem; max-width: 1200px; margin: 0 auto;">
     <GridLines />
-    <div style="position: relative; z-index: 1;">
-      <p data-reveal="hero" style="font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted-foreground); margin-bottom: 1.5rem;">CASES</p>
-      <h1 data-reveal="hero" style="font-family: var(--font-mono); font-size: clamp(3rem, 8vw, 6rem); font-weight: 700; letter-spacing: -0.04em; line-height: 0.95; transition-delay: 120ms;">
-        Trabalhos selecionados.
+    <div style="position: relative; z-index: var(--z-base);">
+      <p data-reveal="hero" style="font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted-foreground); margin-bottom: var(--space-sm);">CASES</p>
+      <h1 data-reveal="hero" class="tabular-nums" style="font-family: var(--font-display); font-size: clamp(1.5rem, 3vw, 2.25rem); font-weight: 600; letter-spacing: -0.01em; line-height: 1.2; transition-delay: 100ms;">
+        Trabalhos selecionados · {cases.length} {cases.length === 1 ? 'case' : 'cases'}
       </h1>
     </div>
   </section>
 
-  <section style="max-width: 1200px; margin: 0 auto; padding: 0 2rem;">
-    {cases.map((c, i) => (
-      <CaseListItem
-        number={String(i + 1).padStart(2, '0')}
-        tag={c.data.tags[0] ?? 'PRODUTO'}
-        title={c.data.title}
-        subtitle={c.data.description}
-        cover={c.data.cover}
-        thumbnail={c.data.thumbnail}
-        coverVideo={c.data.coverVideo}
-        metric={c.data.metric}
-        slug={c.slug}
-        index={i}
-        comingSoon={c.data.comingSoon}
-      />
-    ))}
-    <div style="border-top: 1px solid var(--border);"></div>
+  <section style="max-width: 1200px; margin: 0 auto; padding: 0 2rem var(--space-2xl);">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--space-md);">
+      {cases.map((c, i) => (
+        <CaseListItem
+          number={String(i + 1).padStart(2, '0')}
+          tag={c.data.tags[0] ?? 'PRODUTO'}
+          title={c.data.title}
+          subtitle={c.data.description}
+          cover={c.data.cover}
+          thumbnail={c.data.thumbnail}
+          coverVideo={c.data.coverVideo}
+          metric={c.data.metric}
+          slug={c.slug}
+          index={i}
+          comingSoon={c.data.comingSoon}
+        />
+      ))}
+    </div>
   </section>
 
 </BaseLayout>

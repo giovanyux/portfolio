@@ -11,22 +11,22 @@ const cases = allCases.sort((a, b) => b.data.date.getTime() - a.data.date.getTim
 
 <BaseLayout>
 
-  <!-- ── HERO ──────────────────────────────────────────── -->
-  <section style="position: relative; overflow: hidden; padding: 6rem 2rem 8rem; max-width: 1200px; margin: 0 auto;">
+  <!-- ── MARQUEE HERO ──────────────────────────────────── -->
+  <section style="position: relative; overflow: hidden; padding: 6rem 2rem 6rem; max-width: 1200px; margin: 0 auto;">
     <GridLines />
-    <div style="position: relative; z-index: 1; max-width: 900px;">
+    <div style="position: relative; z-index: var(--z-base); max-width: 900px;">
 
       <p
         data-reveal="hero"
-        style="font-family: var(--font-mono); font-size: 0.7rem; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted-foreground); margin-bottom: 2rem;"
+        style="font-family: var(--font-mono); font-size: 0.7rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted-foreground); margin-bottom: var(--space-md);"
       >
         LEAD PRODUCT DESIGNER · 09 ANOS
       </p>
 
-      <h1 style="font-family: var(--font-mono); font-weight: 700; letter-spacing: -0.04em; line-height: 0.95; margin-bottom: 2.5rem; overflow: hidden;">
-        <span data-reveal="hero" style="display: block; font-size: clamp(4rem, 10vw, 9rem); transition-delay: 120ms;">Criando produtos</span>
-        <span data-reveal="hero" style="display: block; font-size: clamp(4rem, 10vw, 9rem); transition-delay: 240ms;">com método</span>
-        <span data-reveal="hero" style="display: block; font-size: clamp(1.5rem, 4vw, 4rem); color: var(--accent); transition-delay: 360ms;">
+      <h1 style="font-family: var(--font-display); font-weight: 600; letter-spacing: -0.03em; line-height: 0.98; margin-bottom: var(--space-lg); overflow: hidden;">
+        <span data-reveal="hero" style="display: block; font-size: var(--text-display); transition-delay: 100ms;">Criando produtos</span>
+        <span data-reveal="hero" style="display: block; font-size: var(--text-display); transition-delay: 180ms;">com método</span>
+        <span data-reveal="hero" style="display: block; font-size: var(--text-display-s); color: var(--accent); transition-delay: 260ms;">
           <span class="cycling-text">
             <span class="cycling-item">e AI-Augmented Design</span>
             <span class="cycling-item">e pesquisa com usuário</span>
@@ -66,10 +66,6 @@ const cases = allCases.sort((a, b) => b.data.date.getTime() - a.data.date.getTim
     animation-delay: 10s;
   }
 
-  .accent-dot {
-    color: var(--accent);
-  }
-
   @keyframes cycle-text {
     0%, 30% {
       opacity: 1;
@@ -95,24 +91,24 @@ const cases = allCases.sort((a, b) => b.data.date.getTime() - a.data.date.getTim
 
       <p
         data-reveal="hero"
-        style="font-family: var(--font-mono); font-size: 1rem; color: var(--muted-foreground); max-width: 52ch; line-height: 1.7; margin-bottom: 2.5rem; transition-delay: 480ms;"
+        style="font-family: var(--font-sans); font-size: 1rem; color: var(--muted-foreground); max-width: 52ch; line-height: 1.65; margin-bottom: var(--space-lg); transition-delay: 340ms;"
       >
-        9 anos desenhando SaaS B2B e B2C. Do Figma ao componente em produção, com IA no fluxo.<br />
+        9 anos desenhando SaaS B2B e B2C. Do Figma ao componente em produção, com IA no fluxo.
         Aberto a posições sênior/lead, remoto.
       </p>
 
-      <div data-reveal="hero" style="display: flex; gap: 2rem; align-items: center; flex-wrap: wrap; transition-delay: 560ms;">
+      <div data-reveal="hero" style="display: flex; gap: var(--space-lg); align-items: center; flex-wrap: wrap; transition-delay: 420ms;">
         <a
           href={`${BASE}/cases`}
           class="underline-hover"
-          style="font-family: var(--font-mono); font-size: 0.85rem; font-weight: 700; letter-spacing: 0.08em; color: var(--foreground); text-decoration: none; text-transform: uppercase;"
+          style="font-family: var(--font-mono); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.06em; color: var(--foreground); text-decoration: none; text-transform: uppercase;"
         >
           Ver trabalhos →
         </a>
         <a
           href={`${BASE}/contato`}
           class="underline-hover"
-          style="font-family: var(--font-mono); font-size: 0.85rem; font-weight: 500; letter-spacing: 0.08em; color: var(--muted-foreground); text-decoration: none; text-transform: uppercase;"
+          style="font-family: var(--font-mono); font-size: 0.8rem; font-weight: 500; letter-spacing: 0.06em; color: var(--muted-foreground); text-decoration: none; text-transform: uppercase;"
         >
           Entrar em contato →
         </a>
@@ -121,15 +117,15 @@ const cases = allCases.sort((a, b) => b.data.date.getTime() - a.data.date.getTim
   </section>
 
   <!-- ── CREDENTIALS STRIP ─────────────────────────────── -->
-  <div style="border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 0.875rem 0;">
+  <div style="border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: var(--space-sm) 0;">
     <div style="display: flex; align-items: center;">
-      <span style="font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.12em; color: var(--muted-foreground); text-transform: uppercase; padding: 0 2rem; flex-shrink: 0; white-space: nowrap;">
+      <span style="font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.1em; color: var(--muted-foreground); text-transform: uppercase; padding: 0 2rem; flex-shrink: 0; white-space: nowrap;">
         Anteriormente em
       </span>
       <div style="overflow: hidden; flex: 1; min-width: 0;">
-        <div class="marquee-track" style="gap: 3rem; display: flex; align-items: center;">
+        <div class="marquee-track" style="gap: var(--space-xl); display: flex; align-items: center;">
           {[...CREDENTIALS, ...CREDENTIALS].map((name) => (
-            <span style="font-family: var(--font-mono); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.14em; color: var(--muted-foreground); text-transform: uppercase; flex-shrink: 0;">
+            <span style="font-family: var(--font-mono); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; color: var(--muted-foreground); text-transform: uppercase; flex-shrink: 0;">
               {name}
             </span>
           ))}
@@ -138,43 +134,43 @@ const cases = allCases.sort((a, b) => b.data.date.getTime() - a.data.date.getTim
     </div>
   </div>
 
-  <!-- ── TRABALHOS SELECIONADOS ─────────────────────────── -->
-  <section style="max-width: 1200px; margin: 0 auto; padding: 6rem 2rem 0;">
-    <h2 style="font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted-foreground); margin-bottom: 0;">
+  <!-- ── TRABALHOS SELECIONADOS — portfolio grid ─────────── -->
+  <section style="max-width: 1200px; margin: 0 auto; padding: var(--space-2xl) 2rem 0;">
+    <p style="font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted-foreground); margin-bottom: var(--space-lg);">
       Trabalhos selecionados
-    </h2>
+    </p>
 
-    {cases.map((c, i) => (
-      <CaseListItem
-        number={String(i + 1).padStart(2, '0')}
-        tag={c.data.tags[0] ?? 'PRODUTO'}
-        title={c.data.title}
-        subtitle={c.data.description}
-        cover={c.data.cover}
-        thumbnail={c.data.thumbnail}
-        coverVideo={c.data.coverVideo}
-        metric={c.data.metric}
-        slug={c.slug}
-        index={i}
-        comingSoon={c.data.comingSoon}
-      />
-    ))}
-    <div style="border-top: 1px solid var(--border);"></div>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--space-md);">
+      {cases.map((c, i) => (
+        <CaseListItem
+          number={String(i + 1).padStart(2, '0')}
+          tag={c.data.tags[0] ?? 'PRODUTO'}
+          title={c.data.title}
+          subtitle={c.data.description}
+          cover={c.data.cover}
+          thumbnail={c.data.thumbnail}
+          coverVideo={c.data.coverVideo}
+          metric={c.data.metric}
+          slug={c.slug}
+          index={i}
+          comingSoon={c.data.comingSoon}
+        />
+      ))}
+    </div>
   </section>
 
-  <!-- ── CTA FINAL ────────────────────────────────────────── -->
-  <section style="max-width: 1200px; margin: 0 auto; padding: 8rem 2rem 8rem;">
-    <div data-reveal="scroll" style="border-top: 1px solid var(--border); padding-top: 4rem;">
-      <p style="font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.14em; color: var(--muted-foreground); text-transform: uppercase; margin-bottom: 1rem;">
+  <!-- ── CTA FINAL — graphite band ─────────────────────── -->
+  <section style="max-width: 1200px; margin: 0 auto; padding: var(--space-2xl) 2rem;">
+    <div data-reveal="scroll" class="graphite-band" style="padding: var(--space-xl) var(--space-lg);">
+      <p class="muted" style="font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: var(--space-sm);">
         Vamos conversar
       </p>
-      <h2 style="font-family: var(--font-mono); font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 700; color: var(--foreground); margin-bottom: 2rem; line-height: 1.1; max-width: 16ch;">
+      <h2 style="font-family: var(--font-display); font-size: clamp(1.75rem, 4.5vw, 3rem); font-weight: 600; margin-bottom: var(--space-lg); line-height: 1.15; max-width: 18ch;">
         Aberto a posições sênior/lead, remoto.
       </h2>
       <a
         href={`${BASE}/contato`}
-        class="underline-hover"
-        style="font-family: var(--font-mono); font-size: 0.95rem; font-weight: 700; letter-spacing: 0.08em; color: var(--accent); text-decoration: none; text-transform: uppercase;"
+        class="btn-primary"
       >
         Entrar em contato →
       </a>

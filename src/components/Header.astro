@@ -1,24 +1,40 @@
 ---
 import ThemeToggle from './ThemeToggle.astro';
+import CommandPalette from './CommandPalette.astro';
 import { NAV_LINKS, AUTHOR, BASE } from '@/consts';
+import { getCollection } from 'astro:content';
 
 const currentPath = Astro.url.pathname;
+
+const cases = await getCollection('cases', ({ data }) => !data.draft && !data.comingSoon);
+const cmdkItems = [
+  { label: 'Home', href: `${BASE}/`, group: 'PÁGINA' },
+  ...NAV_LINKS.map(({ href, label }) => ({ label: label.charAt(0) + label.slice(1).toLowerCase(), href, group: 'PÁGINA' })),
+  ...cases
+    .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+    .map((c) => ({ label: c.data.title, href: `${BASE}/cases/${c.slug}`, group: 'CASE' })),
+];
 ---
 
 <header id="site-header" style="
+  position: sticky;
+  top: 0;
+  z-index: var(--z-sticky);
   border-bottom: 1px solid var(--border);
-  background: var(--background);
+  background: color-mix(in oklch, var(--background) 88%, transparent);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
 ">
   <div style="max-width: 1200px; margin: 0 auto; padding: 0 2rem; height: 56px; display: flex; align-items: center; justify-content: space-between; gap: 2rem;">
 
     <!-- Logo -->
     <a
       href={`${BASE}/`}
-      style="display: flex; align-items: center; flex-shrink: 0; transition: opacity 0.2s; color: var(--foreground);"
+      style="display: flex; align-items: center; flex-shrink: 0; transition: opacity var(--dur-short) var(--ease-out); color: var(--foreground);"
       class="logo-link"
       aria-label={`${AUTHOR.short} — home`}
     >
-      <svg width="28" height="28" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <svg width="26" height="26" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <path fill-rule="evenodd" clip-rule="evenodd" d="M39.8008 17.1667C38.4248 7.46283 30.0839 0 20 0C8.95434 0 0 8.95432 0 20C0 31.0456 8.95434 40 20 40V31.2316C13.7931 31.2091 8.76825 26.1705 8.76825 19.9582C8.76825 13.7321 13.8156 8.68474 20.0418 8.68474C25.3044 8.68474 29.7248 12.2907 30.9669 17.1667H39.8008Z" fill="currentColor"/>
         <path d="M30 31.25H20L20 40L30 40V31.25Z" fill="var(--accent)"/>
         <path d="M30 22.5H20V31.25H30V22.5Z" fill="var(--accent)"/>
@@ -38,10 +54,10 @@ const currentPath = Astro.url.pathname;
               font-family: var(--font-mono);
               font-size: 0.7rem;
               font-weight: 500;
-              letter-spacing: 0.1em;
+              letter-spacing: 0.08em;
               padding: 0.375rem 0.75rem;
               text-decoration: none;
-              transition: color 0.2s;
+              transition: color var(--dur-short) var(--ease-out);
               color: ${isActive ? 'var(--foreground)' : 'var(--muted-foreground)'};
               ${isActive ? 'font-weight: 700;' : ''}
             `}
@@ -54,7 +70,8 @@ const currentPath = Astro.url.pathname;
     </nav>
 
     <!-- Right controls -->
-    <div style="display: flex; align-items: center; gap: 1.25rem; flex-shrink: 0;">
+    <div style="display: flex; align-items: center; gap: 0.75rem; flex-shrink: 0;">
+      <CommandPalette items={cmdkItems} />
       <ThemeToggle />
 
       <!-- Mobile menu button -->
@@ -113,10 +130,16 @@ const currentPath = Astro.url.pathname;
 <style>
   @media (max-width: 640px) {
     #mobile-menu-btn { display: block !important; }
-    nav { display: none !important; }
+    nav[aria-label="Main navigation"] { display: none !important; }
   }
 
   .logo-link:hover { opacity: 0.6; }
+
+  #cmdk-trigger:hover,
+  #cmdk-trigger:focus-visible {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
 </style>
 
 <script is:inline>

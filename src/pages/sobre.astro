@@ -74,16 +74,16 @@ const tools = ['FIGMA', 'FIGMA MCP', 'CLAUDE', 'CLAUDE CODE', 'CURSOR', 'DOVETAI
 >
 
   <!-- ── HERO ──────────────────────────────────────────── -->
-  <section style="position: relative; overflow: hidden; padding: 5rem 2rem 6rem; max-width: 1200px; margin: 0 auto;">
+  <section style="position: relative; overflow: hidden; padding: 5rem 2rem 5rem; max-width: 1200px; margin: 0 auto;">
     <GridLines />
-    <div style="position: relative; z-index: 1;">
-      <p data-reveal="hero" style="font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted-foreground); margin-bottom: 1.5rem;">
+    <div style="position: relative; z-index: var(--z-base);">
+      <p data-reveal="hero" style="font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted-foreground); margin-bottom: var(--space-md);">
         SOBRE
       </p>
-      <h1 data-reveal="hero" style="font-family: var(--font-mono); font-size: clamp(3rem, 8vw, 7rem); font-weight: 700; letter-spacing: -0.04em; line-height: 0.95; margin-bottom: 1.5rem; transition-delay: 120ms;">
+      <h1 data-reveal="hero" style="font-family: var(--font-display); font-size: var(--text-display); font-weight: 600; letter-spacing: -0.03em; line-height: 1; margin-bottom: var(--space-md); transition-delay: 100ms;">
         Olá, sou Giovany.
       </h1>
-      <p data-reveal="hero" style="font-family: var(--font-mono); font-size: 1rem; color: var(--muted-foreground); transition-delay: 240ms;">
+      <p data-reveal="hero" style="font-family: var(--font-sans); font-size: 1rem; color: var(--muted-foreground); transition-delay: 180ms;">
         Lead product designer baseado em Fortaleza, Brasil.
       </p>
     </div>
@@ -98,46 +98,46 @@ const tools = ['FIGMA', 'FIGMA MCP', 'CLAUDE', 'CLAUDE CODE', 'CURSOR', 'DOVETAI
         'Nos últimos dois anos integrei IA em todas as fases do meu trabalho. Claude pra síntese de pesquisa e escrita. Cursor pra prototipagem com código real. Claude Code pra construir projetos inteiros, como este portfólio. Não é atalho. É multiplicador de capacidade.',
         'Procuro posição senior ou lead em product design, remote, em produto com complexidade operacional de verdade.',
       ].map((para) => (
-        <p style="font-family: var(--font-mono); font-size: 0.95rem; line-height: 1.85; color: var(--muted-foreground); margin-bottom: 1.25rem;">
+        <p style="font-family: var(--font-sans); font-size: 1rem; line-height: 1.7; color: var(--muted-foreground); margin-bottom: var(--space-md);">
           {para}
         </p>
       ))}
     </div>
   </section>
 
-  <!-- ── EXPERIÊNCIA ────────────────────────────────────── -->
+  <!-- ── EXPERIÊNCIA — tratamento tipo changelog ─────────── -->
   <section style="max-width: 1200px; margin: 0 auto; padding: 0 2rem 5rem; border-top: 1px solid var(--border);">
-    <h2 style="font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted-foreground); padding: 3rem 0 2rem;">Experiência</h2>
+    <h2 style="font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted-foreground); padding: var(--space-xl) 0 var(--space-lg);">Experiência</h2>
 
-    {experience.map((item) => (
-      <div
-        style="border-top: 1px solid var(--border); padding: 1.5rem 0; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: baseline;"
-      >
-        <div>
-          <p style="font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.06em; color: var(--foreground); margin-bottom: 0.25rem;">{item.company}</p>
-          <p style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--accent); letter-spacing: 0.04em;">{item.role}</p>
+    <div class="changelog">
+      {experience.map((item, i) => (
+        <div class="changelog-entry">
+          <div class="changelog-meta">
+            <span class="changelog-tag tabular-nums">v{experience.length - i}.0</span>
+            <span class="changelog-years tabular-nums">{item.years}</span>
+          </div>
+          <div>
+            <p style="font-family: var(--font-display); font-size: 1rem; font-weight: 600; color: var(--foreground); margin-bottom: 0.2rem;">{item.company}</p>
+            <p style="font-family: var(--font-mono); font-size: 0.68rem; color: var(--accent); letter-spacing: 0.03em; margin-bottom: 0.6rem;">{item.role}</p>
+            <p style="font-family: var(--font-sans); font-size: 0.85rem; color: var(--muted-foreground); line-height: 1.6;">{item.desc}</p>
+          </div>
         </div>
-        <div>
-          <p style="font-family: var(--font-mono); font-size: 0.65rem; color: var(--muted-foreground); letter-spacing: 0.08em; margin-bottom: 0.375rem;">{item.years}</p>
-          <p style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--muted-foreground); line-height: 1.6;">{item.desc}</p>
-        </div>
-      </div>
-    ))}
-    <div style="border-top: 1px solid var(--border);"></div>
+      ))}
+    </div>
   </section>
 
   <!-- ── ÁREAS DE FOCO ──────────────────────────────────── -->
   <section style="max-width: 1200px; margin: 0 auto; padding: 0 2rem 5rem; border-top: 1px solid var(--border);">
-    <h2 style="font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted-foreground); padding: 3rem 0 2rem;">Áreas de foco</h2>
+    <h2 style="font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted-foreground); padding: var(--space-xl) 0 var(--space-lg);">Áreas de foco</h2>
 
-    <div data-reveal="scroll" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 0; border: 1px solid var(--border);">
+    <div data-reveal="scroll" class="hairline-card" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); overflow: hidden;">
       {focusAreas.map((area, i) => (
         <div
-          style={`padding: 2rem; ${i < focusAreas.length - 1 ? 'border-right: 1px solid var(--border);' : ''}`}
+          style={`padding: var(--space-lg); min-width: 0; ${i < focusAreas.length - 1 ? 'border-right: 1px solid var(--border);' : ''} border-bottom: 1px solid var(--border);`}
         >
-          <p style="font-family: var(--font-mono); font-size: 0.6rem; color: var(--accent); font-weight: 700; letter-spacing: 0.1em; margin-bottom: 1rem;">{area.num}</p>
-          <h3 style="font-family: var(--font-mono); font-size: 0.9rem; font-weight: 700; color: var(--foreground); margin-bottom: 0.75rem; letter-spacing: -0.01em;">{area.title}</h3>
-          <p style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--muted-foreground); line-height: 1.7;">{area.desc}</p>
+          <p class="tabular-nums" style="font-family: var(--font-mono); font-size: 0.6rem; color: var(--accent); font-weight: 700; letter-spacing: 0.08em; margin-bottom: var(--space-sm);">{area.num}</p>
+          <h3 style="font-family: var(--font-display); font-size: 1rem; font-weight: 600; color: var(--foreground); margin-bottom: var(--space-xs); letter-spacing: -0.01em;">{area.title}</h3>
+          <p style="font-family: var(--font-sans); font-size: 0.85rem; color: var(--muted-foreground); line-height: 1.6;">{area.desc}</p>
         </div>
       ))}
     </div>
@@ -145,10 +145,55 @@ const tools = ['FIGMA', 'FIGMA MCP', 'CLAUDE', 'CLAUDE CODE', 'CURSOR', 'DOVETAI
 
   <!-- ── FERRAMENTAS ────────────────────────────────────── -->
   <section style="max-width: 1200px; margin: 0 auto; padding: 0 2rem 6rem; border-top: 1px solid var(--border);">
-    <h2 style="font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted-foreground); padding: 3rem 0 2rem;">Ferramentas</h2>
-    <p style="font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.1em; color: var(--muted-foreground);">
+    <h2 style="font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted-foreground); padding: var(--space-xl) 0 var(--space-lg);">Ferramentas</h2>
+    <p style="font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.08em; color: var(--muted-foreground); line-height: 1.9;">
       {tools.join(' · ')}
     </p>
   </section>
+
+  <style>
+    .changelog-entry {
+      display: grid;
+      grid-template-columns: 12rem 1fr;
+      gap: var(--space-lg);
+      padding: var(--space-md) 0;
+      border-top: 1px solid var(--border);
+      align-items: baseline;
+    }
+
+    .changelog-entry:last-child { border-bottom: 1px solid var(--border); }
+
+    .changelog-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+
+    .changelog-tag {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--foreground);
+      background: var(--muted);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 0.15em 0.5em;
+      width: fit-content;
+    }
+
+    .changelog-years {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      color: var(--muted-foreground);
+      letter-spacing: 0.04em;
+    }
+
+    @media (max-width: 640px) {
+      .changelog-entry {
+        grid-template-columns: 1fr;
+        gap: var(--space-sm);
+      }
+    }
+  </style>
 
 </BaseLayout>

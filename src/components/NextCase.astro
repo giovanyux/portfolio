@@ -12,14 +12,13 @@ const { title, slug, tag } = Astro.props;
 
 <a
   href={`${BASE}/cases/${slug}`}
-  data-reveal="scroll"
   class="underline-hover"
-  style="display: block; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--border); text-decoration: none;"
+  style="display: block; margin-top: var(--space-lg); padding-top: var(--space-lg); border-top: 1px solid var(--border); text-decoration: none;"
 >
-  <p style="font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.14em; color: var(--muted-foreground); text-transform: uppercase; margin-bottom: 0.75rem;">
+  <p style="font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.12em; color: var(--muted-foreground); text-transform: uppercase; margin-bottom: var(--space-xs);">
     Próximo case · {tag}
   </p>
-  <h3 style="font-family: var(--font-mono); font-size: clamp(1.5rem, 3.5vw, 2.25rem); font-weight: 700; line-height: 1.1; letter-spacing: -0.02em; color: var(--foreground);">
+  <h3 style="font-family: var(--font-display); font-size: clamp(1.5rem, 3.5vw, 2.25rem); font-weight: 600; line-height: 1.1; letter-spacing: -0.02em; color: var(--foreground);">
     {title} →
   </h3>
 </a>

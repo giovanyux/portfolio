@@ -303,6 +303,24 @@ img { display: block; max-width: 100%; }
 /* ─── Tabular numbers on any data display ─────────────── */
 .tabular-nums { font-variant-numeric: tabular-nums; }
 
+/* ─── Page curtain — shutter-open once, on first load ─────
+   The whole <main> clips open like a shutter from the centre when the
+   site is first loaded (not on every internal navigation — see the
+   script in BaseLayout.astro, which only fires this once per visit). */
+#page-curtain {
+  clip-path: inset(50% 0);
+}
+
+#page-curtain.is-open {
+  clip-path: inset(0);
+  transition: clip-path 900ms var(--ease-out);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #page-curtain { clip-path: inset(0); }
+  #page-curtain.is-open { transition: none; }
+}
+
 /* ─── View Transitions defaults ──────────────────────── */
 @keyframes fade-in  { from { opacity: 0 } }
 @keyframes fade-out { to   { opacity: 0 } }

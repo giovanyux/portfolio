@@ -72,10 +72,34 @@ const ogLogo = new URL(`${BASE}/favicon.svg`, Astro.site).href;
   </head>
   <body>
     <Header />
-    <main>
+    <main id="page-curtain">
       <slot />
     </main>
     <Footer />
+
+    <!-- Page curtain: shutter-opens once per visit (sessionStorage-gated).
+         <main> is recreated on every soft navigation, so this must still
+         run every astro:page-load — it just only *animates* the first time;
+         later navigations open instantly, no re-trigger. -->
+    <script is:inline>
+      function initCurtain() {
+        var el = document.getElementById('page-curtain');
+        if (!el) return;
+        var seen = sessionStorage.getItem('curtain-shown');
+        if (seen) {
+          el.classList.add('is-open');
+          return;
+        }
+        requestAnimationFrame(function () {
+          requestAnimationFrame(function () {
+            el.classList.add('is-open');
+            sessionStorage.setItem('curtain-shown', '1');
+          });
+        });
+      }
+
+      document.addEventListener('astro:page-load', initCurtain);
+    </script>
 
     <!-- Animation engine: re-runs after every View Transition -->
     <script is:inline>

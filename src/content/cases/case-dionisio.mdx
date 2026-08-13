@@ -1,0 +1,127 @@
+---
+title: "Dionísio: a operação de mesa que não para quando a internet cai"
+description: "App do garçom e admin do gerente pra bistrôs de mesa sentada — discovery completo, telas em alta fidelidade e design system, com o desktop do balcão como servidor local."
+date: 2026-08-09
+tags: ["food-tech", "discovery", "design system", "offline-first"]
+cover: "/cases/case-dionisio/admin-02-visao-geral-do-salao-dark.webp"
+metric: "22 mesas · 6 garçons/turno"
+metricLabel: "escala de referência do piloto: bistrô de mesa sentada, casual dining, ticket médio R$ 95."
+client: "Dionísio — case prático"
+role: "Product Designer"
+industry: "Food-tech · Hospitality"
+platform: "App do garçom (mobile Android) + admin do gerente (desktop nativo)"
+duration: "Agosto de 2026"
+year: 2026
+---
+
+import BigNumber from "@/components/BigNumber.astro";
+import BigNumberGrid from "@/components/BigNumberGrid.astro";
+import Pullquote from "@/components/Pullquote.astro";
+import SystemDisplay from "@/components/SystemDisplay.astro";
+import TechNote from "@/components/TechNote.astro";
+
+## Contexto
+
+Bistrôs e restaurantes de mesa sentada perdem dinheiro em dois pontos específicos: entre o pedido e a conta, e no cliente que sai sem deixar contato. O Dionísio Salão é minha resposta prática a esse briefing — a operação de mesa que cobre o dia inteiro (abertura, atendimento, fechamento), funciona sem internet porque o **desktop do balcão é o servidor local**, e transforma cada mesa atendida em cliente capturado pra base de remarketing do negócio.
+
+Dois produtos que conversam entre si: o app do garçom, mobile, tema escuro, feito pra uma mão livre e turno sem treinamento prévio; e o admin do gerente, desktop nativo, que abre e fecha turno, autoriza exceções e fecha caixa. O piloto de referência é o Bistrô Paulista — 22 mesas, 6 garçons por turno, ticket médio de R$ 95, pico sexta e sábado.
+
+<Pullquote text="Diferente dos POS herdados de 2008, um garçom de primeiro dia usa à noite sem treinamento." />
+
+**O que o produto não é.** Não é KDS, não é emissor fiscal, não é cadastro de cardápio ou estoque, não é sistema que adivinha o mundo físico, e não é solução web que morre sem internet. **O que ele faz:** abre turno e distribui praças, captura cliente novo com consentimento, lança pedido com cardápio contextual, sugere venda com bonificação, mostra fila de preparo, fecha conta com divisão pré-configurada descendo pra maquininha, e opera coordenado em rede local durante queda de internet.
+
+## Benchmark e diferenciais
+
+Concorrentes analisados: Saipos, GrandChef, Consumer, Goomer, Awise. Todos oferecem lançamento de pedido e fechamento de conta — isso é tabela da casa. Nenhum deles oferece os três diferenciais que defini como confirmados: **captura de cliente na mesa** pra base de remarketing, **TEF pré-configurado no celular do garçom** (valor e forma descem prontos pra maquininha, sem retrabalho no caixa), e **operação coordenada em rede local sem depender de internet** — desktop como servidor, celulares falando via Wi-Fi interno.
+
+## Discovery
+
+Quatro personas guiaram cada decisão. **João, primeiro dia:** Android modesto, uma mão na bandeja, ambiente barulhento, não lê tooltip, medo de errar na frente do cliente — precisa que o app não o deixe cair. **João, três meses:** já não erra, o jogo dele agora é gorjeta, ranking e campanha — é quem usa o dashboard de performance. **Carla, no balcão:** gerente e caixa, desktop nativo, abre turno, distribui praças, autoriza desconto e cancelamento, mede o turno pela ausência de problema. **Cliente do bistrô:** ator secundário, não usa o sistema diretamente, mas a captura do telefone dele é o ativo estratégico do produto.
+
+A jornada central tem três fases — abertura (gerente distribui praças), atendimento (o núcleo do dia) e fechamento (caixa fecha, garçom vê gorjeta) — e dentro do atendimento, três fluxos secundários: **lançar** (cliente chega, mesa abre, cardápio contextual, pedido enviado, fila de preparo, servir), **fechar e pagar** (comanda, divisão configurada no app, TEF, mesa libera), e **rupturas** — pelo menos três: transferir item entre mesas, cancelar item já na cozinha, conexão cair no meio do lançamento, divisão desigual da mesa de oito.
+
+<TechNote label="Matriz CSD — o que sustentou as decisões">
+Certezas: conexão instável é fato operacional, não exceção. Rotatividade de garçom é alta e o app precisa de zero treinamento. Erro de lançamento custa dinheiro real. Suposições com risco nomeado: o garçom é vendedor, não digitador — por isso a sugestão de venda é um chip descartável, nunca um modal que bloqueia o fluxo. Dúvidas em aberto que mudariam o desenho: gorjeta é individual por praça ou rateada no time, e se cada garçom tem maquininha própria ou uma central no caixa.
+</TechNote>
+
+## Sistema · App do garçom
+
+Dezesseis telas, tema escuro por padrão, na ordem do turno: do login à maquininha. A primeira decisão de fluxo já é uma correção de reflexo — todo POS abre direto nas mesas, mas o garçom chegando no turno não precisa ver mesas primeiro. Ele precisa saber três coisas: o que está pegando fogo agora, quanto já ganhou, e o que pode vender. Por isso o app abre no **Painel**, não no Salão — mesa é referência, a um toque de distância, nunca ponto de partida.
+
+<SystemDisplay
+  variant="mosaic"
+  imageAspectRatio="9/16"
+  screens={[
+    { src: "/cases/case-dionisio/garcom-02-painel-dark.webp", alt: "Painel do garçom com alertas, ganhos do turno e sugestões de venda", caption: "Painel — alertas, ganhos e sugestão de venda, não uma lista de mesas" },
+    { src: "/cases/case-dionisio/garcom-05-cardapio-dark.webp", alt: "Cardápio contextual do garçom com modificadores", caption: "Cardápio contextual, reordenado pelo momento do turno" },
+    { src: "/cases/case-dionisio/garcom-07-comanda-dark.webp", alt: "Comanda com itens, modificadores e status de preparo", caption: "Comanda — item, modificador, status de preparo, tudo num toque" },
+  ]}
+/>
+
+O fechamento é onde a maior parte dos apps concorrentes trava: dividir uma conta de oito pessoas com consumo desigual. A solução separa **dividir por pessoa** (padrão, rápido) de **dividir por item** (quando alguém pediu menos), e a forma de pagamento de cada parte desce pronta pra maquininha via TEF — sem o caixa redigitar nada.
+
+<SystemDisplay
+  variant="mosaic"
+  imageAspectRatio="9/16"
+  screens={[
+    { src: "/cases/case-dionisio/garcom-10-fechamento-de-conta-dark.webp", alt: "Fechamento de conta do garçom", caption: "Fechamento — conta ainda é prévia até o pagamento confirmar" },
+    { src: "/cases/case-dionisio/garcom-12-dividir-por-item-dark.webp", alt: "Divisão de conta por item", caption: "Divisão por item, pra mesa com consumo desigual" },
+    { src: "/cases/case-dionisio/garcom-13-pagamento-tef-dark.webp", alt: "Tela de pagamento com TEF integrado", caption: "TEF integrado — valor e forma descem prontos pra maquininha" },
+  ]}
+/>
+
+## Sistema · Admin do gerente
+
+O admin é onde a operação inteira fica legível de relance. Visão do salão, autorização de exceções (desconto, cancelamento — sempre com PIN, nunca decisão unilateral do garçom), fechamento de caixa e dashboard de performance por garçom.
+
+<SystemDisplay
+  variant="mosaic"
+  imageAspectRatio="16/9"
+  screens={[
+    { src: "/cases/case-dionisio/admin-02-visao-geral-do-salao-dark.webp", alt: "Visão geral do salão no admin do gerente", caption: "Visão do salão inteiro, estado de cada mesa num relance" },
+    { src: "/cases/case-dionisio/admin-03-detalhe-da-mesa-dark.webp", alt: "Detalhe de uma mesa no admin", caption: "Detalhe da mesa — comanda, tempo aberto, garçom responsável" },
+    { src: "/cases/case-dionisio/admin-06-dashboard-de-performance-dark.webp", alt: "Dashboard de performance dos garçons", caption: "Performance por garçom — o que alimenta gorjeta e ranking" },
+  ]}
+/>
+
+## Resiliência offline
+
+O diferencial arquitetural do produto: o **desktop do balcão é o servidor local**. Internet cair não é uma exceção tratada com uma tela de erro — é um estado operacional esperado, com resposta definida pra cada um dos três pontos de falha mais prováveis.
+
+<TechNote label="Três fluxos de erro, não genéricos">
+**Conexão cai no meio do lançamento** — pedido salvo no servidor local, garçons continuam via rede interna, nenhum dado perdido; barra âmbar avisa, item fica com selo "na fila" até sincronizar. **Pagamento em cartão offline** — comanda e intenção de pagamento ficam registradas local, dinheiro e lançamento continuam normais, só o cartão aguarda internet voltar. **Desktop reinicia** — celulares mantêm cache local de comanda por até dois minutos; consulta funciona, lançamento novo aguarda reconexão automática.
+</TechNote>
+
+<SystemDisplay
+  variant="mosaic"
+  imageAspectRatio="16/9"
+  screens={[
+    { src: "/cases/case-dionisio/admin-08-operando-offline-rede-local-ativa-dark.webp", alt: "Admin operando offline com rede local ativa", caption: "Operando offline — rede local ativa, pedidos e comandas seguem normais" },
+    { src: "/cases/case-dionisio/admin-09-retorno-ao-reconectar-a-internet-dark.webp", alt: "Retorno ao reconectar a internet", caption: "Reconexão — sincroniza sozinho, sem intervenção do gerente" },
+  ]}
+/>
+
+## Design system
+
+Extraído das decisões já tomadas nas telas, não desenhado antes delas. Sora pra display (números de mesa, valores), Inter pro corpo. Base de espaçamento 4px, concentrada em múltiplos de 4 e 8. Dois temas com o mesmo sistema — page → surface → elevated — dark como padrão pro garçom (ambiente mal iluminado, poupa bateria OLED), light pro gerente no escritório.
+
+<BigNumberGrid>
+  <BigNumber number="48px" label="alvo mínimo de toque" context="Acima do padrão Android de 44px — mão molhada e com pressa erra menos com alvo grande." />
+  <BigNumber number="7" label="estados de mesa" context="Livre, reservada, ocupada, em preparo, conta pedida, em pagamento, aguardando limpeza — cada transição com gatilho rastreável." />
+</BigNumberGrid>
+
+Um princípio corta o sistema inteiro: **cor nunca sozinha.** Toda pill de estado tem cor forte, ícone e rótulo de texto juntos — pensado pra sol na tela, ambiente escuro ou daltonismo. E o violeta é reservado exclusivamente pra dinheiro (conta, pagamento), nunca competindo visualmente com o vermelho de erro ou o âmbar de atenção operacional.
+
+## IA no processo
+
+<Pullquote
+  text="Usei IA (Claude) como acelerador de execução e como sparring de raciocínio. Foi no sparring que derrubei ideias que não se sustentavam, como o 'chamou o garçom' mágico — um evento que o sistema não teria como saber de verdade. As decisões de produto, a UI e os cortes são meus."
+/>
+
+No discovery, a IA ajudou a construir a documentação e a pressionar cada decisão. Na produção das telas, sustentou qualidade em volume — variáveis e estilos de tipografia, tema claro duplicado a partir do escuro, ícones no lugar de emoji, e o design system extraído das decisões já tomadas. Muitas rodadas de ajuste fino; o raciocínio de produto não foi terceirizado.
+
+## Aprendizado
+
+Esse é um case prático — resposta a um briefing real de produto pra um bistrô de mesa sentada, não uma implantação em cliente pagante. O valor dele está no raciocínio documentado: da matriz CSD à máquina de estados da mesa, cada tela carrega o porquê antes do como. Se esse produto virasse operação real, os números de validação já estão definidos — tempo médio de lançamento por item, taxa de queda de conexão versus pedido perdido (que precisa ser zero), adoção pelos garçons no primeiro dia sem treinamento.
+
+A dúvida que mais me persegue não é de interface: é se gorjeta deveria ser individual por praça ou rateada no time — uma decisão de produto que muda o desenho do dashboard de performance inteiro, e que só um piloto real resolveria.

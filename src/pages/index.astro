@@ -2,11 +2,11 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import GridLines from '@/components/GridLines.astro';
 import CaseListItem from '@/components/CaseListItem.astro';
-import { CREDENTIALS, EXTRA_CASES, BASE } from '@/consts';
+import { CREDENTIALS, BASE } from '@/consts';
 import { getCollection } from 'astro:content';
 
 const allCases = await getCollection('cases', ({ data }) => !data.draft);
-const cases = [...allCases, ...EXTRA_CASES].sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+const cases = allCases.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 ---
 
 <BaseLayout>

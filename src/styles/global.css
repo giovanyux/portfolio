@@ -89,7 +89,13 @@ html.cursor-ready * {
   cursor: none !important;
 }
 
-html.cursor-ready :is(p, h1, h2, h3, h4, h5, h6, li, blockquote, figcaption, label, td, th, dt, dd):not(:has(a, button, input, textarea, select)) {
+/* A segunda linha (com " *") é o que faltava: cursor é herdado por padrão,
+   mas a regra `* { cursor: none }` acima também mira os FILHOS de um
+   parágrafo/heading (ex.: os <span> do headline do hero) diretamente — uma
+   declaração direta sempre vence herança, então sem essa linha o mouse
+   sumia especificamente em cima de texto que estava dentro de um <span>. */
+html.cursor-ready :is(p, h1, h2, h3, h4, h5, h6, li, blockquote, figcaption, label, td, th, dt, dd):not(:has(a, button, input, textarea, select)),
+html.cursor-ready :is(p, h1, h2, h3, h4, h5, h6, li, blockquote, figcaption, label, td, th, dt, dd):not(:has(a, button, input, textarea, select)) * {
   cursor: auto !important;
 }
 

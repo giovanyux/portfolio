@@ -10,7 +10,7 @@ const cases = allCases.sort((a, b) => b.data.date.getTime() - a.data.date.getTim
 
 // Copy EN pronta pro toggle de idioma, quando existir (nenhum toggle ativo
 // hoje — o antigo foi removido por ficar inerte). Ver design.md.
-// EN:
+// EN — mesma hierarquia em dois tempos (entrada / punch):
 //   Product design that speaks
 //   the language of the business
 ---
@@ -26,7 +26,7 @@ const cases = allCases.sort((a, b) => b.data.date.getTime() - a.data.date.getTim
     <GridLines glow lines={false} />
     <div style="position: relative; z-index: var(--z-base); padding: 6rem 2rem 6rem; max-width: 1200px; margin: 0 auto;">
     <div class="home-hero-layout" style="display: grid; gap: var(--space-2xl); align-items: center;">
-      <div style="max-width: 640px;">
+      <div class="home-hero-copy">
 
         <p
           data-reveal="hero"
@@ -35,14 +35,14 @@ const cases = allCases.sort((a, b) => b.data.date.getTime() - a.data.date.getTim
           LEAD PRODUCT DESIGNER · 09 ANOS
         </p>
 
-        <h1 style="font-family: var(--font-display); font-weight: 600; letter-spacing: -0.03em; line-height: 1.05; margin-bottom: var(--space-lg);">
-          <span data-reveal="hero" style="display: block; font-size: var(--text-display); color: var(--text); transition-delay: 100ms;">Design de produto que fala</span>
-          <span data-reveal="hero" style="display: block; font-size: var(--text-display); color: var(--action); transition-delay: 180ms;">a língua do negócio</span>
+        <h1 class="home-hero-headline">
+          <span data-reveal="hero" class="home-hero-headline-in" style="transition-delay: 100ms;">Design de produto que&nbsp;fala</span>
+          <span data-reveal="hero" class="home-hero-headline-punch" style="transition-delay: 180ms;">a língua do&nbsp;negócio</span>
         </h1>
 
         <p
           data-reveal="hero"
-          style="font-family: var(--font-sans); font-size: 1rem; color: var(--text-muted); max-width: 52ch; line-height: 1.65; margin-bottom: var(--space-lg); transition-delay: 260ms;"
+          style="font-family: var(--font-sans); font-size: 1rem; color: var(--text-muted); max-width: 46ch; line-height: 1.65; margin-bottom: var(--space-lg); transition-delay: 260ms;"
         >
           9 anos desenhando SaaS B2B e B2C. Do Figma ao componente em produção, com IA no fluxo.
           Aberto a posições sênior/lead, remoto.
@@ -74,10 +74,50 @@ const cases = allCases.sort((a, b) => b.data.date.getTime() - a.data.date.getTim
   </section>
 
   <style>
-    .home-hero-layout { grid-template-columns: 1fr; }
+    /* Ancoragem à esquerda: o texto sempre começa na mesma margem do logo
+       no header (mesmo container/padding), sem max-width fixo em px que
+       sobre espaço morto à esquerda em telas largas — o limite de leitura
+       vem de `ch` no parágrafo, não de uma caixa flutuando no meio da coluna. */
+    .home-hero-copy {
+      text-align: left;
+      max-width: 44rem;
+    }
+
+    .home-hero-layout {
+      grid-template-columns: 1fr;
+    }
 
     @media (min-width: 960px) {
-      .home-hero-layout { grid-template-columns: 1.15fr 0.85fr; }
+      .home-hero-layout { grid-template-columns: 1fr 0.82fr; }
+    }
+
+    /* Headline em dois tempos: entrada menor (--text) travada em cima da
+       frase-punch grande (--action), que é o maior elemento do hero. */
+    .home-hero-headline {
+      font-family: var(--font-display);
+      margin-bottom: var(--space-lg);
+    }
+
+    .home-hero-headline-in,
+    .home-hero-headline-punch {
+      display: block;
+      text-wrap: balance;
+    }
+
+    .home-hero-headline-in {
+      font-size: clamp(1.4rem, 1.3vw + 1.05rem, 3rem);
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.05;
+      letter-spacing: -0.01em;
+    }
+
+    .home-hero-headline-punch {
+      font-size: clamp(2.75rem, 4vw + 2rem, 6rem);
+      font-weight: 700;
+      color: var(--action);
+      line-height: 0.98;
+      letter-spacing: -0.02em;
     }
 
     .btn-pill-primary {
@@ -139,10 +179,10 @@ const cases = allCases.sort((a, b) => b.data.date.getTime() - a.data.date.getTim
       <span style="font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.1em; color: var(--text-muted); text-transform: uppercase; padding: 0 2rem; flex-shrink: 0; white-space: nowrap;">
         Anteriormente em
       </span>
-      <div style="overflow: hidden; flex: 1; min-width: 0;">
+      <div class="marquee-viewport" style="overflow: hidden; flex: 1; min-width: 0;">
         <div class="marquee-track" style="gap: var(--space-2xl); display: flex; align-items: center;">
-          {[...CREDENTIALS, ...CREDENTIALS, ...CREDENTIALS].map((name) => (
-            <span style="font-family: var(--font-mono); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; color: var(--text-muted); text-transform: uppercase; flex-shrink: 0;">
+          {[...CREDENTIALS, ...CREDENTIALS].map((name) => (
+            <span style="font-family: var(--font-mono); font-size: 0.6rem; font-weight: 600; letter-spacing: 0.1em; color: var(--text-muted); text-transform: uppercase; flex-shrink: 0; opacity: 0.85;">
               {name}
             </span>
           ))}

@@ -126,15 +126,25 @@ img { display: block; max-width: 100%; }
 }
 
 /* ─── Marquee (credentials strip) ─────────────────────── */
+/* Fade nas bordas: sem isso, os nomes cortam no meio da palavra exatamente
+   na borda do viewport (ex.: "SUPERLOGICA" virando "OGICA") — o fade some
+   com a letra antes de cortar. */
+.marquee-viewport {
+  mask-image: linear-gradient(to right, transparent 0, black 32px, black calc(100% - 32px), transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0, black 32px, black calc(100% - 32px), transparent 100%);
+}
+
 .marquee-track {
   display: flex;
   width: max-content;
-  animation: marquee 28s linear infinite;
+  animation: marquee 36s linear infinite;
 }
 
+/* Só 2 cópias da lista (o mínimo pra um loop sem costura) — 3 cópias
+   deixavam o mesmo nome visível duas vezes ao mesmo tempo em telas largas. */
 @keyframes marquee {
   from { transform: translateX(0); }
-  to   { transform: translateX(-33.3333%); }
+  to   { transform: translateX(-50%); }
 }
 
 @media (prefers-reduced-motion: reduce) {

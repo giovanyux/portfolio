@@ -27,7 +27,7 @@ const {
 } = Astro.props;
 ---
 
-<BaseLayout title={`${title} — Giovany Jr`} description={description} ogImage={`${BASE}${cover}`} type="article">
+<BaseLayout title={`${title} · Giovany Jr`} description={description} ogImage={`${BASE}${cover}`} type="article">
   <div style="max-width: 900px; margin: 0 auto; padding: 0 2rem;">
 
     <!-- Breadcrumb -->
@@ -79,8 +79,8 @@ const {
       {[
         { label: 'EMPRESA', value: client },
         { label: 'PAPEL', value: role },
-        { label: 'INDÚSTRIA', value: industry ?? '—' },
-        { label: 'PLATAFORMA', value: platform ?? '—' },
+        { label: 'INDÚSTRIA', value: industry ?? 'N/D' },
+        { label: 'PLATAFORMA', value: platform ?? 'N/D' },
         { label: 'DURAÇÃO', value: duration },
         { label: 'ANO', value: String(year) },
       ].map(({ label, value }, i) => (
@@ -115,20 +115,20 @@ const {
           class="cover-media"
         >
           <source src={BASE + coverVideo} type="video/mp4" />
-          <img src={BASE + cover} alt={`${title} — hero image`} class="cover-media" />
+          <img src={BASE + cover} alt={`${title}: imagem de capa`} class="cover-media" />
         </video>
       ) : (
         <img
           src={BASE + cover}
-          alt={`${title} — hero image`}
+          alt={`${title}: imagem de capa`}
           class="cover-media"
           onerror="this.style.display='none';"
         />
       )}
-      <span>{title} — hero screenshot</span>
+      <span>{title}: screenshot de capa</span>
     </div>
     <p style="font-family: var(--font-mono); font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.06em; margin-bottom: var(--space-xl); text-align: center;">
-      Fig. 01 — {title}
+      Fig. 01 · {title}
     </p>
 
     <!-- Resultado — card de superfície com acento --action, era a faixa grafite -->

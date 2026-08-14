@@ -26,7 +26,7 @@ const { items = [{}, {}, {}] } = Astro.props;
       <figure data-reveal="scroll" style={`transition-delay: ${i * 80}ms; border: 1px solid var(--border); padding: 2rem;`}>
         <blockquote style="margin: 0 0 1.5rem;">
           <p style="font-family: var(--font-sans); font-size: 0.95rem; line-height: 1.7; color: var(--text);">
-            {item.quote ?? '— depoimento a preencher —'}
+            {item.quote ?? 'Depoimento a preencher'}
           </p>
         </blockquote>
         <figcaption style="display: flex; align-items: center; gap: 0.75rem;">
@@ -34,8 +34,8 @@ const { items = [{}, {}, {}] } = Astro.props;
             {item.photo && <img src={item.photo} alt={item.name ?? ''} style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;" onerror="this.style.display='none';" />}
           </div>
           <div>
-            <p style="font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; color: var(--text);">{item.name ?? 'Nome — a preencher'}</p>
-            <p style="font-family: var(--font-mono); font-size: 0.65rem; color: var(--text-muted);">{item.role ?? 'Cargo — a preencher'}</p>
+            <p style="font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; color: var(--text);">{item.name ?? 'Nome a preencher'}</p>
+            <p style="font-family: var(--font-mono); font-size: 0.65rem; color: var(--text-muted);">{item.role ?? 'Cargo a preencher'}</p>
           </div>
         </figcaption>
       </figure>

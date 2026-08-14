@@ -35,7 +35,7 @@ export const NAV_LINKS = [
 ];
 
 export const SITE = {
-  title: 'Giovany Jr — Lead Product Designer | SaaS B2B e código com IA',
+  title: 'Giovany Jr · Lead Product Designer | SaaS B2B e código com IA',
   description:
     'Lead product designer com 9 anos em SaaS B2B e B2C. Do Figma ao componente em produção, com IA no fluxo.',
   url: 'https://giovanyux.github.io/portfolio',

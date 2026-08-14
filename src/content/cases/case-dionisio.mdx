@@ -19,6 +19,7 @@ import BigNumberGrid from "@/components/BigNumberGrid.astro";
 import Pullquote from "@/components/Pullquote.astro";
 import SystemDisplay from "@/components/SystemDisplay.astro";
 import TechNote from "@/components/TechNote.astro";
+import FigmaEmbed from "@/components/FigmaEmbed.astro";
 
 ## Contexto
 
@@ -29,6 +30,13 @@ Dois produtos que conversam entre si: o app do garçom, mobile, tema escuro, fei
 <Pullquote text="Diferente dos POS herdados de 2008, um garçom de primeiro dia usa à noite sem treinamento." />
 
 **O que o produto não é.** Não é KDS, não é emissor fiscal, não é cadastro de cardápio ou estoque, não é sistema que adivinha o mundo físico, e não é solução web que morre sem internet. **O que ele faz:** abre turno e distribui praças, captura cliente novo com consentimento, lança pedido com cardápio contextual, sugere venda com bonificação, mostra fila de preparo, fecha conta com divisão pré-configurada descendo pra maquininha, e opera coordenado em rede local durante queda de internet.
+
+<FigmaEmbed
+  label="Arquivo original"
+  title="Arquivo Figma do Case Dionísio"
+  description="O Figma completo (discovery, protótipo navegável e design system), na íntegra, pra explorar além do que está nesta página."
+  src="https://embed.figma.com/design/31mmqxid312csOZCFzHiJL/Case-Dion%C3%ADsio?node-id=1-2&embed-host=share"
+/>
 
 ## Benchmark e diferenciais
 
@@ -70,6 +78,13 @@ O fechamento é onde a maior parte dos apps concorrentes trava: dividir uma cont
   ]}
 />
 
+<FigmaEmbed
+  label="Ou explore você mesmo"
+  title="Protótipo navegável do app do garçom"
+  description="O mesmo fluxo, ligado e clicável, direto do Figma."
+  src="https://embed.figma.com/proto/31mmqxid312csOZCFzHiJL/Case-Dion%C3%ADsio?node-id=52-361&p=f&viewport=-414%2C-2830%2C0.55&scaling=scale-down&content-scaling=fixed&starting-point-node-id=52%3A361&page-id=1%3A2&embed-host=share"
+/>
+
 ## Sistema · Admin do gerente
 
 O admin é onde a operação inteira fica legível de relance. Visão do salão, autorização de exceções (desconto, cancelamento — sempre com PIN, nunca decisão unilateral do garçom), fechamento de caixa e dashboard de performance por garçom.
@@ -82,6 +97,13 @@ O admin é onde a operação inteira fica legível de relance. Visão do salão,
     { src: "/cases/case-dionisio/admin-03-detalhe-da-mesa-dark.webp", alt: "Detalhe de uma mesa no admin", caption: "Detalhe da mesa — comanda, tempo aberto, garçom responsável" },
     { src: "/cases/case-dionisio/admin-06-dashboard-de-performance-dark.webp", alt: "Dashboard de performance dos garçons", caption: "Performance por garçom — o que alimenta gorjeta e ranking" },
   ]}
+/>
+
+<FigmaEmbed
+  label="Ou explore você mesmo"
+  title="Protótipo navegável do admin do gerente"
+  description="O mesmo fluxo, ligado e clicável, direto do Figma."
+  src="https://embed.figma.com/proto/31mmqxid312csOZCFzHiJL/Case-Dion%C3%ADsio?node-id=83-8808&p=f&viewport=-414%2C-2830%2C0.55&scaling=scale-down&content-scaling=fixed&starting-point-node-id=83%3A9991&page-id=1%3A2&embed-host=share"
 />
 
 ## Resiliência offline

@@ -1,0 +1,76 @@
+---
+// Embed real do Figma (arquivo ou protótipo navegável) — existia na versão
+// original do case Dionísio (public/cases/case-dionisio/index.html) e se
+// perdeu no reskin pro sistema atual. Recuperado a pedido, com a moldura do
+// site (hairline, --radius-md) em vez do CSS antigo (--color-rule-strong etc).
+interface Props {
+  label?: string;
+  title: string;
+  description: string;
+  src: string;
+}
+
+const { label = 'Explore direto no Figma', title, description, src } = Astro.props;
+---
+
+<figure class="figma-embed" data-reveal="scroll" data-reveal-artifact>
+  <figcaption class="figma-embed-head">
+    <p class="figma-embed-label">{label}</p>
+    <p class="figma-embed-desc">{description}</p>
+  </figcaption>
+  <div class="figma-embed-frame">
+    <iframe src={src} title={title} loading="lazy" allowfullscreen></iframe>
+  </div>
+</figure>
+
+<style>
+  .figma-embed {
+    margin: 3rem 0;
+  }
+
+  .figma-embed-head {
+    margin-bottom: var(--space-md);
+  }
+
+  .figma-embed-label {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--action);
+    margin-bottom: 0.4rem;
+  }
+
+  .figma-embed-desc {
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    max-width: 60ch;
+  }
+
+  .figma-embed-frame {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 800 / 450;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: var(--surface);
+  }
+
+  .figma-embed-frame iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+
+  @media (max-width: 640px) {
+    .figma-embed-frame {
+      aspect-ratio: 4 / 3;
+    }
+  }
+</style>

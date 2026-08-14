@@ -95,7 +95,10 @@ const personLd = {
 
     <title>{title}</title>
 
-    <!-- Dark mode: prevent flash before hydration -->
+    <!-- Dark mode (previne flash) + marca .js síncrono, antes do primeiro
+         paint: o CSS do scroll-reveal só esconde [data-reveal] dentro de
+         `.js ...` — sem essa classe (JS desligado/bloqueado), nada começa
+         invisível, o conteúdo só nunca ganha a animação de entrada. -->
     <script is:inline>
       (function () {
         var saved = localStorage.getItem('theme');
@@ -103,6 +106,7 @@ const personLd = {
         if (saved === 'dark' || (!saved && prefersDark)) {
           document.documentElement.classList.add('dark');
         }
+        document.documentElement.classList.add('js');
       })();
     </script>
 
@@ -142,25 +146,61 @@ const personLd = {
 
     <!-- Animation engine: re-runs after every View Transition -->
     <script is:inline>
+      // Narrativa em cascata: dentro de um container [data-reveal-narrative]
+      // (grid de cases, corpo de um case), os filhos diretos ainda sem
+      // data-reveal próprio ganham um automaticamente, com atraso incremental
+      // que reseta a cada heading (nova "seção" do case). Um primitivo só,
+      // sem animação bespoke por seção — e sem tocar no conteúdo em si, isso
+      // roda em cima do HTML já renderizado.
+      function tagNarrativeGroups() {
+        var containers = document.querySelectorAll('[data-reveal-narrative]');
+        containers.forEach(function(container) {
+          var i = 0;
+          Array.prototype.forEach.call(container.children, function(child) {
+            if (/^H[1-4]$/.test(child.tagName)) i = 0;
+            var alreadyHandled = child.hasAttribute('data-reveal') || child.querySelector('[data-reveal]');
+            if (!alreadyHandled) {
+              child.setAttribute('data-reveal', 'scroll');
+              var isArtifact = child.tagName === 'FIGURE' ||
+                child.classList.contains('case-card') ||
+                child.classList.contains('hairline-card') ||
+                child.classList.contains('sysdisplay') ||
+                child.classList.contains('result-card');
+              if (isArtifact) child.setAttribute('data-reveal-artifact', '');
+              child.style.setProperty('--reveal-delay', Math.min(i * 100, 400) + 'ms');
+            }
+            i++;
+          });
+        });
+      }
+
       function initReveal() {
+        tagNarrativeGroups();
+
         // Hero reveals: immediate, staggered
         var heroes = document.querySelectorAll('[data-reveal="hero"]');
         heroes.forEach(function(el, i) {
           setTimeout(function() { el.classList.add('is-visible'); }, i * 120 + 80);
         });
 
-        // Scroll reveals: Intersection Observer
+        // Scroll reveals: Intersection Observer, um só pra página inteira.
         var scrollEls = document.querySelectorAll('[data-reveal="scroll"]');
         if (!scrollEls.length) return;
 
         var observer = new IntersectionObserver(function(entries) {
           entries.forEach(function(entry) {
             if (entry.isIntersecting) {
-              entry.target.classList.add('is-visible');
-              observer.unobserve(entry.target);
+              var el = entry.target;
+              el.classList.add('is-animating');
+              el.classList.add('is-visible');
+              el.addEventListener('transitionend', function onEnd() {
+                el.classList.remove('is-animating');
+                el.removeEventListener('transitionend', onEnd);
+              });
+              observer.unobserve(el);
             }
           });
-        }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+        }, { threshold: 0.15, rootMargin: '0px 0px -10% 0px' });
 
         scrollEls.forEach(function(el) { observer.observe(el); });
       }

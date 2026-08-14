@@ -25,7 +25,7 @@ const cases = allCases.sort((a, b) => b.data.date.getTime() - a.data.date.getTim
   </section>
 
   <section style="max-width: 1200px; margin: 0 auto; padding: 0 2rem var(--space-2xl);">
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--space-md);">
+    <div data-reveal-narrative style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--space-md);">
       {cases.map((c, i) => (
         <CaseListItem
           number={String(i + 1).padStart(2, '0')}

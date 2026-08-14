@@ -66,6 +66,7 @@
   --dur-micro: 120ms;
   --dur-short: 220ms;
   --dur-long: 420ms;
+  --dur-reveal: 520ms; /* scroll-reveal: opacity+translateY, gesto único do site inteiro */
 
   /* ---- z-index — não muda no rebrand ---- */
   --z-base: 1;

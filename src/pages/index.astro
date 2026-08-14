@@ -174,7 +174,7 @@ const cases = allCases.sort((a, b) => b.data.date.getTime() - a.data.date.getTim
   </style>
 
   <!-- ── CREDENTIALS STRIP ─────────────────────────────── -->
-  <div style="border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: var(--space-sm) 0;">
+  <div data-reveal="scroll" style="border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: var(--space-sm) 0;">
     <div style="display: flex; align-items: center;">
       <span style="font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.1em; color: var(--text-muted); text-transform: uppercase; padding: 0 2rem; flex-shrink: 0; white-space: nowrap;">
         Anteriormente em
@@ -193,11 +193,11 @@ const cases = allCases.sort((a, b) => b.data.date.getTime() - a.data.date.getTim
 
   <!-- ── TRABALHOS SELECIONADOS — portfolio grid ─────────── -->
   <section style="max-width: 1200px; margin: 0 auto; padding: var(--space-2xl) 2rem 0;">
-    <p style="font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); margin-bottom: var(--space-lg);">
+    <p data-reveal="scroll" style="font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); margin-bottom: var(--space-lg);">
       Trabalhos selecionados
     </p>
 
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--space-md);">
+    <div data-reveal-narrative style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--space-md);">
       {cases.map((c, i) => (
         <CaseListItem
           number={String(i + 1).padStart(2, '0')}
@@ -218,7 +218,7 @@ const cases = allCases.sort((a, b) => b.data.date.getTime() - a.data.date.getTim
 
   <!-- ── CTA FINAL ──────────────────────────────────────── -->
   <section style="max-width: 1200px; margin: 0 auto; padding: var(--space-2xl) 2rem;">
-    <div data-reveal="scroll" class="result-card" style="padding: var(--space-xl) var(--space-lg);">
+    <div data-reveal="scroll" data-reveal-artifact class="result-card" style="padding: var(--space-xl) var(--space-lg);">
       <p class="result-card-label" style="font-family: var(--font-sans); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); margin-bottom: var(--space-sm);">
         Vamos conversar
       </p>

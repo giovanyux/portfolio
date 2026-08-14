@@ -100,6 +100,7 @@ const {
     <!-- Hero image / video -->
     <div
       data-reveal="scroll"
+      data-reveal-artifact
       class="img-placeholder"
       style="width: 100%; aspect-ratio: 16/9; margin-bottom: 0.5rem; border-radius: var(--radius-md);"
     >
@@ -134,6 +135,7 @@ const {
     <!-- Resultado — card de superfície com acento --action, era a faixa grafite -->
     <div
       data-reveal="scroll"
+      data-reveal-artifact
       class="result-card"
       style="padding: var(--space-lg); margin-bottom: var(--space-xl);"
     >
@@ -144,8 +146,11 @@ const {
       )}
     </div>
 
-    <!-- Markdown content -->
-    <article class="prose">
+    <!-- Markdown content — cascata narrativa: cada bloco (heading, parágrafo,
+         componente) revela em sequência conforme entra na tela, o atraso
+         reseta a cada heading (nova seção do case). Ver tagNarrativeGroups
+         em BaseLayout.astro. -->
+    <article class="prose" data-reveal-narrative>
       <slot />
     </article>
 

@@ -80,9 +80,7 @@ img { display: block; max-width: 100%; }
   }
 }
 
-/* ─── Grid Lines + corner glows ────────────────────────
-   Glow values are exact Figma exports (design.md), not estimated —
-   radial-gradient stops matching the two source nodes. */
+/* ─── Grid Lines ───────────────────────────────────────── */
 .grid-lines {
   position: absolute;
   inset: 0;
@@ -92,25 +90,18 @@ img { display: block; max-width: 100%; }
   z-index: var(--z-base);
 }
 
-.grid-lines--glow::before,
-.grid-lines--glow::after {
-  content: '';
+/* ─── Hero glow — single layer, no box edges ─────────────
+   Two radial-gradients on ONE full-inset element, each an explicit
+   circle sized in vw (not a small fixed-px box), centred outside the
+   viewport so only the already-faded outer edge is ever visible. This
+   is what stops it reading as a rectangle with a seam: there is no
+   element boundary inside the visible area for the eye to catch on. */
+.hero-glow {
   position: absolute;
-  width: 640px;
-  height: 640px;
+  inset: 0;
   pointer-events: none;
-}
-
-.grid-lines--glow::before {
-  top: -180px;
-  left: -180px;
-  background: var(--glow-top);
-}
-
-.grid-lines--glow::after {
-  bottom: -220px;
-  right: -220px;
-  background: var(--glow-bottom);
+  background-image: var(--glow-top), var(--glow-bottom);
+  z-index: var(--z-base);
 }
 
 /* ─── Marquee (credentials strip) ─────────────────────── */
@@ -122,7 +113,7 @@ img { display: block; max-width: 100%; }
 
 @keyframes marquee {
   from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
+  to   { transform: translateX(-33.3333%); }
 }
 
 @media (prefers-reduced-motion: reduce) {

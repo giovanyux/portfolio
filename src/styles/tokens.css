@@ -23,8 +23,8 @@
   --logo-bg: #1C1310;
 
   /* glows de canto — valores exatos do Figma (radial, não estimado) */
-  --glow-top:    radial-gradient(circle, rgba(61,187,255,0.4) 0%, rgba(61,187,255,0) 100%);
-  --glow-bottom: radial-gradient(circle, rgba(224,158,150,0.4) 0%, rgba(224,158,150,0.26) 45%, rgba(224,158,150,0) 100%);
+  --glow-top:    radial-gradient(circle 70vw at -10% -25%, rgba(61,187,255,0.30) 0%, rgba(61,187,255,0) 100%);
+  --glow-bottom: radial-gradient(circle 70vw at 110% 125%, rgba(224,158,150,0.30) 0%, rgba(224,158,150,0) 100%);
 
   /* ---- type: Poppins display + Inter body + JetBrains Mono (técnico, pontual) ---- */
   --font-display: 'Poppins', ui-sans-serif, system-ui, sans-serif;
@@ -87,6 +87,6 @@
   --accent:          #E9A79C;
   --grid-line:       rgba(246, 232, 221, 0.06);
 
-  --glow-top:    radial-gradient(circle, rgba(61,187,255,0.3) 0%, rgba(61,187,255,0) 100%);
-  --glow-bottom: radial-gradient(circle, rgba(224,158,150,0.3) 0%, rgba(224,158,150,0.18) 45%, rgba(224,158,150,0) 100%);
+  --glow-top:    radial-gradient(circle 70vw at -10% -25%, rgba(61,187,255,0.18) 0%, rgba(61,187,255,0) 100%);
+  --glow-bottom: radial-gradient(circle 70vw at 110% 125%, rgba(224,158,150,0.16) 0%, rgba(224,158,150,0) 100%);
 }

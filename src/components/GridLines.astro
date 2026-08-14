@@ -1,7 +1,9 @@
 ---
 interface Props {
+  lines?: boolean;
   glow?: boolean;
 }
-const { glow = false } = Astro.props;
+const { lines = true, glow = false } = Astro.props;
 ---
-<div class={`grid-lines ${glow ? 'grid-lines--glow' : ''}`} aria-hidden="true"></div>
+{lines && <div class="grid-lines" aria-hidden="true"></div>}
+{glow && <div class="hero-glow" aria-hidden="true"></div>}

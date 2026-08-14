@@ -7,114 +7,125 @@ import { getCollection } from 'astro:content';
 
 const allCases = await getCollection('cases', ({ data }) => !data.draft);
 const cases = allCases.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+// Copy EN pronta pro toggle de idioma, quando existir (nenhum toggle ativo
+// hoje — o antigo foi removido por ficar inerte). Ver design.md.
+// EN:
+//   Product design that speaks
+//   the language of the business
 ---
 
 <BaseLayout>
 
   <!-- ── MARQUEE HERO ──────────────────────────────────── -->
   <section style="position: relative; overflow: hidden; padding: 6rem 2rem 6rem; max-width: 1200px; margin: 0 auto;">
-    <GridLines glow />
-    <div style="position: relative; z-index: var(--z-base); max-width: 900px;">
+    <GridLines glow lines={false} />
+    <div class="home-hero-layout" style="position: relative; z-index: var(--z-base); display: grid; gap: var(--space-2xl); align-items: center;">
+      <div style="max-width: 640px;">
 
-      <p
-        data-reveal="hero"
-        style="font-family: var(--font-mono); font-size: 0.7rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); margin-bottom: var(--space-md);"
-      >
-        LEAD PRODUCT DESIGNER · 09 ANOS
-      </p>
-
-      <h1 style="font-family: var(--font-display); font-weight: 600; letter-spacing: -0.03em; line-height: 0.98; margin-bottom: var(--space-lg); overflow: hidden;">
-        <span data-reveal="hero" style="display: block; font-size: var(--text-display); transition-delay: 100ms;">Criando produtos</span>
-        <span data-reveal="hero" style="display: block; font-size: var(--text-display); transition-delay: 180ms;">com método</span>
-        <span data-reveal="hero" style="display: block; font-size: var(--text-display-s); color: var(--action); transition-delay: 260ms;">
-          <span class="cycling-text">
-            <span class="cycling-item">e AI-Augmented Design</span>
-            <span class="cycling-item">e pesquisa com usuário</span>
-            <span class="cycling-item">e visão de produto</span>
-          </span>
-        </span>
-      </h1>
-
-<style>
-  .cycling-text {
-    display: inline-block;
-    position: relative;
-    vertical-align: top;
-  }
-
-  .cycling-item {
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    white-space: nowrap;
-    opacity: 0;
-    transform: translateY(8px);
-    animation: cycle-text 15s infinite;
-  }
-
-  .cycling-item:nth-child(1) {
-    position: relative;
-    animation-delay: 0s;
-  }
-
-  .cycling-item:nth-child(2) {
-    animation-delay: 5s;
-  }
-
-  .cycling-item:nth-child(3) {
-    animation-delay: 10s;
-  }
-
-  @keyframes cycle-text {
-    0%, 30% {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    33%, 100% {
-      opacity: 0;
-      transform: translateY(-8px);
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .cycling-item {
-      animation: none;
-      opacity: 1;
-      position: relative;
-    }
-    .cycling-item:not(:first-child) {
-      display: none;
-    }
-  }
-</style>
-
-      <p
-        data-reveal="hero"
-        style="font-family: var(--font-sans); font-size: 1rem; color: var(--text-muted); max-width: 52ch; line-height: 1.65; margin-bottom: var(--space-lg); transition-delay: 340ms;"
-      >
-        9 anos desenhando SaaS B2B e B2C. Do Figma ao componente em produção, com IA no fluxo.
-        Aberto a posições sênior/lead, remoto.
-      </p>
-
-      <div data-reveal="hero" style="display: flex; gap: var(--space-lg); align-items: center; flex-wrap: wrap; transition-delay: 420ms;">
-        <a
-          href={`${BASE}/cases`}
-          class="underline-hover"
-          style="font-family: var(--font-mono); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.06em; color: var(--text); text-decoration: none; text-transform: uppercase;"
+        <p
+          data-reveal="hero"
+          style="font-family: var(--font-mono); font-size: 0.7rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); margin-bottom: var(--space-md);"
         >
-          Ver trabalhos →
-        </a>
-        <a
-          href={`${BASE}/contato`}
-          class="underline-hover"
-          style="font-family: var(--font-mono); font-size: 0.8rem; font-weight: 500; letter-spacing: 0.06em; color: var(--text-muted); text-decoration: none; text-transform: uppercase;"
+          LEAD PRODUCT DESIGNER · 09 ANOS
+        </p>
+
+        <h1 style="font-family: var(--font-display); font-weight: 600; letter-spacing: -0.03em; line-height: 1.05; margin-bottom: var(--space-lg);">
+          <span data-reveal="hero" style="display: block; font-size: var(--text-display); color: var(--text); transition-delay: 100ms;">Design de produto que fala</span>
+          <span data-reveal="hero" style="display: block; font-size: var(--text-display); color: var(--action); transition-delay: 180ms;">a língua do negócio</span>
+        </h1>
+
+        <p
+          data-reveal="hero"
+          style="font-family: var(--font-sans); font-size: 1rem; color: var(--text-muted); max-width: 52ch; line-height: 1.65; margin-bottom: var(--space-lg); transition-delay: 260ms;"
         >
-          Entrar em contato →
-        </a>
+          9 anos desenhando SaaS B2B e B2C. Do Figma ao componente em produção, com IA no fluxo.
+          Aberto a posições sênior/lead, remoto.
+        </p>
+
+        <div data-reveal="hero" style="display: flex; gap: var(--space-md); align-items: center; flex-wrap: wrap; transition-delay: 340ms;">
+          <a href={`${BASE}/cases`} class="btn-pill-primary">
+            Ver trabalhos →
+          </a>
+          <a href={`${BASE}/contato`} class="btn-ghost">
+            Entrar em contato →
+          </a>
+        </div>
+      </div>
+
+      <div data-reveal="hero" class="home-hero-art" style="transition-delay: 200ms;">
+        <figure class="hero-artifact">
+          <img
+            src={`${BASE}/cases/case-dionisio/admin-02-visao-geral-do-salao-dark.webp`}
+            alt="Admin do Dionísio: visão geral do salão em tempo real, produto real entregue"
+            width="800"
+            height="424"
+            loading="eager"
+          />
+        </figure>
       </div>
     </div>
   </section>
+
+  <style>
+    .home-hero-layout { grid-template-columns: 1fr; }
+
+    @media (min-width: 960px) {
+      .home-hero-layout { grid-template-columns: 1.15fr 0.85fr; }
+    }
+
+    .btn-pill-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2xs);
+      font-family: var(--font-sans);
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 0.75rem 1.5rem;
+      border-radius: 999px;
+      background: var(--text);
+      color: var(--bg);
+      text-decoration: none;
+      white-space: nowrap;
+      transition: opacity var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out);
+    }
+    .btn-pill-primary:hover { opacity: 0.85; }
+    .btn-pill-primary:active { transform: translateY(1px); }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2xs);
+      font-family: var(--font-sans);
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 0.75rem 0.25rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      white-space: nowrap;
+      transition: color var(--dur-short) var(--ease-out);
+    }
+    .btn-ghost:hover { color: var(--text); }
+
+    .hero-artifact {
+      margin: 0;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      transform: rotate(-1.5deg);
+      box-shadow: 0 28px 56px -24px color-mix(in oklch, var(--text) 45%, transparent);
+    }
+
+    .hero-artifact img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    @media (max-width: 640px) {
+      .hero-artifact { transform: none; }
+    }
+  </style>
 
   <!-- ── CREDENTIALS STRIP ─────────────────────────────── -->
   <div style="border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: var(--space-sm) 0;">
@@ -123,8 +134,8 @@ const cases = allCases.sort((a, b) => b.data.date.getTime() - a.data.date.getTim
         Anteriormente em
       </span>
       <div style="overflow: hidden; flex: 1; min-width: 0;">
-        <div class="marquee-track" style="gap: var(--space-xl); display: flex; align-items: center;">
-          {[...CREDENTIALS, ...CREDENTIALS].map((name) => (
+        <div class="marquee-track" style="gap: var(--space-2xl); display: flex; align-items: center;">
+          {[...CREDENTIALS, ...CREDENTIALS, ...CREDENTIALS].map((name) => (
             <span style="font-family: var(--font-mono); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; color: var(--text-muted); text-transform: uppercase; flex-shrink: 0;">
               {name}
             </span>

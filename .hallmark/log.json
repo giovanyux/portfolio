@@ -3,6 +3,16 @@
     "date": "2026-08-13",
     "scope": "app",
     "macrostructure": "Marquee Hero / Portfolio Grid / Workbench (design.md families)",
+    "theme": "custom",
+    "theme_axes": "light (paper #FFF3EB) / geometric-sans (Poppins) / warm (maroon #5E2116 text, cool-blue #31749E action)",
+    "vibe": "identidade real do usuário — capa-linkedin.jpeg + logo.webm, creme quente",
+    "enrichment": "none (typography + real screenshots + animated logo mark only)",
+    "brief": "Rebrand completo do portfolio pra identidade visual própria, extraída de assets reais (banner LinkedIn + logo animada), substituindo o tema Cobalt anterior"
+  },
+  {
+    "date": "2026-08-13",
+    "scope": "app",
+    "macrostructure": "Marquee Hero / Portfolio Grid / Workbench (design.md families)",
     "theme": "Cobalt",
     "enrichment": "none (typography + real screenshots only)",
     "brief": "Giovany Jr portfolio — full multi-page redesign, técnico/funcional/informativo/profissional para recrutadores, anchored on the existing #0066FF brand accent"

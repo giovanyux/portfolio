@@ -186,8 +186,25 @@ img { display: block; max-width: 100%; }
 .result-card {
   background: var(--surface);
   border: 1px solid var(--border);
-  border-left: 3px solid var(--action);
   border-radius: var(--radius-md);
+}
+
+/* Pequeno quadrado de acento ao lado do label — em vez da listra lateral
+   (side-stripe card é um tell reconhecido: borda grossa colorida numa
+   borda só). Usar junto de .result-card-label no markup. */
+.result-card-label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2xs);
+}
+
+.result-card-label::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-radius: 2px;
+  background: var(--action);
+  flex-shrink: 0;
 }
 
 /* ─── Prose (case body) ───────────────────────────────── */

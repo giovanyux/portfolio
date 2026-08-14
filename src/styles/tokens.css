@@ -1,11 +1,14 @@
-/* Rebrand · identidade nova (light/dark) — extraída de capa-linkedin.jpeg + logo.webm
- * De-para completo em design.md. Accent é SEMPRE decorativo — nunca texto/link/ícone
- * com significado (isso usa --action). Contraste calculado via WCAG 2.1, não estimado.
+/* Hallmark · genre: custom (warm, autoral) · macrostructure: family (Marquee Hero /
+ * Portfolio Grid / Workbench) · theme: custom (vibe: "quente, criado a partir da
+ * identidade real — capa-linkedin.jpeg + logo.webm") · design-system: design.md ·
+ * designed-as-app
+ * Accent é SEMPRE decorativo — nunca texto/link/ícone com significado (isso usa
+ * --action). Contraste calculado via WCAG 2.1, não estimado.
  */
 :root {
   /* ---- color ---- */
   --bg:              #FFF3EB;
-  --surface:         #FFFFFF;
+  --surface:         #FFFCFA; /* levemente puxado pro creme — nunca #fff puro */
   --border:          #EFDDD1;
   --border-strong:   color-mix(in oklab, var(--border), var(--text) 30%);
   --text:            #5E2116;
@@ -14,6 +17,10 @@
   --action-foreground: #FFFFFF;
   --accent:          #DC9790; /* decorativo apenas — sparkle, destaque pontual. NUNCA texto/link/ícone com significado */
   --grid-line:       rgba(94, 33, 22, 0.05);
+
+  /* Fundo fixo do mark da logo — intencionalmente igual nos dois temas
+     (o vídeo carrega seu próprio contraste), por isso fica fora do bloco .dark. */
+  --logo-bg: #1C1310;
 
   /* glows de canto — valores exatos do Figma (radial, não estimado) */
   --glow-top:    radial-gradient(circle, rgba(61,187,255,0.4) 0%, rgba(61,187,255,0) 100%);

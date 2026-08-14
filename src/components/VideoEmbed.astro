@@ -1,0 +1,60 @@
+---
+// Vídeo embedado (YouTube) — existia no topo da página estática original do
+// case Dionísio, antes até do header do case, e se perdeu no reskin.
+// Recuperado a pedido, com a moldura do site em vez do CSS antigo.
+interface Props {
+  src: string;
+  title: string;
+  label?: string;
+}
+
+const { src, title, label } = Astro.props;
+---
+
+<figure class="video-embed" data-reveal="scroll" data-reveal-artifact>
+  {label && <figcaption class="video-embed-label">{label}</figcaption>}
+  <div class="video-embed-frame">
+    <iframe
+      src={src}
+      title={title}
+      loading="lazy"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      referrerpolicy="strict-origin-when-cross-origin"
+      allowfullscreen
+    ></iframe>
+  </div>
+</figure>
+
+<style>
+  .video-embed {
+    margin: 3rem 0;
+  }
+
+  .video-embed-label {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--action);
+    margin-bottom: var(--space-md);
+  }
+
+  .video-embed-frame {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: var(--surface);
+  }
+
+  .video-embed-frame iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+</style>

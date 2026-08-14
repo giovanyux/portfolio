@@ -80,6 +80,19 @@ img { display: block; max-width: 100%; }
   top: var(--space-md);
 }
 
+/* Cursor customizado: só esconde o nativo sob .cursor-ready, marcada pelo
+   próprio script do cursor DEPOIS de garantir que está rodando (ver
+   CustomCursor.astro) — se o JS falhar, essa classe nunca chega e o cursor
+   do sistema nunca some. Texto legível recupera o nativo (I-beam). */
+html.cursor-ready,
+html.cursor-ready * {
+  cursor: none !important;
+}
+
+html.cursor-ready :is(p, h1, h2, h3, h4, h5, h6, li, blockquote, figcaption, label, td, th, dt, dd):not(:has(a, button, input, textarea, select)) {
+  cursor: auto !important;
+}
+
 /* ─── Reveal — narrativa em cascata, um gesto só ──────────
    Gate por `.js`: só esconde [data-reveal] se o JS rodou a tempo de marcar
    <html class="js"> (script inline síncrono no topo do <head>). Sem JS, ou

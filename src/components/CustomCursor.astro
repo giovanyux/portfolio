@@ -1,0 +1,150 @@
+---
+// Cursor contextual: wayfinding, não enfeite. Ponto pequeno e preciso por
+// padrão; sobre um card de case vira um rótulo pill; sobre link/botão
+// genérico encolhe; sobre texto desaparece e devolve o cursor nativo.
+// Só (pointer: fine) and (hover: hover) — em touch fica 100% desligado.
+---
+
+<div id="custom-cursor" class="custom-cursor" aria-hidden="true" transition:persist>
+  <span class="custom-cursor-dot"></span>
+  <span class="custom-cursor-label"></span>
+</div>
+
+<style>
+  .custom-cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: var(--z-toast);
+    pointer-events: none;
+    transform: translate3d(-100px, -100px, 0);
+    will-change: transform;
+  }
+
+  .custom-cursor-dot {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--action);
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+    transition: transform 150ms var(--ease-out), background-color 150ms var(--ease-out), opacity 150ms var(--ease-out);
+  }
+
+  .custom-cursor-label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translate(-50%, -50%) scale(0.7);
+    opacity: 0;
+    white-space: nowrap;
+    background: var(--text);
+    color: var(--bg);
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 0.55rem 1rem;
+    border-radius: 999px;
+    transition: transform 180ms var(--ease-out), opacity 180ms var(--ease-out);
+  }
+
+  /* sobre link/botão genérico: encolhe, indica clique preciso */
+  .custom-cursor.is-link .custom-cursor-dot {
+    background: var(--text);
+    transform: translate(-50%, -50%) scale(0.55);
+  }
+
+  /* sobre card de case / vitrine: vira rótulo */
+  .custom-cursor.is-case .custom-cursor-dot { opacity: 0; }
+  .custom-cursor.is-case .custom-cursor-label {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  /* clique ativo: leve scale down, funciona em cima de qualquer estado */
+  .custom-cursor.is-active .custom-cursor-dot { transform: translate(-50%, -50%) scale(0.7); }
+  .custom-cursor.is-active .custom-cursor-label { transform: translate(-50%, -50%) scale(0.92); }
+
+  /* sobre texto: cursor custom some por completo — o nativo (I-beam) assume,
+     ver a regra `cursor: auto !important` em global.css que devolve o
+     cursor nativo pros mesmos elementos. */
+  .custom-cursor.is-text .custom-cursor-dot,
+  .custom-cursor.is-text .custom-cursor-label {
+    opacity: 0;
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    if (window.__cursorInitialized) return;
+
+    var canUseCustomCursor = window.matchMedia('(pointer: fine) and (hover: hover)').matches;
+    var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    // Touch (sem pointer fino) ou reduced-motion: cursor nativo, sem exceção.
+    if (!canUseCustomCursor || reducedMotion) return;
+
+    var cursor = document.getElementById('custom-cursor');
+    if (!cursor) return;
+    var label = cursor.querySelector('.custom-cursor-label');
+
+    window.__cursorInitialized = true;
+
+    var TEXT_SELECTOR = 'p, h1, h2, h3, h4, h5, h6, li, blockquote, figcaption, label, td, th, dt, dd';
+    var LINK_SELECTOR = 'a, button, [role="button"], summary, input, textarea, select';
+    var CASE_SELECTOR = '.case-card-link, [data-cursor-label]';
+
+    var rafId = null;
+    var x = -100;
+    var y = -100;
+
+    function render() {
+      cursor.style.transform = 'translate3d(' + x + 'px,' + y + 'px,0)';
+      rafId = null;
+    }
+
+    function onMouseMove(e) {
+      x = e.clientX;
+      y = e.clientY;
+      if (rafId === null) rafId = requestAnimationFrame(render);
+    }
+
+    function onPointerOver(e) {
+      var caseEl = e.target.closest(CASE_SELECTOR);
+      if (caseEl) {
+        cursor.className = 'custom-cursor is-case';
+        label.textContent = caseEl.getAttribute('data-cursor-label') || 'Ver case →';
+        return;
+      }
+      var linkEl = e.target.closest(LINK_SELECTOR);
+      if (linkEl) {
+        cursor.className = 'custom-cursor is-link';
+        return;
+      }
+      var textEl = e.target.closest(TEXT_SELECTOR);
+      if (textEl && !textEl.closest(LINK_SELECTOR)) {
+        cursor.className = 'custom-cursor is-text';
+        return;
+      }
+      cursor.className = 'custom-cursor';
+    }
+
+    function onMouseDown() { cursor.classList.add('is-active'); }
+    function onMouseUp() { cursor.classList.remove('is-active'); }
+    function onMouseLeaveWindow() { x = -100; y = -100; render(); }
+
+    document.addEventListener('mousemove', onMouseMove, { passive: true });
+    document.addEventListener('pointerover', onPointerOver, { passive: true });
+    document.addEventListener('mousedown', onMouseDown);
+    document.addEventListener('mouseup', onMouseUp);
+    document.addEventListener('mouseleave', onMouseLeaveWindow);
+
+    // Só esconde o cursor nativo depois do custom estar garantido rodando —
+    // se esse script nunca chegar até aqui (erro, JS bloqueado), o nativo
+    // nunca some, ver `html.cursor-ready *` em global.css.
+    document.documentElement.classList.add('cursor-ready');
+  })();
+</script>

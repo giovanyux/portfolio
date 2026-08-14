@@ -18,9 +18,14 @@ const cases = allCases.sort((a, b) => b.data.date.getTime() - a.data.date.getTim
 <BaseLayout>
 
   <!-- ── MARQUEE HERO ──────────────────────────────────── -->
-  <section style="position: relative; overflow: hidden; padding: 6rem 2rem 6rem; max-width: 1200px; margin: 0 auto;">
+  <section style="position: relative;">
+    <!-- Glow: full-bleed layer, sibling to (not inside) the max-width
+         content wrapper below — this is what makes it span the whole
+         viewport instead of just the 1200px content column, which was
+         the actual bug causing the vertical seams at the column edges. -->
     <GridLines glow lines={false} />
-    <div class="home-hero-layout" style="position: relative; z-index: var(--z-base); display: grid; gap: var(--space-2xl); align-items: center;">
+    <div style="position: relative; z-index: var(--z-base); padding: 6rem 2rem 6rem; max-width: 1200px; margin: 0 auto;">
+    <div class="home-hero-layout" style="display: grid; gap: var(--space-2xl); align-items: center;">
       <div style="max-width: 640px;">
 
         <p
@@ -64,6 +69,7 @@ const cases = allCases.sort((a, b) => b.data.date.getTime() - a.data.date.getTim
           />
         </figure>
       </div>
+    </div>
     </div>
   </section>
 

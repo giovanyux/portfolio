@@ -1,0 +1,193 @@
+---
+// Vitrine de telas do hero: palco de tamanho FIXO (aspect-ratio estável,
+// nunca pula), mídias mobile/desktop entram com object-fit: contain — nunca
+// distorce, nunca corta. Crossfade entre duas camadas empilhadas, um timer
+// só, pausa no hover e com a aba oculta. Curadoria em src/data/hero-showcase.ts.
+import { BASE } from '@/consts';
+import { HERO_SHOWCASE } from '@/data/hero-showcase';
+import { getImageDimensions } from '@/lib/image-dimensions';
+import path from 'node:path';
+
+const items = HERO_SHOWCASE.map((item) => ({
+  ...item,
+  src: `${BASE}${item.src}`,
+  href: `${BASE}/cases/${item.caseSlug}`,
+}));
+
+const firstDims = getImageDimensions(path.join(process.cwd(), 'public', HERO_SHOWCASE[0].src));
+---
+
+<a
+  href={items[0]?.href}
+  class="hero-showcase"
+  id="hero-showcase"
+  data-cursor-label="Ver case →"
+  aria-label={`Ver case: ${items[0]?.caseTitle ?? ''}`}
+>
+  <div class="hero-showcase-stage">
+    <img
+      id="hero-showcase-a"
+      class="hero-showcase-media is-active"
+      src={items[0]?.src}
+      alt={items[0]?.alt}
+      width={firstDims?.width}
+      height={firstDims?.height}
+      loading="eager"
+    />
+    <img id="hero-showcase-b" class="hero-showcase-media" alt="" />
+  </div>
+</a>
+
+<script type="application/json" id="hero-showcase-data" set:html={JSON.stringify(items)} />
+
+<style>
+  .hero-showcase {
+    display: block;
+    position: relative;
+  }
+
+  .hero-showcase-stage {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background:
+      radial-gradient(circle at 20% 20%, color-mix(in oklch, var(--action) 12%, transparent) 0%, transparent 55%),
+      var(--surface);
+    box-shadow: 0 28px 56px -24px color-mix(in oklch, var(--text) 45%, transparent);
+    padding: 1.75rem;
+  }
+
+  .hero-showcase-media {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 1.75rem;
+    opacity: 0;
+    transition: opacity 700ms var(--ease-out);
+  }
+
+  .hero-showcase-media.is-active {
+    opacity: 1;
+  }
+
+  @media (max-width: 640px) {
+    .hero-showcase-stage { transform: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-showcase-media { transition: none; }
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    if (window.__heroShowcaseInitialized) return;
+    window.__heroShowcaseInitialized = true;
+
+    // Timer fica no escopo do IIFE (sobrevive entre chamadas de
+    // initHeroShowcase) só pra garantir que, ao voltar pra home depois de
+    // navegar via view transitions, o intervalo da visita anterior seja
+    // limpo antes de criar um novo — senão ele ficaria rodando pra sempre
+    // apontando pra elementos já removidos do DOM.
+    var timerId = null;
+    var resumeFn = null; // aponta pro start() da página atual — só existe uma home por vez
+
+    function stop() {
+      if (timerId !== null) {
+        clearInterval(timerId);
+        timerId = null;
+      }
+    }
+
+    function initHeroShowcase() {
+      stop();
+      resumeFn = null;
+
+      var root = document.getElementById('hero-showcase');
+      var dataEl = document.getElementById('hero-showcase-data');
+      if (!root || !dataEl) return;
+
+      var items;
+      try {
+        items = JSON.parse(dataEl.textContent);
+      } catch (e) {
+        return;
+      }
+      if (!items || items.length < 2) return;
+
+      var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reducedMotion) return; // primeira tela fica estática, já é o estado inicial
+
+      var layerA = document.getElementById('hero-showcase-a');
+      var layerB = document.getElementById('hero-showcase-b');
+      var active = layerA;
+      var hidden = layerB;
+      var index = 0;
+      var paused = false;
+      var DWELL_MS = 4500;
+      var CROSSFADE_MS = 700;
+
+      function nextIndex() {
+        return (index + 1) % items.length;
+      }
+
+      function preloadNext() {
+        var next = items[nextIndex()];
+        hidden.src = next.src;
+        hidden.alt = next.alt;
+      }
+
+      function crossfade() {
+        index = nextIndex();
+        var current = items[index];
+
+        active.classList.remove('is-active');
+        hidden.classList.add('is-active');
+
+        var tmp = active;
+        active = hidden;
+        hidden = tmp;
+
+        root.href = current.href;
+        root.setAttribute('aria-label', 'Ver case: ' + current.caseTitle);
+
+        setTimeout(preloadNext, CROSSFADE_MS);
+      }
+
+      function tick() {
+        if (!paused) crossfade();
+      }
+
+      function start() {
+        stop();
+        timerId = setInterval(tick, DWELL_MS);
+      }
+
+      preloadNext();
+      start();
+      resumeFn = start;
+
+      root.addEventListener('mouseenter', function () { paused = true; });
+      root.addEventListener('mouseleave', function () { paused = false; });
+      root.addEventListener('focusin', function () { paused = true; });
+      root.addEventListener('focusout', function () { paused = false; });
+    }
+
+    // Registrado uma única vez (não a cada page-load) — evita empilhar
+    // listener a cada navegação de volta pra home. Chama sempre a versão
+    // mais recente de start() via resumeFn.
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) {
+        stop();
+      } else if (resumeFn) {
+        resumeFn();
+      }
+    });
+
+    document.addEventListener('astro:page-load', initHeroShowcase);
+  })();
+</script>

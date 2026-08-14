@@ -2,6 +2,7 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import GridLines from '@/components/GridLines.astro';
 import CaseListItem from '@/components/CaseListItem.astro';
+import HeroShowcase from '@/components/HeroShowcase.astro';
 import { CREDENTIALS, BASE } from '@/consts';
 import { getCollection } from 'astro:content';
 
@@ -59,15 +60,7 @@ const cases = allCases.sort((a, b) => b.data.date.getTime() - a.data.date.getTim
       </div>
 
       <div data-reveal="hero" class="home-hero-art" style="transition-delay: 200ms;">
-        <figure class="hero-artifact">
-          <img
-            src={`${BASE}/cases/case-dionisio/cover.webp`}
-            alt="Capa do case Dionísio: admin do gerente e app do garçom, produto real entregue"
-            width="1800"
-            height="945"
-            loading="eager"
-          />
-        </figure>
+        <HeroShowcase />
       </div>
     </div>
     </div>
@@ -153,24 +146,6 @@ const cases = allCases.sort((a, b) => b.data.date.getTime() - a.data.date.getTim
     }
     .btn-ghost:hover { color: var(--text); }
 
-    .hero-artifact {
-      margin: 0;
-      border-radius: var(--radius-md);
-      overflow: hidden;
-      border: 1px solid var(--border);
-      transform: rotate(-1.5deg);
-      box-shadow: 0 28px 56px -24px color-mix(in oklch, var(--text) 45%, transparent);
-    }
-
-    .hero-artifact img {
-      display: block;
-      width: 100%;
-      height: auto;
-    }
-
-    @media (max-width: 640px) {
-      .hero-artifact { transform: none; }
-    }
   </style>
 
   <!-- ── CREDENTIALS STRIP ─────────────────────────────── -->

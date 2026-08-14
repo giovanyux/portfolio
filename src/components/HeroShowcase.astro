@@ -1,10 +1,11 @@
 ---
 // Vitrine de telas do hero: cada case entra na sua própria moldura de
-// device — desktop num card largo, mobile num frame de phone com altura
-// generosa — em vez de conter tudo num palco neutro (isso fazia a tela
-// mobile ficar minúscula e ilegível). Quando o case tem as duas, compõe em
-// profundidade (desktop atrás, mobile sobreposto e rotacionado na frente),
-// igual a capa antiga do Dionísio, que funcionava bem. Curadoria em
+// device — desktop num card, mobile num frame de phone — compostas em
+// profundidade quando o case tem as duas. Contenção é a regra número um: a
+// coluna de mídia tem overflow:hidden e todo frame é limitado por
+// max-width/max-height (não largura OU altura fixa), então nenhuma mídia,
+// nenhuma proporção, pode vazar pra cima da coluna de texto — foi
+// exatamente esse vazamento que quebrou o hero antes. Curadoria em
 // src/data/hero-showcase.ts.
 import { BASE } from '@/consts';
 import { HERO_SHOWCASE } from '@/data/hero-showcase';
@@ -46,7 +47,10 @@ const first = items[0];
          construídas no client script, ver buildScene(). -->
     <div id="hero-showcase-a" class="showcase-scene is-active">
       {first?.desktop && (
-        <div class="showcase-frame--desktop">
+        <div
+          class="showcase-frame showcase-frame--desktop"
+          style={first.desktop.width && first.desktop.height ? `aspect-ratio: ${first.desktop.width} / ${first.desktop.height};` : undefined}
+        >
           <img
             src={first.desktop.src}
             alt={first.desktop.alt}
@@ -58,7 +62,7 @@ const first = items[0];
       )}
       {first?.mobile && (
         <div
-          class={`showcase-frame--mobile ${first.desktop ? 'is-layered' : 'is-solo'}`}
+          class={`showcase-frame showcase-frame--mobile ${first.desktop ? 'is-layered' : 'is-solo'}`}
           style={first.mobile.width && first.mobile.height ? `aspect-ratio: ${first.mobile.width} / ${first.mobile.height};` : undefined}
         >
           <img
@@ -81,15 +85,16 @@ const first = items[0];
   .hero-showcase {
     display: block;
     position: relative;
+    min-width: 0; /* pra caber num grid track sem forçar overflow na coluna */
   }
 
-  /* Reserva de espaço estável (evita CLS entre cenas de proporções
-     diferentes) — mais alto que largo de propósito, é o que dá altura
-     generosa pro frame de phone. Não é uma moldura visível: sem borda, sem
-     fundo próprio, só uma área. */
+  /* Área reservada (evita CLS entre cenas) E limite físico da coluna de
+     mídia — overflow:hidden é o que garante, sem exceção, que nada
+     ultrapasse essa caixa em direção ao texto. */
   .hero-showcase-stage {
     position: relative;
     aspect-ratio: 5 / 6;
+    overflow: hidden;
   }
 
   .showcase-scene {
@@ -103,71 +108,78 @@ const first = items[0];
     opacity: 1;
   }
 
-  /* ── desktop: card largo, ocupa a largura, levemente sangrando a
-       direita pra ganhar presença sem sair da tela. ── */
-  :global(.showcase-frame--desktop) {
+  /* Base comum: todo frame é limitado por max-width/max-height (nunca
+     width/height fixos) — regardless da proporção real da imagem, o frame
+     nunca cresce além desses limites. aspect-ratio (setado inline, exato,
+     por imagem) faz width/height auto se resolverem juntos preservando a
+     proporção, então "caber no limite" nunca distorce nem corta. */
+  /* :global() nessas classes de frame: a cena 0 vem do servidor (tem o
+     atributo de scoping do Astro), mas as cenas seguintes da rotação são
+     criadas via document.createElement no client script — sem :global()
+     essas regras não bateriam nelas. */
+  :global(.showcase-frame) {
     position: absolute;
-    top: 4%;
-    left: 0;
-    width: 92%;
+    width: auto;
+    height: auto;
     border-radius: var(--radius-md);
     overflow: hidden;
-    border: 1px solid var(--border);
     background: var(--surface);
-    box-shadow: 0 24px 48px -20px color-mix(in oklch, var(--text) 42%, transparent);
   }
 
-  :global(.showcase-frame--desktop img) {
-    display: block;
-    width: 100%;
-    height: auto;
-  }
-
-  /* ── mobile: frame de phone (bezel enxuto, sem chrome desenhado à toa),
-       aspect-ratio EXATO do arquivo real (setado inline via JS) — nunca
-       distorce, nunca deixa sobra de letterbox. ── */
-  :global(.showcase-frame--mobile) {
-    position: absolute;
-    border-radius: 22px;
-    overflow: hidden;
-    border: 3px solid var(--surface);
-    outline: 1px solid var(--border);
-    background: var(--surface);
-    box-shadow: 0 20px 40px -16px color-mix(in oklch, var(--text) 46%, transparent);
-  }
-
-  :global(.showcase-frame--mobile img) {
+  :global(.showcase-frame img) {
     display: block;
     width: 100%;
     height: 100%;
     object-fit: cover;
   }
 
-  /* composição em profundidade: mobile sobreposto ao desktop, deslocado
-     pra direita/baixo, leve rotação — o tratamento preferido. */
+  :global(.showcase-frame--desktop) {
+    top: 6%;
+    left: 0;
+    max-width: 74%;
+    max-height: 62%;
+    border: 1px solid var(--border);
+    box-shadow: 0 24px 48px -20px color-mix(in oklch, var(--text) 42%, transparent);
+  }
+
+  :global(.showcase-frame--mobile) {
+    border-radius: 22px;
+    border: 3px solid var(--surface);
+    outline: 1px solid var(--border);
+    box-shadow: 0 20px 40px -16px color-mix(in oklch, var(--text) 46%, transparent);
+  }
+
+  /* composição em profundidade: mobile sobreposto ao desktop, canto
+     inferior direito, leve rotação — o tratamento preferido. Ainda dentro
+     dos limites da caixa (right/bottom positivos, nunca negativos). */
   :global(.showcase-frame--mobile.is-layered) {
-    right: -6%;
-    bottom: -4%;
-    height: 62%;
-    width: auto;
+    right: 4%;
+    bottom: 3%;
+    max-width: 46%;
+    max-height: 54%;
     transform: rotate(-4deg);
     z-index: 2;
   }
 
-  /* case sem desktop (ex.: PJBank): mobile sozinho, centralizado, generoso. */
+  /* case sem desktop (ex.: PJBank): mobile sozinho, centralizado, maior —
+     mas ainda contido pelos próprios limites, nunca cresce sem teto. */
   :global(.showcase-frame--mobile.is-solo) {
     left: 50%;
     top: 50%;
-    height: 90%;
-    width: auto;
+    max-width: 62%;
+    max-height: 88%;
     transform: translate(-50%, -50%) rotate(-2deg);
   }
 
+  /* Mobile do site (empilhado, uma coluna): mídia abaixo do texto, nunca
+     sobre ele — o grid já resolve isso (ver .home-hero-layout em
+     index.astro), aqui só ajusta proporções pra não haver overflow lateral
+     nem quadro raso demais. */
   @media (max-width: 640px) {
-    .hero-showcase-stage { aspect-ratio: 1 / 1; }
-    :global(.showcase-frame--desktop) { width: 88%; }
-    :global(.showcase-frame--mobile.is-layered) { height: 56%; }
-    :global(.showcase-frame--mobile.is-solo) { height: 82%; }
+    .hero-showcase-stage { aspect-ratio: 4 / 5; }
+    :global(.showcase-frame--desktop) { max-width: 80%; max-height: 58%; }
+    :global(.showcase-frame--mobile.is-layered) { max-width: 48%; max-height: 50%; }
+    :global(.showcase-frame--mobile.is-solo) { max-width: 68%; max-height: 84%; }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -190,40 +202,32 @@ const first = items[0];
       }
     }
 
+    function buildFrame(media, extraClass) {
+      var frame = document.createElement('div');
+      frame.className = 'showcase-frame ' + extraClass;
+      if (media.width && media.height) {
+        frame.style.aspectRatio = media.width + ' / ' + media.height;
+      }
+      var img = document.createElement('img');
+      img.src = media.src;
+      img.alt = media.alt;
+      if (media.width) img.width = media.width;
+      if (media.height) img.height = media.height;
+      img.loading = 'eager';
+      img.decoding = 'async';
+      frame.appendChild(img);
+      return frame;
+    }
+
     function buildScene(entry) {
       var frag = document.createDocumentFragment();
-
       if (entry.desktop) {
-        var d = document.createElement('div');
-        d.className = 'showcase-frame--desktop';
-        var dImg = document.createElement('img');
-        dImg.src = entry.desktop.src;
-        dImg.alt = entry.desktop.alt;
-        if (entry.desktop.width) dImg.width = entry.desktop.width;
-        if (entry.desktop.height) dImg.height = entry.desktop.height;
-        dImg.loading = 'eager';
-        dImg.decoding = 'async';
-        d.appendChild(dImg);
-        frag.appendChild(d);
+        frag.appendChild(buildFrame(entry.desktop, 'showcase-frame--desktop'));
       }
-
       if (entry.mobile) {
-        var m = document.createElement('div');
-        m.className = 'showcase-frame--mobile ' + (entry.desktop ? 'is-layered' : 'is-solo');
-        if (entry.mobile.width && entry.mobile.height) {
-          m.style.aspectRatio = entry.mobile.width + ' / ' + entry.mobile.height;
-        }
-        var mImg = document.createElement('img');
-        mImg.src = entry.mobile.src;
-        mImg.alt = entry.mobile.alt;
-        if (entry.mobile.width) mImg.width = entry.mobile.width;
-        if (entry.mobile.height) mImg.height = entry.mobile.height;
-        mImg.loading = 'eager';
-        mImg.decoding = 'async';
-        m.appendChild(mImg);
-        frag.appendChild(m);
+        var mobileClass = 'showcase-frame--mobile ' + (entry.desktop ? 'is-layered' : 'is-solo');
+        frag.appendChild(buildFrame(entry.mobile, mobileClass));
       }
-
       return frag;
     }
 

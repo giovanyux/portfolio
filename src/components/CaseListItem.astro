@@ -22,50 +22,36 @@ const videoSrc = coverVideo ? BASE + coverVideo : undefined;
 ---
 
 <article class="hairline-card case-card" style={comingSoon ? 'opacity: 0.6;' : undefined}>
-  <!-- Case image -->
-  {comingSoon ? (
-    <div style="display: block; position: relative; border-bottom: 1px solid var(--border);">
-      <div class="img-placeholder" style="width: 100%; aspect-ratio: 4/3; border: none; border-radius: 0;">
+  <!-- Case image — plain (não-link): o card inteiro é a área de clique,
+       via o link único ancorado no título (ver .case-card-link abaixo). -->
+  <div style="display: block; position: relative; border-bottom: 1px solid var(--border);">
+    <div class={comingSoon ? 'img-placeholder' : 'img-placeholder case-img-hover'} style="width: 100%; aspect-ratio: 4/3; border: none; border-radius: 0;">
+      {videoSrc ? (
+        <video
+          autoplay
+          loop
+          muted
+          playsinline
+          preload="metadata"
+          poster={imgSrc}
+          aria-label={`${title} — preview`}
+          style="width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; z-index: 2; transition: transform var(--dur-long) var(--ease-out);"
+        >
+          <source src={videoSrc} type="video/mp4" />
+          <img src={imgSrc} alt={`${title} screenshot`} style="width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; z-index: 2;" />
+        </video>
+      ) : (
         <img
           src={imgSrc}
           alt={`${title} screenshot`}
-          style="width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; z-index: 2;"
+          style="width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; z-index: 2; transition: transform var(--dur-long) var(--ease-out);"
           onerror="this.style.display='none';"
           loading="lazy"
         />
-        <span>{title} — screenshot placeholder</span>
-      </div>
+      )}
+      <span>{title} — screenshot placeholder</span>
     </div>
-  ) : (
-    <a href={href} style="display: block; position: relative; border-bottom: 1px solid var(--border);" aria-label={`Abrir case: ${title}`}>
-      <div class="img-placeholder case-img-hover" style="width: 100%; aspect-ratio: 4/3; border: none; border-radius: 0;">
-        {videoSrc ? (
-          <video
-            autoplay
-            loop
-            muted
-            playsinline
-            preload="metadata"
-            poster={imgSrc}
-            aria-label={`${title} — preview`}
-            style="width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; z-index: 2; transition: transform var(--dur-long) var(--ease-out);"
-          >
-            <source src={videoSrc} type="video/mp4" />
-            <img src={imgSrc} alt={`${title} screenshot`} style="width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; z-index: 2;" />
-          </video>
-        ) : (
-          <img
-            src={imgSrc}
-            alt={`${title} screenshot`}
-            style="width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; z-index: 2; transition: transform var(--dur-long) var(--ease-out);"
-            onerror="this.style.display='none';"
-            loading="lazy"
-          />
-        )}
-        <span>{title} — screenshot placeholder</span>
-      </div>
-    </a>
-  )}
+  </div>
 
   <div style="padding: var(--space-md);">
     <!-- Top row: tag + status -->
@@ -84,9 +70,14 @@ const videoSrc = coverVideo ? BASE + coverVideo : undefined;
       )}
     </div>
 
-    <!-- Title -->
-    <h3 style="font-family: var(--font-display); font-size: 1.25rem; font-weight: 600; line-height: 1.2; letter-spacing: -0.01em; color: var(--text); margin-bottom: var(--space-2xs);">
-      {title}
+    <!-- Title — o único <a> real do card. Um pseudo-elemento (.case-card-link::after)
+         estica a área de clique pro card inteiro, então não há <a> aninhado. -->
+    <h3 style="font-family: var(--font-display); font-size: 1.25rem; font-weight: 600; line-height: 1.2; letter-spacing: -0.01em; margin-bottom: var(--space-2xs);">
+      {comingSoon ? (
+        <span style="color: var(--text);">{title}</span>
+      ) : (
+        <a href={href} class="case-card-link">{title}</a>
+      )}
     </h3>
 
     <!-- Subtitle -->
@@ -100,13 +91,12 @@ const videoSrc = coverVideo ? BASE + coverVideo : undefined;
         {metric}
       </p>
       {!comingSoon && (
-        <a
-          href={href}
-          class="underline-hover"
-          style="font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.06em; color: var(--text); text-decoration: none; text-transform: uppercase; white-space: nowrap;"
+        <span
+          aria-hidden="true"
+          style="font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.06em; color: var(--text); text-transform: uppercase; white-space: nowrap;"
         >
           Ver case →
-        </a>
+        </span>
       )}
     </div>
   </div>
@@ -118,10 +108,14 @@ const videoSrc = coverVideo ? BASE + coverVideo : undefined;
     flex-direction: column;
     min-width: 0;
     overflow: hidden;
+    position: relative; /* ancora o ::after do stretched-link */
   }
 
-  .case-img-hover img:hover,
-  .case-img-hover video:hover {
+  /* Hover do zoom da imagem agora escuta o card inteiro, não só a própria
+     mídia — porque o clique/hover real acontece na camada do link
+     (z-index acima da imagem), não na imagem em si. */
+  .case-card:hover .case-img-hover img,
+  .case-card:hover .case-img-hover video {
     transform: scale(1.02);
   }
 
@@ -129,5 +123,31 @@ const videoSrc = coverVideo ? BASE + coverVideo : undefined;
      where the border flashes --action instead of the generic --border-strong. */
   .case-card:hover {
     border-color: var(--action);
+  }
+
+  /* Stretched link: o <a> real fica só no título, mas ::after cobre o
+     card inteiro (z-index acima da mídia, que usa z-index: 2) — assim
+     clicar em qualquer ponto do card (imagem, subtítulo, métrica) navega
+     pro case, sem precisar de <a> aninhado. */
+  .case-card-link {
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  .case-card-link::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: var(--z-raised);
+  }
+
+  .case-card-link:focus-visible {
+    outline: none;
+  }
+
+  .case-card-link:focus-visible::after {
+    outline: 2px solid var(--action);
+    outline-offset: -2px;
+    border-radius: var(--radius-sm);
   }
 </style>

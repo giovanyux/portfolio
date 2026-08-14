@@ -21,9 +21,17 @@ const imgSrc = BASE + (thumbnail ?? cover);
 const videoSrc = coverVideo ? BASE + coverVideo : undefined;
 ---
 
-<article class="hairline-card case-card" style={comingSoon ? 'opacity: 0.6;' : undefined}>
+<article
+  class="hairline-card case-card"
+  style={comingSoon ? 'opacity: 0.6;' : undefined}
+  data-cursor-label={comingSoon ? undefined : 'Ver case →'}
+>
   <!-- Case image — plain (não-link): o card inteiro é a área de clique,
-       via o link único ancorado no título (ver .case-card-link abaixo). -->
+       via o link único ancorado no título (ver .case-card-link abaixo).
+       data-cursor-label no <article> (não só no <a> do título) é o que
+       faz o rótulo do cursor aparecer em cima do card inteiro — a área de
+       clique real também é o card inteiro (stretched-link), então o
+       cursor precisa bater com isso, não só com o texto do título. -->
   <div style="display: block; position: relative; border-bottom: 1px solid var(--border);">
     <div class={comingSoon ? 'img-placeholder' : 'img-placeholder case-img-hover'} style="width: 100%; aspect-ratio: 4/3; border: none; border-radius: 0;">
       {videoSrc ? (

@@ -1,40 +1,77 @@
 ---
-// Vitrine de telas do hero: palco de tamanho FIXO (aspect-ratio estável,
-// nunca pula), mídias mobile/desktop entram com object-fit: contain — nunca
-// distorce, nunca corta. Crossfade entre duas camadas empilhadas, um timer
-// só, pausa no hover e com a aba oculta. Curadoria em src/data/hero-showcase.ts.
+// Vitrine de telas do hero: cada case entra na sua própria moldura de
+// device — desktop num card largo, mobile num frame de phone com altura
+// generosa — em vez de conter tudo num palco neutro (isso fazia a tela
+// mobile ficar minúscula e ilegível). Quando o case tem as duas, compõe em
+// profundidade (desktop atrás, mobile sobreposto e rotacionado na frente),
+// igual a capa antiga do Dionísio, que funcionava bem. Curadoria em
+// src/data/hero-showcase.ts.
 import { BASE } from '@/consts';
 import { HERO_SHOWCASE } from '@/data/hero-showcase';
 import { getImageDimensions } from '@/lib/image-dimensions';
 import path from 'node:path';
 
-const items = HERO_SHOWCASE.map((item) => ({
-  ...item,
-  src: `${BASE}${item.src}`,
-  href: `${BASE}/cases/${item.caseSlug}`,
+function resolveMedia(media?: { src: string; alt: string }) {
+  if (!media) return undefined;
+  const dims = getImageDimensions(path.join(process.cwd(), 'public', media.src));
+  return {
+    src: `${BASE}${media.src}`,
+    alt: media.alt,
+    width: dims?.width,
+    height: dims?.height,
+  };
+}
+
+const items = HERO_SHOWCASE.map((entry) => ({
+  caseSlug: entry.caseSlug,
+  caseTitle: entry.caseTitle,
+  href: `${BASE}/cases/${entry.caseSlug}`,
+  desktop: resolveMedia(entry.desktop),
+  mobile: resolveMedia(entry.mobile),
 }));
 
-const firstDims = getImageDimensions(path.join(process.cwd(), 'public', HERO_SHOWCASE[0].src));
+const first = items[0];
 ---
 
 <a
-  href={items[0]?.href}
+  href={first?.href}
   class="hero-showcase"
   id="hero-showcase"
   data-cursor-label="Ver case →"
-  aria-label={`Ver case: ${items[0]?.caseTitle ?? ''}`}
+  aria-label={`Ver case: ${first?.caseTitle ?? ''}`}
 >
   <div class="hero-showcase-stage">
-    <img
-      id="hero-showcase-a"
-      class="hero-showcase-media is-active"
-      src={items[0]?.src}
-      alt={items[0]?.alt}
-      width={firstDims?.width}
-      height={firstDims?.height}
-      loading="eager"
-    />
-    <img id="hero-showcase-b" class="hero-showcase-media" alt="" />
+    <!-- Cena 0 renderizada no servidor (não via JS) — LCP correto e o hero
+         nunca fica em branco sem JS. As demais cenas da rotação são
+         construídas no client script, ver buildScene(). -->
+    <div id="hero-showcase-a" class="showcase-scene is-active">
+      {first?.desktop && (
+        <div class="showcase-frame--desktop">
+          <img
+            src={first.desktop.src}
+            alt={first.desktop.alt}
+            width={first.desktop.width}
+            height={first.desktop.height}
+            loading="eager"
+          />
+        </div>
+      )}
+      {first?.mobile && (
+        <div
+          class={`showcase-frame--mobile ${first.desktop ? 'is-layered' : 'is-solo'}`}
+          style={first.mobile.width && first.mobile.height ? `aspect-ratio: ${first.mobile.width} / ${first.mobile.height};` : undefined}
+        >
+          <img
+            src={first.mobile.src}
+            alt={first.mobile.alt}
+            width={first.mobile.width}
+            height={first.mobile.height}
+            loading="eager"
+          />
+        </div>
+      )}
+    </div>
+    <div id="hero-showcase-b" class="showcase-scene"></div>
   </div>
 </a>
 
@@ -46,40 +83,95 @@ const firstDims = getImageDimensions(path.join(process.cwd(), 'public', HERO_SHO
     position: relative;
   }
 
+  /* Reserva de espaço estável (evita CLS entre cenas de proporções
+     diferentes) — mais alto que largo de propósito, é o que dá altura
+     generosa pro frame de phone. Não é uma moldura visível: sem borda, sem
+     fundo próprio, só uma área. */
   .hero-showcase-stage {
     position: relative;
-    aspect-ratio: 4 / 3;
-    border-radius: var(--radius-md);
-    overflow: hidden;
-    border: 1px solid var(--border);
-    background:
-      radial-gradient(circle at 20% 20%, color-mix(in oklch, var(--action) 12%, transparent) 0%, transparent 55%),
-      var(--surface);
-    box-shadow: 0 28px 56px -24px color-mix(in oklch, var(--text) 45%, transparent);
-    padding: 1.75rem;
+    aspect-ratio: 5 / 6;
   }
 
-  .hero-showcase-media {
+  .showcase-scene {
     position: absolute;
     inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    padding: 1.75rem;
     opacity: 0;
     transition: opacity 700ms var(--ease-out);
   }
 
-  .hero-showcase-media.is-active {
+  .showcase-scene.is-active {
     opacity: 1;
   }
 
+  /* ── desktop: card largo, ocupa a largura, levemente sangrando a
+       direita pra ganhar presença sem sair da tela. ── */
+  :global(.showcase-frame--desktop) {
+    position: absolute;
+    top: 4%;
+    left: 0;
+    width: 92%;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    box-shadow: 0 24px 48px -20px color-mix(in oklch, var(--text) 42%, transparent);
+  }
+
+  :global(.showcase-frame--desktop img) {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  /* ── mobile: frame de phone (bezel enxuto, sem chrome desenhado à toa),
+       aspect-ratio EXATO do arquivo real (setado inline via JS) — nunca
+       distorce, nunca deixa sobra de letterbox. ── */
+  :global(.showcase-frame--mobile) {
+    position: absolute;
+    border-radius: 22px;
+    overflow: hidden;
+    border: 3px solid var(--surface);
+    outline: 1px solid var(--border);
+    background: var(--surface);
+    box-shadow: 0 20px 40px -16px color-mix(in oklch, var(--text) 46%, transparent);
+  }
+
+  :global(.showcase-frame--mobile img) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* composição em profundidade: mobile sobreposto ao desktop, deslocado
+     pra direita/baixo, leve rotação — o tratamento preferido. */
+  :global(.showcase-frame--mobile.is-layered) {
+    right: -6%;
+    bottom: -4%;
+    height: 62%;
+    width: auto;
+    transform: rotate(-4deg);
+    z-index: 2;
+  }
+
+  /* case sem desktop (ex.: PJBank): mobile sozinho, centralizado, generoso. */
+  :global(.showcase-frame--mobile.is-solo) {
+    left: 50%;
+    top: 50%;
+    height: 90%;
+    width: auto;
+    transform: translate(-50%, -50%) rotate(-2deg);
+  }
+
   @media (max-width: 640px) {
-    .hero-showcase-stage { transform: none; }
+    .hero-showcase-stage { aspect-ratio: 1 / 1; }
+    :global(.showcase-frame--desktop) { width: 88%; }
+    :global(.showcase-frame--mobile.is-layered) { height: 56%; }
+    :global(.showcase-frame--mobile.is-solo) { height: 82%; }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .hero-showcase-media { transition: none; }
+    .showcase-scene { transition: none; }
   }
 </style>
 
@@ -88,19 +180,51 @@ const firstDims = getImageDimensions(path.join(process.cwd(), 'public', HERO_SHO
     if (window.__heroShowcaseInitialized) return;
     window.__heroShowcaseInitialized = true;
 
-    // Timer fica no escopo do IIFE (sobrevive entre chamadas de
-    // initHeroShowcase) só pra garantir que, ao voltar pra home depois de
-    // navegar via view transitions, o intervalo da visita anterior seja
-    // limpo antes de criar um novo — senão ele ficaria rodando pra sempre
-    // apontando pra elementos já removidos do DOM.
     var timerId = null;
-    var resumeFn = null; // aponta pro start() da página atual — só existe uma home por vez
+    var resumeFn = null;
 
     function stop() {
       if (timerId !== null) {
         clearInterval(timerId);
         timerId = null;
       }
+    }
+
+    function buildScene(entry) {
+      var frag = document.createDocumentFragment();
+
+      if (entry.desktop) {
+        var d = document.createElement('div');
+        d.className = 'showcase-frame--desktop';
+        var dImg = document.createElement('img');
+        dImg.src = entry.desktop.src;
+        dImg.alt = entry.desktop.alt;
+        if (entry.desktop.width) dImg.width = entry.desktop.width;
+        if (entry.desktop.height) dImg.height = entry.desktop.height;
+        dImg.loading = 'eager';
+        dImg.decoding = 'async';
+        d.appendChild(dImg);
+        frag.appendChild(d);
+      }
+
+      if (entry.mobile) {
+        var m = document.createElement('div');
+        m.className = 'showcase-frame--mobile ' + (entry.desktop ? 'is-layered' : 'is-solo');
+        if (entry.mobile.width && entry.mobile.height) {
+          m.style.aspectRatio = entry.mobile.width + ' / ' + entry.mobile.height;
+        }
+        var mImg = document.createElement('img');
+        mImg.src = entry.mobile.src;
+        mImg.alt = entry.mobile.alt;
+        if (entry.mobile.width) mImg.width = entry.mobile.width;
+        if (entry.mobile.height) mImg.height = entry.mobile.height;
+        mImg.loading = 'eager';
+        mImg.decoding = 'async';
+        m.appendChild(mImg);
+        frag.appendChild(m);
+      }
+
+      return frag;
     }
 
     function initHeroShowcase() {
@@ -117,18 +241,23 @@ const firstDims = getImageDimensions(path.join(process.cwd(), 'public', HERO_SHO
       } catch (e) {
         return;
       }
-      if (!items || items.length < 2) return;
+      if (!items || !items.length) return;
+
+      var sceneA = document.getElementById('hero-showcase-a');
+      var sceneB = document.getElementById('hero-showcase-b');
+      // Cena A (índice 0) já vem renderizada do servidor — não reconstrói,
+      // só as próximas cenas da rotação passam pelo buildScene().
+
+      if (items.length < 2) return; // 1 case só: fica parado, sem rotação
 
       var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (reducedMotion) return; // primeira tela fica estática, já é o estado inicial
+      if (reducedMotion) return; // primeira cena fica estática
 
-      var layerA = document.getElementById('hero-showcase-a');
-      var layerB = document.getElementById('hero-showcase-b');
-      var active = layerA;
-      var hidden = layerB;
+      var active = sceneA;
+      var hidden = sceneB;
       var index = 0;
       var paused = false;
-      var DWELL_MS = 4500;
+      var DWELL_MS = 4800;
       var CROSSFADE_MS = 700;
 
       function nextIndex() {
@@ -136,9 +265,8 @@ const firstDims = getImageDimensions(path.join(process.cwd(), 'public', HERO_SHO
       }
 
       function preloadNext() {
-        var next = items[nextIndex()];
-        hidden.src = next.src;
-        hidden.alt = next.alt;
+        hidden.innerHTML = '';
+        hidden.appendChild(buildScene(items[nextIndex()]));
       }
 
       function crossfade() {
@@ -177,9 +305,6 @@ const firstDims = getImageDimensions(path.join(process.cwd(), 'public', HERO_SHO
       root.addEventListener('focusout', function () { paused = false; });
     }
 
-    // Registrado uma única vez (não a cada page-load) — evita empilhar
-    // listener a cada navegação de volta pra home. Chama sempre a versão
-    // mais recente de start() via resumeFn.
     document.addEventListener('visibilitychange', function () {
       if (document.hidden) {
         stop();

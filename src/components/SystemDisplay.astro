@@ -1,5 +1,7 @@
 ---
+import path from 'node:path';
 import { BASE } from '@/consts';
+import { getImageDimensions } from '@/lib/image-dimensions';
 
 interface Screen {
   src: string;
@@ -27,6 +29,28 @@ const imgScreens = screens.map(s => ({ ...s, src: BASE + s.src }));
 const backdropBg = accent
   ? 'color-mix(in srgb, var(--action) 10%, transparent)'
   : 'var(--surface)';
+
+// Dimensões reais lidas do arquivo (não do BASE-prefixado) — largura/altura
+// no HTML deixam o browser reservar o espaço certo antes da imagem carregar
+// (previne layout shift), mesmo com a imagem em width:100%/height:auto via CSS.
+function dimsFor(publicSrc?: string) {
+  if (!publicSrc) return undefined;
+  return getImageDimensions(path.join(process.cwd(), 'public', publicSrc)) ?? undefined;
+}
+
+const mainDims = dimsFor(src);
+const screenDims = screens.map((s) => dimsFor(s.src));
+
+// Guardrail de a11y: falha o build em vez de publicar uma imagem muda.
+// `alt` era opcional aqui e caía num fallback silencioso (`alt ?? ''`) —
+// todo uso atual já passa alt real, isso só impede regressão futura.
+if (variant === 'backdrop' && src && !alt) {
+  throw new Error(`SystemDisplay: falta "alt" pra imagem "${src}" (variant="backdrop").`);
+}
+const emptyAltScreen = screens.find((s) => !s.alt || !s.alt.trim());
+if (emptyAltScreen) {
+  throw new Error(`SystemDisplay: falta "alt" pra imagem "${emptyAltScreen.src}" (variant="${variant}").`);
+}
 ---
 
 <figure class="sysdisplay" data-variant={variant}>
@@ -42,13 +66,15 @@ const backdropBg = accent
           playsinline
           preload="metadata"
           poster={imgSrc}
+          width={mainDims?.width}
+          height={mainDims?.height}
           class="sysdisplay-img"
         >
           <source src={resolvedVideoSrc} type="video/mp4" />
-          <img src={imgSrc} alt={alt ?? ''} class="sysdisplay-img" />
+          <img src={imgSrc} alt={alt ?? ''} width={mainDims?.width} height={mainDims?.height} loading="lazy" decoding="async" class="sysdisplay-img" />
         </video>
       ) : (
-        <img src={imgSrc} alt={alt ?? ''} class="sysdisplay-img" />
+        <img src={imgSrc} alt={alt ?? ''} width={mainDims?.width} height={mainDims?.height} loading="lazy" decoding="async" class="sysdisplay-img" />
       )}
     </div>
   )}
@@ -65,7 +91,7 @@ const backdropBg = accent
             z-index: ${screens.length - i};
           `}
         >
-          <img src={s.src} alt={s.alt} class="sysdisplay-img" />
+          <img src={s.src} alt={s.alt} width={screenDims[i]?.width} height={screenDims[i]?.height} loading="lazy" decoding="async" class="sysdisplay-img" />
         </div>
       ))}
     </div>
@@ -73,11 +99,15 @@ const backdropBg = accent
 
   {variant === 'mosaic' && (
     <div class={`sysdisplay-mosaic sysdisplay-mosaic--${imgScreens.length}`}>
-      {imgScreens.map((s) => (
+      {imgScreens.map((s, i) => (
         <div class="sysdisplay-mosaic-cell">
           <img
             src={s.src}
             alt={s.alt}
+            width={screenDims[i]?.width}
+            height={screenDims[i]?.height}
+            loading="lazy"
+            decoding="async"
             class="sysdisplay-img"
             style={imageAspectRatio ? `aspect-ratio: ${imageAspectRatio}; object-fit: cover; object-position: top center;` : undefined}
           />

@@ -83,32 +83,12 @@ img { display: block; max-width: 100%; }
 /* Cursor customizado: só esconde o nativo sob .cursor-ready, marcada pelo
    próprio script do cursor DEPOIS de garantir que está rodando (ver
    CustomCursor.astro) — se o JS falhar, essa classe nunca chega e o cursor
-   do sistema nunca some. Texto legível recupera o nativo (I-beam). */
+   do sistema nunca some. A bola de inversão substitui o nativo em TUDO,
+   texto incluso (decisão explícita — a bola aparece até em cima de
+   parágrafo/título, sem cair pro I-beam nativo ali). Seleção de texto
+   continua funcionando normalmente, cursor é só a camada visual. */
 html.cursor-ready,
 html.cursor-ready * {
-  cursor: none !important;
-}
-
-/* A segunda linha (com " *") é o que faltava: cursor é herdado por padrão,
-   mas a regra `* { cursor: none }` acima também mira os FILHOS de um
-   parágrafo/heading (ex.: os <span> do headline do hero) diretamente — uma
-   declaração direta sempre vence herança, então sem essa linha o mouse
-   sumia especificamente em cima de texto que estava dentro de um <span>.
-   `span` entrou na lista porque o site usa span solto (sem p/h* em volta)
-   pra muito texto pequeno de UI: breadcrumb, pills de tag, separador de
-   meta, ano do changelog — todos bare span com texto real de leitura. */
-html.cursor-ready :is(p, h1, h2, h3, h4, h5, h6, li, blockquote, figcaption, label, td, th, dt, dd, span):not(:has(a, button, input, textarea, select)),
-html.cursor-ready :is(p, h1, h2, h3, h4, h5, h6, li, blockquote, figcaption, label, td, th, dt, dd, span):not(:has(a, button, input, textarea, select)) * {
-  cursor: auto !important;
-}
-
-/* Dentro de um [data-cursor-label] (card de case, vitrine do hero) o JS
-   mostra o rótulo "Ver case →" — sem essa regra o texto interno do card
-   (subtítulo, métrica) bateria na exceção de texto acima e o cursor nativo
-   apareceria JUNTO com o rótulo, competindo. Specificity (0,2,1) > (0,1,3)
-   da regra de texto, então essa vence independente da ordem no arquivo. */
-html.cursor-ready [data-cursor-label],
-html.cursor-ready [data-cursor-label] * {
   cursor: none !important;
 }
 

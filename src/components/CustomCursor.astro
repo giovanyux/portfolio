@@ -2,8 +2,10 @@
 // Cursor autoral: uma bola que INVERTE o que está embaixo dela (backdrop-filter:
 // invert(1), com fallback mix-blend-mode: difference). Auto-contrastante em
 // qualquer fundo — creme, gradiente, card escuro, texto — de propósito não
-// leva cor de marca por cima. Sobre card de case vira rótulo "Ver case →".
-// Só (pointer: fine) and (hover: hover) — em touch fica 100% desligado.
+// leva cor de marca por cima. Aparece em tudo, texto incluso (decisão
+// explícita, substitui o nativo até em parágrafo/título). Sobre card de case
+// vira rótulo "Ver case →". Só (pointer: fine) and (hover: hover) — em touch
+// fica 100% desligado.
 ---
 
 <div id="custom-cursor" class="custom-cursor" aria-hidden="true" transition:persist>
@@ -87,13 +89,6 @@
     transform: translate(-50%, -50%) scale(0.8);
   }
 
-  /* sobre texto: cursor custom some por completo — o nativo (I-beam) assume,
-     ver a regra `cursor: auto !important` em global.css pros mesmos elementos. */
-  .custom-cursor.is-text .custom-cursor-ball,
-  .custom-cursor.is-text .custom-cursor-label {
-    opacity: 0;
-  }
-
   /* reduced-motion: a bola continua seguindo o mouse (é posição, não
      decoração), mas sem transições suaves e sem a micro-animação de clique. */
   @media (prefers-reduced-motion: reduce) {
@@ -130,7 +125,6 @@
       (CSS.supports('backdrop-filter', 'invert(1)') || CSS.supports('-webkit-backdrop-filter', 'invert(1)'));
     document.documentElement.classList.add(supportsInvert ? 'cursor-invert' : 'cursor-blend');
 
-    var TEXT_SELECTOR = 'p, h1, h2, h3, h4, h5, h6, li, blockquote, figcaption, label, td, th, dt, dd, span';
     var LINK_SELECTOR = 'a, button, [role="button"], summary, input, textarea, select';
     var CASE_SELECTOR = '.case-card-link, [data-cursor-label]';
 
@@ -159,11 +153,6 @@
       var linkEl = e.target.closest(LINK_SELECTOR);
       if (linkEl) {
         cursor.className = 'custom-cursor is-link';
-        return;
-      }
-      var textEl = e.target.closest(TEXT_SELECTOR);
-      if (textEl && !textEl.closest(LINK_SELECTOR)) {
-        cursor.className = 'custom-cursor is-text';
         return;
       }
       cursor.className = 'custom-cursor';

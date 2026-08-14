@@ -20,12 +20,16 @@ export const HERO_SHOWCASE: HeroShowcaseEntry[] = [
   {
     caseSlug: 'case-dionisio',
     caseTitle: 'Dionísio',
+    // Variante LIGHT de propósito (não a -dark, que é o tema padrão real do
+    // produto) — dentro de um card escuro, sobre o tema dark do SITE, uma
+    // tela já escura do produto quase desaparecia (escuro sobre escuro sobre
+    // escuro). Light garante contraste nos dois temas do site.
     desktop: {
-      src: '/cases/case-dionisio/admin-02-visao-geral-do-salao-dark.webp',
+      src: '/cases/case-dionisio/admin-02-visao-geral-do-salao-light.webp',
       alt: 'Admin do gerente do case Dionísio: visão geral do salão',
     },
     mobile: {
-      src: '/cases/case-dionisio/garcom-02-painel-dark.webp',
+      src: '/cases/case-dionisio/garcom-02-painel-light.webp',
       alt: 'App do garçom do case Dionísio: painel com alertas e sugestão de venda',
     },
   },

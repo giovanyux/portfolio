@@ -1,12 +1,13 @@
 ---
-// Cursor contextual: wayfinding, não enfeite. Ponto pequeno e preciso por
-// padrão; sobre um card de case vira um rótulo pill; sobre link/botão
-// genérico encolhe; sobre texto desaparece e devolve o cursor nativo.
+// Cursor autoral: uma bola que INVERTE o que está embaixo dela (backdrop-filter:
+// invert(1), com fallback mix-blend-mode: difference). Auto-contrastante em
+// qualquer fundo — creme, gradiente, card escuro, texto — de propósito não
+// leva cor de marca por cima. Sobre card de case vira rótulo "Ver case →".
 // Só (pointer: fine) and (hover: hover) — em touch fica 100% desligado.
 ---
 
 <div id="custom-cursor" class="custom-cursor" aria-hidden="true" transition:persist>
-  <span class="custom-cursor-dot"></span>
+  <span class="custom-cursor-ball"></span>
   <span class="custom-cursor-label"></span>
 </div>
 
@@ -21,18 +22,33 @@
     will-change: transform;
   }
 
-  .custom-cursor-dot {
+  .custom-cursor-ball {
     position: absolute;
     top: 0;
     left: 0;
-    display: block;
-    width: 10px;
-    height: 10px;
+    width: 28px;
+    height: 28px;
     border-radius: 50%;
-    background: var(--action);
     transform: translate(-50%, -50%) scale(1);
     opacity: 1;
-    transition: transform 150ms var(--ease-out), background-color 150ms var(--ease-out), opacity 150ms var(--ease-out);
+    will-change: transform, backdrop-filter;
+    transition: transform 150ms var(--ease-out), opacity 150ms var(--ease-out),
+                width 150ms var(--ease-out), height 150ms var(--ease-out);
+  }
+
+  /* Técnica ativa decidida em JS (feature detection), vira classe no <html>.
+     Preferida: inversão real do que está embaixo. */
+  :global(html.cursor-invert) .custom-cursor-ball {
+    backdrop-filter: invert(1);
+    -webkit-backdrop-filter: invert(1);
+    background: transparent;
+  }
+
+  /* Fallback (sem suporte a backdrop-filter): círculo branco + difference,
+     mesmo resultado visual de inversão, técnica mais barata/compatível. */
+  :global(html.cursor-blend) .custom-cursor-ball {
+    background: #fff;
+    mix-blend-mode: difference;
   }
 
   .custom-cursor-label {
@@ -52,29 +68,42 @@
     transition: transform 180ms var(--ease-out), opacity 180ms var(--ease-out);
   }
 
-  /* sobre link/botão genérico: encolhe, indica clique preciso */
-  .custom-cursor.is-link .custom-cursor-dot {
-    background: var(--text);
-    transform: translate(-50%, -50%) scale(0.55);
+  /* sobre link/botão genérico: cresce um pouco, sinaliza clicável */
+  .custom-cursor.is-link .custom-cursor-ball {
+    width: 38px;
+    height: 38px;
   }
 
-  /* sobre card de case / vitrine: vira rótulo */
-  .custom-cursor.is-case .custom-cursor-dot { opacity: 0; }
+  /* sobre card de case / vitrine do hero: bola some, rótulo assume — aqui
+     abre mão da inversão e usa --text sólido, fica mais legível como CTA. */
+  .custom-cursor.is-case .custom-cursor-ball { opacity: 0; }
   .custom-cursor.is-case .custom-cursor-label {
     opacity: 1;
     transform: translate(-50%, -50%) scale(1);
   }
 
-  /* clique ativo: leve scale down, funciona em cima de qualquer estado */
-  .custom-cursor.is-active .custom-cursor-dot { transform: translate(-50%, -50%) scale(0.7); }
-  .custom-cursor.is-active .custom-cursor-label { transform: translate(-50%, -50%) scale(0.92); }
+  /* clique: encolhe, discreto */
+  .custom-cursor.is-active .custom-cursor-ball {
+    transform: translate(-50%, -50%) scale(0.8);
+  }
 
   /* sobre texto: cursor custom some por completo — o nativo (I-beam) assume,
-     ver a regra `cursor: auto !important` em global.css que devolve o
-     cursor nativo pros mesmos elementos. */
-  .custom-cursor.is-text .custom-cursor-dot,
+     ver a regra `cursor: auto !important` em global.css pros mesmos elementos. */
+  .custom-cursor.is-text .custom-cursor-ball,
   .custom-cursor.is-text .custom-cursor-label {
     opacity: 0;
+  }
+
+  /* reduced-motion: a bola continua seguindo o mouse (é posição, não
+     decoração), mas sem transições suaves e sem a micro-animação de clique. */
+  @media (prefers-reduced-motion: reduce) {
+    .custom-cursor-ball,
+    .custom-cursor-label {
+      transition: none;
+    }
+    .custom-cursor.is-active .custom-cursor-ball {
+      transform: translate(-50%, -50%) scale(1);
+    }
   }
 </style>
 
@@ -82,16 +111,24 @@
   (function () {
     if (window.__cursorInitialized) return;
 
+    // Toque/sem hover: cursor nativo, sem exceção. Reduced-motion NÃO
+    // desativa mais o cursor inteiro — só a micro-animação de clique (CSS).
     var canUseCustomCursor = window.matchMedia('(pointer: fine) and (hover: hover)').matches;
-    var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    // Touch (sem pointer fino) ou reduced-motion: cursor nativo, sem exceção.
-    if (!canUseCustomCursor || reducedMotion) return;
+    if (!canUseCustomCursor) return;
 
     var cursor = document.getElementById('custom-cursor');
     if (!cursor) return;
     var label = cursor.querySelector('.custom-cursor-label');
 
     window.__cursorInitialized = true;
+
+    // Feature detection: inversão real via backdrop-filter quando dá,
+    // mix-blend-mode: difference como fallback (efeito visual equivalente).
+    var supportsInvert =
+      window.CSS &&
+      CSS.supports &&
+      (CSS.supports('backdrop-filter', 'invert(1)') || CSS.supports('-webkit-backdrop-filter', 'invert(1)'));
+    document.documentElement.classList.add(supportsInvert ? 'cursor-invert' : 'cursor-blend');
 
     var TEXT_SELECTOR = 'p, h1, h2, h3, h4, h5, h6, li, blockquote, figcaption, label, td, th, dt, dd';
     var LINK_SELECTOR = 'a, button, [role="button"], summary, input, textarea, select';

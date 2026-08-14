@@ -59,6 +59,27 @@ img { display: block; max-width: 100%; }
   transition: none;
 }
 
+/* Skip-to-content: invisível até receber foco por teclado. */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: var(--space-md);
+  z-index: var(--z-toast);
+  background: var(--action);
+  color: var(--action-foreground);
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 0.6rem 1rem;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  transition: top var(--dur-short) var(--ease-out);
+}
+
+.skip-link:focus-visible {
+  top: var(--space-md);
+}
+
 /* ─── Reveal — one orchestrated moment, not universal ── */
 [data-reveal] {
   opacity: 0;

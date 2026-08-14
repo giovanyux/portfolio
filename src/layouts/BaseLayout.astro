@@ -5,6 +5,13 @@ import Footer from '@/components/Footer.astro';
 import '@/styles/global.css';
 import { SITE, BASE } from '@/consts';
 
+// Preload só os 3 pesos usados acima da dobra em toda página (eyebrow +
+// headline + corpo do hero/heading). `?url` é resolvido pelo Vite pro
+// arquivo real já com hash — nunca fica fora de sincronia com o build.
+import poppins600 from '@fontsource/poppins/files/poppins-latin-600-normal.woff2?url';
+import poppins700 from '@fontsource/poppins/files/poppins-latin-700-normal.woff2?url';
+import inter400 from '@fontsource/inter/files/inter-latin-400-normal.woff2?url';
+
 interface Props {
   title?: string;
   description?: string;
@@ -23,6 +30,17 @@ const canonical = new URL(Astro.url.pathname, SITE.url);
 const ogImageAbsolute = new URL(ogImage, Astro.site).href;
 const ogImageMime = ogImage.endsWith('.png') ? 'image/png' : 'image/jpeg';
 const ogLogo = new URL(`${BASE}/favicon-64.png`, Astro.site).href;
+
+const personLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Cicero Giovany Junior',
+  alternateName: 'Giovany Jr',
+  jobTitle: 'Lead Product Designer',
+  url: SITE.url,
+  image: new URL(`${BASE}/avatar.jpg`, Astro.site).href,
+  sameAs: ['https://linkedin.com/in/giovany-jr-617223aa', 'https://github.com/giovanyux'],
+};
 ---
 
 <!doctype html>
@@ -30,9 +48,26 @@ const ogLogo = new URL(`${BASE}/favicon-64.png`, Astro.site).href;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Segurança: hardening que dá pra fazer via meta tag num site estático
+         (GitHub Pages não permite headers HTTP custom). Sem CDN externo além
+         das fontes do próprio bundle, então a CSP fica enxuta. -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; font-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none';"
+    />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+
     <link rel="canonical" href={canonical} />
     <meta name="description" content={description} />
     <meta name="author" content="Cicero Giovany Junior" />
+
+    <!-- Preload das fontes críticas acima da dobra (evita FOUT no LCP). -->
+    <link rel="preload" as="font" type="font/woff2" href={poppins700} crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href={poppins600} crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href={inter400} crossorigin />
+
+    <script type="application/ld+json" set:html={JSON.stringify(personLd)} />
 
     <!-- OG -->
     <meta property="og:type" content={type} />
@@ -74,6 +109,7 @@ const ogLogo = new URL(`${BASE}/favicon-64.png`, Astro.site).href;
     <ClientRouter />
   </head>
   <body>
+    <a href="#page-curtain" class="skip-link">Pular pro conteúdo</a>
     <Header />
     <main id="page-curtain">
       <slot />
